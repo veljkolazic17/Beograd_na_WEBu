@@ -1,7 +1,9 @@
+//Ova klasa je reprezentativna, i sluzi za testiranje klase RecommenderImpl
 public class Accommodation {
     private double price;
     private double size;
     private double numOfRooms;
+    private double floor;
 
     public double getPrice() {
         return price;
@@ -27,13 +29,13 @@ public class Accommodation {
         this.numOfRooms = numOfRooms;
     }
 
-    public int getFloor() {
+    public double getFloor() {
         return floor;
     }
 
-    public void setFloor(int floor) {
+    public void setFloor(double floor) {
         this.floor = floor;
     }
 
-    private int floor;
+
 }

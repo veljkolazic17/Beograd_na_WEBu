@@ -3,9 +3,10 @@
 body {
     background-color: #f5f0f6;
     margin: 0;
+    overflow: auto;
+    min-height: 800px;
     height: 100vh;
     font-family: Verdana, sans-serif;
-    overflow: hidden;
     color: #2d3142;
 }
 
@@ -15,18 +16,12 @@ p {
     padding: 0;
 }
 
-input[type="button"] {
-    cursor: pointer;
+input:focus {
+    outline: none;
 }
 
-#pocetnaSlika {
-    height: calc(100% - 100px - 30px);
-    width: auto;
-    border-style:solid;
-    border-width: 15px;
-    border-radius: 50%;
-    border-color: #f5f0f6;
-    margin: 50px;
+input[type="button"] {
+    cursor: pointer;
 }
 
 #leviPanel {
@@ -36,87 +31,68 @@ input[type="button"] {
     position: relative;
     float: left;
     height: 100%;
+    overflow: hidden;
 }
 
-@keyframes animacijaRegistracijaWrapperGore {
-    from {top: 0;}
-    to {top: -100%;}
-}
-
-@keyframes animacijaRegistracijaWrapperDole {
-    from {top: -100%;}
-    to {top: 0;}
+#pocetnaSlika {
+    height: calc(100% - 100px - 30px);
+    width: auto;
+    border-style: solid;
+    border-width: 15px;
+    border-radius: 50%;
+    border-color: #f5f0f6;
+    margin: 50px;
 }
 
 @keyframes animacijaLoginNestaje {
-    from {visibility: visible;}
-    to {visibility: hidden;}
+    from {margin-top: 0;}
+    to {margin-top: -900px;}
 }
 
 @keyframes animacijaLoginNastaje {
-    from {visibility: hidden;}
-    to {visibility: visible;}
-}
-
-@keyframes animacijaRegistracijaNestaje {
-    from {visibility: visible;}
-    to {visibility: hidden;}
-}
-
-@keyframes animacijaRegistracijaNastaje {
-    from {visibility: hidden;}
-    to {visibility: visible;}
+    from {margin-top: -900px;}
+    to {margin-top: 0;}
 }
 
 #desniPanelWrapper {
-    position: relative;
-    float: left;
-    width: calc(100% - 100vh);
-    height: 200%;
-    animation-play-state: paused;
-    animation-name: animacijaRegistracijaWrapperGore;
-    animation-duration: 2s;
-    animation-fill-mode: forwards;
+    width: fit-content;
+    height: 100%;
+    margin: auto;
+    overflow: hidden;
 }
 
 #desniPanel {
-    position: relative;
-    float: left;
-    height: 50%;
+    height: calc(100% - 100px);
     width: 100%;
+    padding-top: 100px;
+    transition-property: all;
     animation-play-state: paused;
-    animation-delay: 2s;
+    animation-duration: 2s;
     animation-fill-mode: forwards;
 }
 
 #desniPanelRegistracija {
-    position: relative;
-    float: right;
-    height: 50%;
+    float: left;
+    height: calc(100% - 250px);
     width: 100%;
-    animation-play-state: paused;
-    animation-delay: 0s;
-    animation-duration: 2s;
-    animation-fill-mode: forwards;
-    visibility: hidden;
+    padding-top: 250px;
 }
 
 svg {
     display: block;
-    height: 30vh;
+    height: calc(800px * 0.3);
     width: auto;
     margin: auto;
-    margin-top: 10vh;
 }
 
 #naslov {
     width: 100%;
     height: fit-content;
-    margin-top: 4vh;
-    margin-bottom: 4vh;
+    margin-top: 34px;
+    margin-bottom: 34px;
     text-align: center;
     font-family: 'Bilbo Swash Caps';
-    font-size: 8vh;
+    font-size: 80px;
     font-weight: 600;
     color: #2d3142;
 }
@@ -134,8 +110,8 @@ svg {
 }
 
 .forma table tr td * {
-    margin-top: 0.75vh;
-    margin-bottom: 0.75vh;
+    margin-top: 7px;
+    margin-bottom: 7px;
 }
 
 .inputLogin {
@@ -165,10 +141,6 @@ svg {
     font-style: italic;
 }
 
-input:focus {
-    outline: none;
-}
-
 .loginButtons {
     float: right;
     font-size: 13px;
@@ -181,6 +153,10 @@ input:focus {
     border-style: solid;
 }
 
+#formaReg {
+    height: 100%;
+}
+
 #zaboravljenaSifra {
     margin: 0;
     cursor: pointer;
@@ -188,6 +164,8 @@ input:focus {
 
 #zaboravljenaSifraPozadina {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
@@ -217,8 +195,4 @@ input:focus {
     margin: 10px 0px 10px 15px;
     float: none;
     display: block;
-}
-
-#formaReg {
-    margin-top: 25vh;
 }

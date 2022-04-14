@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", function() {
         var leviPanel = document.getElementById("leviPanel");
         var leviPanelWidth = getComputedStyle(leviPanel).width;
         leviPanelWidth = parseInt(leviPanelWidth.substring(0, leviPanelWidth.length - 1));
-        if(leviPanelWidth > window.innerWidth * 0.6) {
-            leviPanel.style.marginLeft = "-200vw";
+        if(leviPanelWidth > window.innerWidth * 0.60) {
+            leviPanel.style.marginLeft = "-" + leviPanelWidth + "px";
         } else {
             leviPanel.style.marginLeft = "0";
         }

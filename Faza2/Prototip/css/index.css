@@ -46,11 +46,11 @@ input[type="button"] {
 
 @keyframes animacijaLoginNestaje {
     from {margin-top: 0;}
-    to {margin-top: -900px;}
+    to {margin-top: -1000px;}
 }
 
 @keyframes animacijaLoginNastaje {
-    from {margin-top: -900px;}
+    from {margin-top: -1000px;}
     to {margin-top: 0;}
 }
 
@@ -86,7 +86,7 @@ svg {
 }
 
 #naslov {
-    width: 100%;
+    width: 600px;
     height: fit-content;
     margin-top: 34px;
     margin-bottom: 34px;

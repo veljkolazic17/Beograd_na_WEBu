@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // ciscenje svih filtera
-    document.getElementById("ocistiFiltereDugme").addEventListener("click", function(ev) {
+    function ocistiFiltere(ev) {
         var filterLista = document.getElementById("filteriPanel");
         var sviInputi = filterLista.getElementsByTagName("input");
         for (let i = 0; i < sviInputi.length; i++) {
@@ -105,7 +105,9 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         document.getElementById("izabraniFilteriWrapper").style.display = "none"; 
-    });
+    }
+
+    document.getElementById("ocistiFiltereDugme").addEventListener("click", ocistiFiltere);
 
     // primena filtera
     document.getElementById("potvrdiFiltereDugme").addEventListener("click", function(ev) {
@@ -117,5 +119,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // brisanje odrednjenog filtera
     document.getElementById("izabraniFilteriWrapper").addEventListener("click", function(ev) {
         document.getElementById("izabraniFilteriWrapper").style.display = "none";
+        ocistiFiltere(null);
     });
 });

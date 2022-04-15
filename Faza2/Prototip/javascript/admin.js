@@ -29,22 +29,14 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
         });
 
-        // prototip: korisnik i admin kao korisnici
+        // prototip: korisnik za uklanjanje
         var korisnik = document.createElement("p");
         korisnik.innerHTML = "korisnik";
         korisnik.setAttribute("class", "korisniciBrisanje");
         korisnik.addEventListener("dblclick", function() {
             korisnik.remove();
         });
-        var admin = document.createElement("p");
-        admin.innerHTML = "admin";
-        admin.setAttribute("class", "korisniciBrisanje");
-        admin.addEventListener("dblclick", function() {
-            admin.remove();
-        });
-
         divWrapper.append(korisnik);
-        divWrapper.append(admin);
 
         document.getElementById("prozorZaPotvrduPozadina").style.display = "block";
     });

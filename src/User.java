@@ -76,5 +76,9 @@ public class User {
         this.weights = weights;
     }
 
+    public Accommodation getLast(){
+        return null;
+    }
+
 
 }

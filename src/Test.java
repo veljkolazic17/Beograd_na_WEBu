@@ -1,5 +1,6 @@
 //Klasa za testiranje algoritma
 public class Test {
+
     public static void main(String[] args){
         User user1 = new User();
 
@@ -16,7 +17,7 @@ public class Test {
         user1.setAvgAcc(a1);
         Accommodation test1 = new Accommodation();
         test1.setSize(60);
-        test1.setPrice(450);
+        test1.setPrice(300);
         test1.setNumOfRooms(2);
         test1.setFloor(9);
         RecommenderImpl r = new RecommenderImpl();

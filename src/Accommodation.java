@@ -5,6 +5,17 @@ public class Accommodation {
     private double numOfRooms;
     private double floor;
 
+    private static double[] maxDiff;
+
+    public static double[] getMaxDiff(){
+        return maxDiff;
+    }
+
+    // Poziva se na svakih 10 minuta za svaki od atributa
+    public static void calcMaxDiff(){
+
+    }
+
     public double getPrice() {
         return price;
     }

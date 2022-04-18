@@ -4,6 +4,10 @@ public class User {
     private int userID;
     private Accommodation avgAcc;
     private double[] weights;
+
+    private Accommodation lastLiked;
+
+    // Unutrasnja klasa range
     public static class Range{
         public Range(double min,double max){
             this.max = max;
@@ -13,44 +17,16 @@ public class User {
         public double min;
         public double max;
     }
-    private Range priceRange;
-    private Range sizeRange;
+    
+    private Range[] ranges;
 
-    public Range getPriceRange() {
-        return priceRange;
+    public Range getRange(int index){
+        return ranges[index];
     }
-
-    public void setPriceRange(Range priceRange) {
-        this.priceRange = priceRange;
+    
+    public void setRange(Range range, int index){
+        ranges[index] = range;
     }
-
-    public Range getSizeRange() {
-        return sizeRange;
-    }
-
-    public void setSizeRange(Range sizeRange) {
-        this.sizeRange = sizeRange;
-    }
-
-    public Range getNumOfRoomsRange() {
-        return numOfRoomsRange;
-    }
-
-    public void setNumOfRoomsRange(Range numOfRoomsRange) {
-        this.numOfRoomsRange = numOfRoomsRange;
-    }
-
-    public Range getFloorRange() {
-        return floorRange;
-    }
-
-    public void setFloorRange(Range floorRange) {
-        this.floorRange = floorRange;
-    }
-
-    private Range numOfRoomsRange;
-    private Range floorRange;
-
 
     public int getUserID() {
         return userID;
@@ -77,8 +53,10 @@ public class User {
     }
 
     public Accommodation getLast(){
-        return null;
+        return lastLiked;
     }
 
-
+    public void setLast(Accommodation accommodation){
+        lastLiked = accommodation;
+    }
 }

@@ -31,26 +31,55 @@ public class KomentarDAO implements DAO<Komentar> {
 
     @Override
     public List<Komentar> list() {
-        return null;
+        return jdbcTemplate.query("SELECT * FROM komentar",rowMapper);
+
     }
 
     @Override
     public void create(Komentar komentar) {
+        try {
+            jdbcTemplate.update("INSERT INTO komentar (tekst_komentara, idkorisnik, idsmestaj) VALUES (?,?,?)",
+                    komentar.getTekstKomentara(),komentar.getIdkorisnik(),komentar.getIdsmestaj());
+        }
+        catch (Exception e){
+            log.info("Neispravan komentar");
+        }
 
     }
 
     @Override
     public Optional<Komentar> get(int id) {
-        return Optional.empty();
+        Optional<Komentar> komentar = null;
+        try {
+            Komentar komRet = jdbcTemplate.queryForObject("SELECT * FROM komentar WHERE idkomentar = ?",rowMapper,id);
+            komentar = Optional.ofNullable(komRet);
+        }
+        catch (Exception e){
+            log.info("Nije pronadjen komenatar sa ID: " + id);
+        }
+        return komentar;
+
+
     }
 
     @Override
     public void update(Komentar komentar, int id) {
-
+        try {
+            jdbcTemplate.update("UPDATE komentar SET tekst_komentara = ?, idkorisnik = ?, idsmestaj = ? WHERE idkomentar =?"
+                    , komentar.getTekstKomentara(),komentar.getIdkorisnik(),komentar.getIdsmestaj(),id);
+        }
+        catch (Exception e){
+            log.info("Nije pronadjen komenatar sa ID: " + id);
+        }
     }
 
     @Override
     public void delete(int id) {
-
+        try {
+            jdbcTemplate.update("DELETE FROM komentar WHERE idkomentar = ?", id);
+        }
+        catch (Exception e){
+            log.info("Nije pronadjen komenatar sa ID: " + id);
+        }
     }
 }

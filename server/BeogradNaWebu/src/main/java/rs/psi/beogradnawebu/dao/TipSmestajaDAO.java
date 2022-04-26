@@ -2,6 +2,7 @@ package rs.psi.beogradnawebu.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -29,26 +30,55 @@ public class TipSmestajaDAO implements DAO<TipSmestaja> {
 
     @Override
     public List<TipSmestaja> list() {
-        return null;
+
+        return jdbcTemplate.query("SELECT * FROM tip_smestaja",rowMapper);
     }
 
     @Override
     public void create(TipSmestaja tipSmestaja) {
+        try {
+            jdbcTemplate.update("INSERT INTO tip_smestaja (ime_tipa) VALUES (?)",tipSmestaja.getImeTipa());
+        }
+        catch (Exception e){
+            log.info("Neispravan tip smestaja");
+        }
 
     }
 
     @Override
     public Optional<TipSmestaja> get(int id) {
-        return Optional.empty();
+        Optional<TipSmestaja> tip = null;
+        try {
+            TipSmestaja tipSmestaja =jdbcTemplate.queryForObject("SELECT * FROM tip_smestaja WHERE idtip_smestaja = ?", rowMapper, id);
+            tip = Optional.ofNullable(tipSmestaja);
+        }
+        catch (Exception e){
+            log.info("Nije pronadjen tip smestaja sa ID: " + id);
+        }
+        return tip;
+
     }
 
     @Override
     public void update(TipSmestaja tipSmestaja, int id) {
+        try {
+            jdbcTemplate.update("UPDATE tip_smestaja SET ime_tipa = ? WHERE idtip_smestaja = ?",tipSmestaja.getImeTipa(),id);
+
+        }
+        catch (Exception e){
+            log.info("Nije pronadjen tip smestaja sa ID: " + id);
+        }
 
     }
 
     @Override
     public void delete(int id) {
+        try {
+            jdbcTemplate.update("DELETE FROM tip_smestaja WHERE idtip_smestaja = ?",id);
 
+        }
+        catch (Exception e){
+            log.info("Nije pronadjen tip smestaja sa ID: " + id);
+        }
     }
 }

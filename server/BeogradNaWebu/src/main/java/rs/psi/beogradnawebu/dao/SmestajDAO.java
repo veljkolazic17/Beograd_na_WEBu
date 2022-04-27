@@ -7,7 +7,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
+
+import rs.psi.beogradnawebu.misc.FilterForm;
 import rs.psi.beogradnawebu.model.Smestaj;
+import rs.psi.beogradnawebu.model.TipSmestaja;
 
 import java.sql.Blob;
 import java.util.List;
@@ -19,7 +22,7 @@ public class SmestajDAO implements DAO<Smestaj>{
     private static final Logger log = LoggerFactory.getLogger(KomentarDAO.class);
     private JdbcTemplate jdbcTemplate;
 
-    private RowMapper<Smestaj> rowMapper = (rs, rowNum) -> {
+    public static RowMapper<Smestaj> rowMapper = (rs, rowNum) -> {
         Smestaj smestaj = new Smestaj();
         smestaj.setIdsmestaj(rs.getLong("idsmestaj"));
         smestaj.setOrgPutanja(rs.getString("org_putanja"));
@@ -102,5 +105,44 @@ public class SmestajDAO implements DAO<Smestaj>{
         catch (Exception e){
             log.info("Nije pronadjen smestaj sa ID: " + id);
         }
+    }
+
+    public List<Smestaj> searchByFilters(FilterForm filters){
+        try {
+            TipSmestaja id_tipS = jdbcTemplate.queryForObject("SELECT * FROM tip_smestaja WHERE ime_tipa = ?", TipSmestajaDAO.rowMapper, filters.getTipSmestaja());
+
+            assert id_tipS != null;
+            long id_tip = id_tipS.getIdtipSmestaja();
+            return jdbcTemplate.query("SELECT * FROM smestaj WHERE CASE WHEN ? > 0 THEN cena >= ? ELSE TRUE END " +
+                            "AND CASE WHEN ? > 0 THEN cena <= ? ELSE TRUE  END " +
+                            "AND CASE WHEN  ? > 0 THEN kvadratura >= ? ELSE TRUE END " +
+                            "AND CASE WHEN ? > 0 THEN kvadratura <= ? ELSE TRUE END AND lokacija = ?" +
+                            " AND CASE WHEN ? < 3 AND ? > 0 THEN broj_soba = ? WHEN ? >= 3 THEN broj_soba >= ? ELSE TRUE END" +
+                            " AND idtip_smestaja = ? AND CASE WHEN ? THEN spratonost > 0 END " +
+                            " AND CASE WHEN ? THEN ima_lift = 1 ELSE ima_lift = 0 END ", rowMapper,
+                    filters.getCenaOd(), filters.getCenaOd(), filters.getCenaDo(), filters.getCenaDo(),
+                    filters.getKvadraturaOd(), filters.getKvadraturaOd(), filters.getKvadraturaDo(), filters.getKvadraturaDo(),
+                    filters.getLokacija(), mapBrojSoba(filters.getBrojSoba()), mapBrojSoba(filters.getBrojSoba()),
+                    mapBrojSoba(filters.getBrojSoba()), mapBrojSoba(filters.getBrojSoba()),
+                    mapBrojSoba(filters.getBrojSoba()), id_tip, filters.isNijePrvi(), filters.isImaLift());
+        }
+        catch (Exception e){
+            log.info("Neuspesna operacija");
+            return null;
+        }
+
+    }
+
+    public double mapBrojSoba(String str){
+        return switch (str) {
+            case "nullSoba" -> -1;
+            case "Garsonjera" -> 0.5;
+            case "Jednosoban" -> 1;
+            case "Jednoiposoban" -> 1.5;
+            case "Dvosoban" -> 2;
+            case "Dvoiposoban" -> 2.5;
+            case "TrosobanIPreko" -> 3;
+            default -> 0;
+        };
     }
 }

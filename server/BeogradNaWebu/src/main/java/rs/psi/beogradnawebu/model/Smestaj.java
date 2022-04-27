@@ -116,4 +116,20 @@ public class Smestaj {
     this.cena = cena;
   }
 
+  @Override
+  public String toString() {
+    return "Smestaj{" +
+            "idsmestaj=" + idsmestaj +
+            ", orgPutanja='" + orgPutanja + '\'' +
+            ", slika=" + slika +
+            ", brojLajkova=" + brojLajkova +
+            ", lokacija='" + lokacija + '\'' +
+            ", brojSoba=" + brojSoba +
+            ", spratonost=" + spratonost +
+            ", imaLift=" + imaLift +
+            ", idtipSmestaja=" + idtipSmestaja +
+            ", kvadratura=" + kvadratura +
+            ", cena=" + cena +
+            '}';
+  }
 }

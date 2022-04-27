@@ -17,7 +17,7 @@ public class TipSmestajaDAO implements DAO<TipSmestaja> {
     private static final Logger log = LoggerFactory.getLogger(KomentarDAO.class);
     private JdbcTemplate jdbcTemplate;
 
-    private RowMapper<TipSmestaja> rowMapper = (rs, rowNum) -> {
+    public static RowMapper<TipSmestaja> rowMapper = (rs, rowNum) -> {
         TipSmestaja tipSmestaja = new TipSmestaja();
         tipSmestaja.setIdtipSmestaja(rs.getLong("idtip_smestaja"));
         tipSmestaja.setImeTipa(rs.getString("ime_tipa"));

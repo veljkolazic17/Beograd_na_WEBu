@@ -16,7 +16,7 @@ public class KomentarDAO implements DAO<Komentar> {
     private JdbcTemplate jdbcTemplate;
 
 
-    private RowMapper<Komentar> rowMapper = (rs, rowNum) -> {
+    public static RowMapper<Komentar> rowMapper = (rs, rowNum) -> {
         Komentar komentar = new Komentar();
         komentar.setIdkomentar(rs.getLong("idkomentar"));
         komentar.setTekstKomentara(rs.getString("tekst_komentara"));

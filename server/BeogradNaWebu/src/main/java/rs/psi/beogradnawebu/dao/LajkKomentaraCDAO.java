@@ -16,7 +16,7 @@ public class LajkKomentaraCDAO implements CDAO<LajkKomentara> {
     private static final Logger log = LoggerFactory.getLogger(KomentarDAO.class);
     private JdbcTemplate jdbcTemplate;
 
-    private RowMapper<LajkKomentara> rowMapper = (rs, rowNum) -> {
+    public static RowMapper<LajkKomentara> rowMapper = (rs, rowNum) -> {
         LajkKomentara lajkKomentara = new LajkKomentara();
         lajkKomentara.setIdkomentar(rs.getLong("idkomentar"));
         lajkKomentara.setIdkorisnik(rs.getLong("idkorisnik"));

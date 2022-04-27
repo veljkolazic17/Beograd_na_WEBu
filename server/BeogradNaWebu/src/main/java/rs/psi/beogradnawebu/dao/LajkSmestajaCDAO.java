@@ -16,7 +16,7 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
     private static final Logger log = LoggerFactory.getLogger(KomentarDAO.class);
     private JdbcTemplate jdbcTemplate;
 
-    private RowMapper<LajkSmestaja> rowMapper = (rs, rowNum) -> {
+    public static RowMapper<LajkSmestaja> rowMapper = (rs, rowNum) -> {
         LajkSmestaja lajkSmestaja = new LajkSmestaja();
         lajkSmestaja.setIdkorisnik(rs.getLong("idkorisnik"));
         lajkSmestaja.setIdsmestaj(rs.getLong("idsmestaj"));

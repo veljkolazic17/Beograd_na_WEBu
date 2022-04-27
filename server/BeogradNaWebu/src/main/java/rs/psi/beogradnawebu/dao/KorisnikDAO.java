@@ -17,7 +17,7 @@ public class KorisnikDAO implements DAO<Korisnik> {
     private static final Logger log = LoggerFactory.getLogger(KomentarDAO.class);
     private JdbcTemplate jdbcTemplate;
 
-    private RowMapper<Korisnik> rowMapper = (rs, rowNum) -> {
+    public static RowMapper<Korisnik> rowMapper = (rs, rowNum) -> {
         Korisnik korisnik = new Korisnik();
         korisnik.setIdkorisnik(rs.getLong("idkorisnik"));
         korisnik.setKorisnickoime(rs.getString("korisnickoime"));

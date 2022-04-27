@@ -109,22 +109,28 @@ public class SmestajDAO implements DAO<Smestaj>{
 
     public List<Smestaj> searchByFilters(FilterForm filters){
         try {
-            TipSmestaja id_tipS = jdbcTemplate.queryForObject("SELECT * FROM tip_smestaja WHERE ime_tipa = ?", TipSmestajaDAO.rowMapper, filters.getTipSmestaja());
+            long id_tip;
+            if(filters.getTipSmestaja().equals("nullSmestaj")){
+                id_tip = 0;
+            }
+            else {
+                TipSmestaja id_tipS = jdbcTemplate.queryForObject("SELECT * FROM tip_smestaja WHERE ime_tipa = ?", TipSmestajaDAO.rowMapper, filters.getTipSmestaja());
 
-            assert id_tipS != null;
-            long id_tip = id_tipS.getIdtipSmestaja();
+                assert id_tipS != null;
+                id_tip = id_tipS.getIdtipSmestaja();
+            }
             return jdbcTemplate.query("SELECT * FROM smestaj WHERE CASE WHEN ? > 0 THEN cena >= ? ELSE TRUE END " +
                             "AND CASE WHEN ? > 0 THEN cena <= ? ELSE TRUE  END " +
                             "AND CASE WHEN  ? > 0 THEN kvadratura >= ? ELSE TRUE END " +
                             "AND CASE WHEN ? > 0 THEN kvadratura <= ? ELSE TRUE END AND lokacija = ?" +
                             " AND CASE WHEN ? < 3 AND ? > 0 THEN broj_soba = ? WHEN ? >= 3 THEN broj_soba >= ? ELSE TRUE END" +
-                            " AND idtip_smestaja = ? AND CASE WHEN ? THEN spratonost > 0 END " +
+                            " AND CASE WHEN ? != 0 THEN idtip_smestaja = ?  ELSE TRUE END AND CASE WHEN ? THEN spratonost > 0 END " +
                             " AND CASE WHEN ? THEN ima_lift = 1 ELSE ima_lift = 0 END ", rowMapper,
                     filters.getCenaOd(), filters.getCenaOd(), filters.getCenaDo(), filters.getCenaDo(),
                     filters.getKvadraturaOd(), filters.getKvadraturaOd(), filters.getKvadraturaDo(), filters.getKvadraturaDo(),
                     filters.getLokacija(), mapBrojSoba(filters.getBrojSoba()), mapBrojSoba(filters.getBrojSoba()),
                     mapBrojSoba(filters.getBrojSoba()), mapBrojSoba(filters.getBrojSoba()),
-                    mapBrojSoba(filters.getBrojSoba()), id_tip, filters.isNijePrvi(), filters.isImaLift());
+                    mapBrojSoba(filters.getBrojSoba()), id_tip,id_tip, filters.isNijePrvi(), filters.isImaLift());
         }
         catch (Exception e){
             log.info("Neuspesna operacija");

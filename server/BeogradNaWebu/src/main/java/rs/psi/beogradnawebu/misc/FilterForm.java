@@ -1,14 +1,31 @@
 package rs.psi.beogradnawebu.misc;
 
-public class Filter {
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+public class FilterForm {
+
+    @NotNull
     private String Lokacija;
-    private double BrojSoba;
-    private String TipSmestajaIme;
+    @NotNull
+    private String BrojSoba;
+    @NotNull
+    private String TipSmestaja;
+    @NotNull
+    @Size(min = 1, max = 1000)
     private int KvadraturaOd;
+    @NotNull
+    @Size(min = 1, max = 1000)
     private int KvadraturaDo;
+    @NotNull
+    @Size(min = 1, max = 10000)
     private double CenaOd;
+    @NotNull
+    @Size(min = 1, max = 10000)
     private double CenaDo;
-    private int Spratnost;
+
+    private boolean NijePrvi;
+    private boolean NijePoslednji;
     private boolean ImaLift;
 
     public String getLokacija() {
@@ -19,20 +36,20 @@ public class Filter {
         Lokacija = lokacija;
     }
 
-    public double getBrojSoba() {
+    public String getBrojSoba() {
         return BrojSoba;
     }
 
-    public void setBrojSoba(double brojSoba) {
+    public void setBrojSoba(String brojSoba) {
         BrojSoba = brojSoba;
     }
 
-    public String getTipSmestajaIme() {
-        return TipSmestajaIme;
+    public String getTipSmestaja() {
+        return TipSmestaja;
     }
 
-    public void setTipSmestajaIme(String tipSmestajaIme) {
-        TipSmestajaIme = tipSmestajaIme;
+    public void setTipSmestaja(String tipSmestaja) {
+        TipSmestaja = tipSmestaja;
     }
 
     public int getKvadraturaOd() {
@@ -67,12 +84,20 @@ public class Filter {
         CenaDo = cenaDo;
     }
 
-    public int getSpratnost() {
-        return Spratnost;
+    public boolean isNijePrvi() {
+        return NijePrvi;
     }
 
-    public void setSpratnost(int spratnost) {
-        Spratnost = spratnost;
+    public void setNijePrvi(boolean nijePrvi) {
+        NijePrvi = nijePrvi;
+    }
+
+    public boolean isNijePoslednji() {
+        return NijePoslednji;
+    }
+
+    public void setNijePoslednji(boolean nijePoslednji) {
+        NijePoslednji = nijePoslednji;
     }
 
     public boolean isImaLift() {

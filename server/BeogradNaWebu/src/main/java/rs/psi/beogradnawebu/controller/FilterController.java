@@ -8,8 +8,6 @@ import rs.psi.beogradnawebu.model.Smestaj;
 import java.util.List;
 
 
-
-
 @Controller
 public class FilterController {
 

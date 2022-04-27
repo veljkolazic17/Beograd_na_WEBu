@@ -2,6 +2,7 @@ package rs.psi.beogradnawebu.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -33,26 +34,42 @@ public class KorisnikDAO implements DAO<Korisnik> {
 
     @Override
     public List<Korisnik> list() {
-        return null;
+        List<Korisnik> result = jdbcTemplate.query("select * from korisnik",rowMapper);
+        return result;
     }
 
     @Override
     public void create(Korisnik korisnik) {
-
+            jdbcTemplate.update("insert into korisnik (korisnickoime,email,sifra,uloga,epredlog) values (?,?,?,?,?)", korisnik.getKorisnickoime(), korisnik.getEmail(), korisnik.getSifra(), korisnik.getUloga(), korisnik.getEpredlog());
     }
 
     @Override
     public Optional<Korisnik> get(int id) {
-        return Optional.empty();
+        Korisnik korisnik = null;
+        try{
+            korisnik = jdbcTemplate.queryForObject("select * from korisnik where idkorisnik = ?",rowMapper,id);
+        }catch(Exception exception){
+           log.info("Korisnik nije pronadjen: " + id);
+        }
+        return Optional.ofNullable(korisnik);
     }
 
     @Override
     public void update(Korisnik korisnik, int id) {
-
+        try{
+            jdbcTemplate.update("update korisnik set korisnickoime = ?,email = ?, sifra = ?,uloga = ?, epredlog = ? where idkorisnik = ?",
+                    korisnik.getKorisnickoime(),korisnik.getEmail(),korisnik.getSifra(),korisnik.getUloga(),korisnik.getEpredlog(),id);
+        } catch (Exception exception){
+            log.info("Nije moguce promeniti korisnika");
+        }
     }
 
     @Override
     public void delete(int id) {
-
+        try{
+            jdbcTemplate.update("delete from korisnik where idkorisnik = ?",id);
+        } catch (Exception exception){
+            log.info("Nije moguce obrisati korisnika: " + id);
+        }
     }
 }

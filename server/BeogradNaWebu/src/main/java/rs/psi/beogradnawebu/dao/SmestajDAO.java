@@ -26,7 +26,7 @@ public class SmestajDAO implements DAO<Smestaj>{
         Smestaj smestaj = new Smestaj();
         smestaj.setIdsmestaj(rs.getLong("idsmestaj"));
         smestaj.setOrgPutanja(rs.getString("org_putanja"));
-        smestaj.setSlika(rs.getBlob("slika"));
+        smestaj.setSlika(rs.getString("slika"));
         smestaj.setBrojLajkova(rs.getLong("broj_lajkova"));
         smestaj.setLokacija(rs.getString("lokacija"));
         smestaj.setBrojSoba(rs.getDouble("broj_soba"));

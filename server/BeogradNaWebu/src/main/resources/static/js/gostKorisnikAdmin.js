@@ -2,10 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    // otvaranje originalnog sajta za konkretni smeštaj
-    document.getElementById("linkNaSlici").addEventListener('click', function() {
-        window.open("https://www.4zida.rs/", "_blank");
-    });
+
 
     // podesavanje prikazanih smestaja da prikazu svoju sliku na panelu za konkretni smestaj
     var smestaji = document.getElementsByClassName("smestaji");
@@ -41,6 +38,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
             document.getElementById("opisKonkretnogSmestaja").innerHTML = opis
+            document.getElementById("likeCounter").innerHTML = smestajList[i].brojLajkova
+            // otvaranje originalnog sajta za konkretni smeštaj
+            document.getElementById("linkNaSlici").addEventListener('click', function() {
+                window.open(smestajList[i].orgPutanja, "_blank");
+            });
 
 
 
@@ -48,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if(evTarget.getAttribute("class") != "smestaji")
                 evTarget = evTarget.parentElement;
             document.getElementById("slikaKonkretnogSmestaja")
-            .setAttribute("src", evTarget.children[0].getAttribute("src"));
+            .setAttribute("src", smestajList[i].slika);
         });
     }
 

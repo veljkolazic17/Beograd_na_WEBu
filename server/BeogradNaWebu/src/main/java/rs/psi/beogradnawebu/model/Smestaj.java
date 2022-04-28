@@ -7,7 +7,7 @@ public class Smestaj {
 
   private long idsmestaj;
   private String orgPutanja;
-  private Blob slika;
+  private String slika;
   private long brojLajkova;
   private String lokacija;
   private double brojSoba;
@@ -36,11 +36,11 @@ public class Smestaj {
   }
 
 
-  public Blob getSlika() {
+  public String getSlika() {
     return slika;
   }
 
-  public void setSlika(Blob slika) {
+  public void setSlika(String slika) {
     this.slika = slika;
   }
 

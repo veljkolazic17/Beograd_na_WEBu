@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
     for(let i = 0; i < smestaji.length; i++) {
         smestaji[i].addEventListener("click", function(ev) {
             document.getElementById("prikazStana").style.display = "block";
+            localStorage.setItem("index",i);
             var evTarget = ev.target;
             if(evTarget.getAttribute("class") != "smestaji")
                 evTarget = evTarget.parentElement;

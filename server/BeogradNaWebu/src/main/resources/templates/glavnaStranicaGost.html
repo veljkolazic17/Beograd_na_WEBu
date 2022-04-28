@@ -13,6 +13,16 @@
         <link href="https://fonts.googleapis.com/css?family=Bilbo Swash Caps"  rel='stylesheet'>
     </head>
 <body>
+
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        var smestajList = [[${smestajList}]];
+        localStorage.setItem("smestajList",smestajList);
+        console.log(smestajList);
+        /*]]>*/
+    </script>
+
+
     <main class="container">
         <header class="row">
             <span id="dugmeNalog" class="col-3"></span>
@@ -114,7 +124,9 @@
                     Sve funkcionalnosti ovog panela rade, ali se odnose na samo jednog korisnika (Vas).<br />
                     Prikaz smeštaja se nalazi iznad.<br />
                     Detaljan opis smeštaja nalaziće se ovde.<br />
-        </div>
+
+
+            </div>
             
         <div id="dugmeZaKomentare">
             <p>Prikaži komentare</p>

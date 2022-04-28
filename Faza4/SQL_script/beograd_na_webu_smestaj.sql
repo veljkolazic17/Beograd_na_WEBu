@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `smestaj`;
 CREATE TABLE `smestaj` (
   `idsmestaj` int NOT NULL AUTO_INCREMENT,
   `org_putanja` varchar(45) NOT NULL,
-  `slika` blob,
+  `slika` varchar(1000),
   `broj_lajkova` int NOT NULL DEFAULT '0',
   `lokacija` varchar(100) DEFAULT NULL,
   `broj_soba` double DEFAULT NULL,

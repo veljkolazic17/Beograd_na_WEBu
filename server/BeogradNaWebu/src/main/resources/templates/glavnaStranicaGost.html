@@ -59,7 +59,7 @@
         <div id="pregledSmestaja" class="row pregled">
             <section class="col-10" id="smestajiSekcija" th:each="smestaj : ${smestajList}">
                 <article class="smestaji">
-                    <img class="slikaSmestaja" src="../static/images/nekiApartman.jpg" th:src="@{/images/nekiApartman.jpg}" alt="primer apartmana" />
+                    <img class="slikaSmestaja" src="../static/images/nekiApartman.jpg" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
                     <div class="opisSmestaja">
                         Broj soba: <th:block th:text="${smestaj.getBrojSoba()}"></th:block> <br />
                         Spratnost: <th:block th:text="${smestaj.getSpratonost()}"></th:block>  sprat, <br />

@@ -12,7 +12,38 @@ document.addEventListener("DOMContentLoaded", function() {
     for(let i = 0; i < smestaji.length; i++) {
         smestaji[i].addEventListener("click", function(ev) {
             document.getElementById("prikazStana").style.display = "block";
-            localStorage.setItem("index",i);
+            var smestajList =JSON.parse(sessionStorage.getItem("smestajList"));
+
+            var opis = "";
+
+                    if (smestajList[i].cena > 0) {
+                        opis+= "Cena: " + smestajList[i].cena + '<br>';
+                    }
+                    if(smestajList[i].kvadratura > 0){
+                        opis+= "Kvadratura: " + smestajList[i].kvadratura + '<br>';
+                    }
+                    if(smestajList[i].lokacija != ""){
+                        opis+= "Lokacija: " + smestajList[i].lokacija + '<br>';
+                    }
+                    if(smestajList[i].brojSoba > 0){
+                        opis+= "Broj soba: " + smestajList[i].brojSoba + '<br>';
+                    }
+                    if(smestajList[i].spratonost > 0 ){
+                        opis+= "Spratnost: " + smestajList[i].spratonost + '<br>';
+                    }
+                    if(smestajList[i].imaLift){
+                        opis+= "Ima lift" + '<br>';
+                    }
+                    if(smestajList[i].idtipSmestaja > 0){
+                        opis+= "Tip smestaja: " + smestajList[i].idtipSmestaja + '<br>';
+                    }
+
+
+
+            document.getElementById("opisKonkretnogSmestaja").innerHTML = opis
+
+
+
             var evTarget = ev.target;
             if(evTarget.getAttribute("class") != "smestaji")
                 evTarget = evTarget.parentElement;

@@ -17,7 +17,7 @@
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
         var smestajList = [[${smestajList}]];
-        localStorage.setItem("smestajList",smestajList);
+        sessionStorage.setItem("smestajList",JSON.stringify(smestajList));
         console.log(smestajList);
         /*]]>*/
     </script>
@@ -95,7 +95,7 @@
         </div>
     </main>
 
-    <div id="prikazStana">
+    <div id="prikazStana" name = "">
         <div id="stanPanel">
             <div id="slikaWrapper">
                 <img id="slikaKonkretnogSmestaja" alt="prikaz apartmana" />
@@ -120,10 +120,7 @@
             </div>
             
             <div id="opisKonkretnogSmestaja">
-                    <b>**Prototip**</b><br />
-                    Sve funkcionalnosti ovog panela rade, ali se odnose na samo jednog korisnika (Vas).<br />
-                    Prikaz smeštaja se nalazi iznad.<br />
-                    Detaljan opis smeštaja nalaziće se ovde.<br />
+
 
 
             </div>

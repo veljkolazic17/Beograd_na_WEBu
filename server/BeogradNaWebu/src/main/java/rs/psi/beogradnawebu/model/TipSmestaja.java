@@ -24,4 +24,11 @@ public class TipSmestaja {
     this.imeTipa = imeTipa;
   }
 
+  @Override
+  public String toString() {
+    return "TipSmestaja{" +
+            "idtipSmestaja=" + idtipSmestaja +
+            ", imeTipa='" + imeTipa + '\'' +
+            '}';
+  }
 }

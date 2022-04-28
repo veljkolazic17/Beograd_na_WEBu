@@ -64,4 +64,15 @@ public class Korisnik {
     this.epredlog = epredlog;
   }
 
+  @Override
+  public String toString() {
+    return "Korisnik{" +
+            "idkorisnik=" + idkorisnik +
+            ", korisnickoime='" + korisnickoime + '\'' +
+            ", email='" + email + '\'' +
+            ", sifra='" + sifra + '\'' +
+            ", uloga=" + uloga +
+            ", epredlog=" + epredlog +
+            '}';
+  }
 }

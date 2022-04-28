@@ -23,4 +23,11 @@ public class LajkKomentara {
     this.idkorisnik = idkorisnik;
   }
 
+  @Override
+  public String toString() {
+    return "LajkKomentara{" +
+            "idkomentar=" + idkomentar +
+            ", idkorisnik=" + idkorisnik +
+            '}';
+  }
 }

@@ -20,7 +20,7 @@ import java.util.Optional;
 public class SmestajDAO implements DAO<Smestaj>{
 
     private static final Logger log = LoggerFactory.getLogger(KomentarDAO.class);
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     public static RowMapper<Smestaj> rowMapper = (rs, rowNum) -> {
         Smestaj smestaj = new Smestaj();
@@ -73,7 +73,7 @@ public class SmestajDAO implements DAO<Smestaj>{
 
     @Override
     public Optional<Smestaj> get(int id) {
-        Optional<Smestaj> smestaj = null;
+        Optional<Smestaj> smestaj = Optional.empty();
         try {
             Smestaj smestajRet = jdbcTemplate.query("SELECT * FROM smestaj WHERE idsmestaj = ?", rowMapper, id).get(0);
             smestaj =  Optional.ofNullable(smestajRet);
@@ -87,7 +87,7 @@ public class SmestajDAO implements DAO<Smestaj>{
     @Override
     public void update(Smestaj smestaj, int id) {
         try{
-            jdbcTemplate.update("UPDATE smestaj SET orgPutanja = ?,slika = ?,brojLajkova = ?,lokacija = ?,broj_soba = ?, spratonost = ?, ima_lift = ?, idtip_smestaja = ?, kvadratura = ?, cena = ? " +
+            jdbcTemplate.update("UPDATE smestaj SET org_putanja = ?,slika = ?,broj_lajkova = ?,lokacija = ?,broj_soba = ?, spratonost = ?, ima_lift = ?, idtip_smestaja = ?, kvadratura = ?, cena = ? " +
                     "WHERE idsmestaj = ?",smestaj.getOrgPutanja(),smestaj.getSlika(),smestaj.getBrojLajkova(),smestaj.getLokacija(),smestaj.getBrojSoba(),smestaj.getSpratonost(),smestaj.getImaLift(),smestaj.getIdtipSmestaja(),smestaj.getKvadratura(),smestaj.getCena(),id);
         }
         catch (Exception e){
@@ -137,7 +137,6 @@ public class SmestajDAO implements DAO<Smestaj>{
             log.info("Neuspesna operacija");
             return null;
         }
-
     }
 
     public double mapBrojSoba(String str){

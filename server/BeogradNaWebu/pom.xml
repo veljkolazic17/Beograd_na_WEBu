@@ -61,10 +61,22 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- THYMELEAF DEPENDENCY-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+        <!-- THYMELEAF DEPENDENCY-->
+        <!--REDIS DEPENDENCY-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.session</groupId>-->
+<!--            <artifactId>spring-session-data-redis</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-session-data-redis</artifactId>-->
+<!--        </dependency>-->
+        <!--REDIS DEPENDENCY-->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>

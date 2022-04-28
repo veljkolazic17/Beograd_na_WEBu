@@ -68,6 +68,9 @@
           <element id="library" level="project" name="Maven: org.attoparser:attoparser:2.0.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.unbescape:unbescape:1.1.6.RELEASE" />
           <element id="library" level="project" name="Maven: org.thymeleaf.extras:thymeleaf-extras-java8time:3.0.4.RELEASE" />
+          <element id="library" level="project" name="Maven: javax:javaee-api:8.0" />
+          <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.6.0" />
+          <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">

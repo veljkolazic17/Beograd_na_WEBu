@@ -107,4 +107,20 @@ public class FilterForm {
     public void setImaLift(boolean imaLift) {
         ImaLift = imaLift;
     }
+
+    @Override
+    public String toString() {
+        return "FilterForm{" +
+                "Lokacija='" + Lokacija + '\'' +
+                ", BrojSoba='" + BrojSoba + '\'' +
+                ", TipSmestaja='" + TipSmestaja + '\'' +
+                ", KvadraturaOd=" + KvadraturaOd +
+                ", KvadraturaDo=" + KvadraturaDo +
+                ", CenaOd=" + CenaOd +
+                ", CenaDo=" + CenaDo +
+                ", NijePrvi=" + NijePrvi +
+                ", NijePoslednji=" + NijePoslednji +
+                ", ImaLift=" + ImaLift +
+                '}';
+    }
 }

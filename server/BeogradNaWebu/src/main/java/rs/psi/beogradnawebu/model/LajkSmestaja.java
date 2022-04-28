@@ -24,4 +24,11 @@ public class LajkSmestaja {
     this.idsmestaj = idsmestaj;
   }
 
+  @Override
+  public String toString() {
+    return "LajkSmestaja{" +
+            "idkorisnik=" + idkorisnik +
+            ", idsmestaj=" + idsmestaj +
+            '}';
+  }
 }

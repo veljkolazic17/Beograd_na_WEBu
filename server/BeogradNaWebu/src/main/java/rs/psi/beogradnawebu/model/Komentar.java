@@ -45,4 +45,13 @@ public class Komentar {
     this.idsmestaj = idsmestaj;
   }
 
+  @Override
+  public String toString() {
+    return "Komentar{" +
+            "idkomentar=" + idkomentar +
+            ", tekstKomentara='" + tekstKomentara + '\'' +
+            ", idkorisnik=" + idkorisnik +
+            ", idsmestaj=" + idsmestaj +
+            '}';
+  }
 }

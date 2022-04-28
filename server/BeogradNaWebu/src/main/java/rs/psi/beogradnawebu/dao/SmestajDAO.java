@@ -125,8 +125,8 @@ public class SmestajDAO implements DAO<Smestaj>{
                             "AND CASE WHEN  ? > 0 THEN kvadratura >= ? ELSE TRUE END " +
                             "AND CASE WHEN ? > 0 THEN kvadratura <= ? ELSE TRUE END AND CASE WHEN ? != 'nullLokacija' THEN lokacija = ? ELSE TRUE"  +
                             " END AND CASE WHEN ? < 3 AND ? > 0 THEN broj_soba = ? WHEN ? >= 3 THEN broj_soba >= ? ELSE TRUE END" +
-                            " AND CASE WHEN ? != 0 THEN idtip_smestaja = ?  ELSE TRUE END AND CASE WHEN ? THEN spratonost > 0 END " +
-                            " AND CASE WHEN ? THEN ima_lift = 1 ELSE ima_lift = 0 END ", rowMapper,
+                            " AND CASE WHEN ? != 0 THEN idtip_smestaja = ?  ELSE TRUE END AND CASE WHEN ? THEN spratonost > 0 ELSE TRUE END " +
+                            " AND CASE WHEN ? THEN ima_lift = 1 ELSE TRUE END ", rowMapper,
                     filters.getCenaOd(), filters.getCenaOd(), filters.getCenaDo(), filters.getCenaDo(),
                     filters.getKvadraturaOd(), filters.getKvadraturaOd(), filters.getKvadraturaDo(), filters.getKvadraturaDo(),
                     filters.getLokacija(),filters.getLokacija(), mapBrojSoba(filters.getBrojSoba()), mapBrojSoba(filters.getBrojSoba()),

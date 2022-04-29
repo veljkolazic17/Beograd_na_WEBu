@@ -40,9 +40,10 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("opisKonkretnogSmestaja").innerHTML = opis
             document.getElementById("likeCounter").innerHTML = smestajList[i].brojLajkova
             // otvaranje originalnog sajta za konkretni smeštaj
-            document.getElementById("linkNaSlici").addEventListener('click', function() {
-                window.open(smestajList[i].orgPutanja, "_blank");
-            });
+            // document.getElementById("linkNaSlici").addEventListener('click', function(link) {
+            //     window.open(smestajList[i].orgPutanja, "_blank");
+            // });
+            document.getElementById("link").setAttribute("href", smestajList[i].orgPutanja)
 
 
 

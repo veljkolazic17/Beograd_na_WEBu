@@ -72,4 +72,14 @@ public class KorisnikDAO implements DAO<Korisnik> {
             log.info("Nije moguce obrisati korisnika: " + id);
         }
     }
+
+    public Optional<Korisnik> getUserByUsername(String username){
+        Korisnik korisnik = null;
+        try{
+            korisnik = jdbcTemplate.queryForObject("select * from korisnik where username = ?",rowMapper,username);
+        }catch(Exception exception){
+            log.info("Korisnik nije pronadjen: " + username);
+        }
+        return Optional.ofNullable(korisnik);
+    }
 }

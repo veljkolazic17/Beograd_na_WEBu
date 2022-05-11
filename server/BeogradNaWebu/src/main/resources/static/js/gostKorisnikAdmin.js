@@ -6,10 +6,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // podesavanje prikazanih smestaja da prikazu svoju sliku na panelu za konkretni smestaj
     var smestaji = document.getElementsByClassName("smestaji");
+    var currClicked = null;
+    var smestajList =JSON.parse(sessionStorage.getItem("smestajList"));
     for(let i = 0; i < smestaji.length; i++) {
         smestaji[i].addEventListener("click", function(ev) {
+
             document.getElementById("prikazStana").style.display = "block";
-            var smestajList =JSON.parse(sessionStorage.getItem("smestajList"));
+
+
+            currClicked = i;
 
             var opis = "";
 
@@ -38,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
             document.getElementById("opisKonkretnogSmestaja").innerHTML = opis
-            document.getElementById("likeCounter").innerHTML = smestajList[i].brojLajkova
+            document.getElementById("likeCounter").innerHTML = smestajList[currClicked].brojLajkova
             // otvaranje originalnog sajta za konkretni smeštaj
             // document.getElementById("linkNaSlici").addEventListener('click', function(link) {
             //     window.open(smestajList[i].orgPutanja, "_blank");
@@ -156,4 +161,24 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("izabraniFilteriWrapper").style.display = "none";
         ocistiFiltere(null);
     });
+    document.getElementById("lajkNaSlici").addEventListener("click", function(ev) {
+        var element = document.getElementById("lajkNaSlici");
+        if(element.children[0].children[0].getAttribute("class") == "Layer_1") {
+            element.children[1].innerHTML = parseInt(element.children[1].innerHTML) + 1;
+            element.children[0].innerHTML = fullHeart;
+            smestajList[currClicked].brojLajkova+=1;
+            $.ajax({url:"like/"+smestajList[currClicked].idsmestaj,type:"POST"})
+
+        } else {
+            element.children[1].innerHTML = parseInt(element.children[1].innerHTML) - 1;
+            element.children[0].innerHTML = emptyHeart;
+            smestajList[currClicked].brojLajkova-=1;
+            $.ajax({url:"unlike/"+smestajList[currClicked].idsmestaj,type:"POST"})
+        }
+        //$.post("/like/" + currClicked.idsmestaj)
+
+
+    });
+
+
 });

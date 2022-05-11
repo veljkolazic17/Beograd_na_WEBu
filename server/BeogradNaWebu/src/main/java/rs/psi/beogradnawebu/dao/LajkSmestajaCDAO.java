@@ -63,7 +63,7 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
     @Override
     public void delete(int[] id) {
         try {
-            jdbcTemplate.update("delete from lajk_smestaja where idkorisnik = ? and idsmestaj = ?");
+            jdbcTemplate.update("delete from lajk_smestaja where idkorisnik = ? and idsmestaj = ?,id[0],id[1]");
         } catch (Exception e){
             log.info("Nije moguce izbrisati lajksmestaja");
         }

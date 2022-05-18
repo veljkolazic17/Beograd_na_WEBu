@@ -1,6 +1,8 @@
 package rs.psi.beogradnawebu.model;
 
 
+import java.util.List;
+
 public class LajkSmestaja {
 
   private long idkorisnik;

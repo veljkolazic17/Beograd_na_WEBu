@@ -5,7 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+import rs.psi.beogradnawebu.model.Korisnik;
 import rs.psi.beogradnawebu.model.LajkSmestaja;
+import rs.psi.beogradnawebu.model.Smestaj;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,7 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
 
     private static final Logger log = LoggerFactory.getLogger(KomentarDAO.class);
     private JdbcTemplate jdbcTemplate;
+    private SmestajDAO smestajDAO;
 
     public static RowMapper<LajkSmestaja> rowMapper = (rs, rowNum) -> {
         LajkSmestaja lajkSmestaja = new LajkSmestaja();
@@ -23,7 +26,7 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
         return lajkSmestaja;
     };
 
-    public LajkSmestajaCDAO(JdbcTemplate jdbcTemplate) {
+    public LajkSmestajaCDAO(JdbcTemplate jdbcTemplate,SmestajDAO smestajDAO) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -63,9 +66,20 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
     @Override
     public void delete(int[] id) {
         try {
-            jdbcTemplate.update("delete from lajk_smestaja where idkorisnik = ? and idsmestaj = ?,id[0],id[1]");
+            //CHANGED
+            jdbcTemplate.update("delete from lajk_smestaja where idkorisnik = ? and idsmestaj = ?",id[0],id[1]);
         } catch (Exception e){
             log.info("Nije moguce izbrisati lajksmestaja");
         }
+    }
+
+    public Optional<Smestaj> getLast(int idkorisnik){
+        //int idkorisnik = (int)korisnik.getIdkorisnik();
+        //PROVERITI DA LI KORISNIK POSTOJI !!!!
+        List<LajkSmestaja> smestajList = jdbcTemplate.query("select * from lajk_smestaja where idkorisnik = ?",rowMapper,idkorisnik);
+        if(smestajList.size() == 0)
+            return null;
+        LajkSmestaja lajkSmestaja = smestajList.get(smestajList.size() - 1);
+        return smestajDAO.get((int)(lajkSmestaja.getIdsmestaj()));
     }
 }

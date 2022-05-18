@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import rs.psi.beogradnawebu.model.Korisnik;
+import rs.psi.beogradnawebu.model.Smestaj;
 
 import java.util.List;
 import java.util.Optional;

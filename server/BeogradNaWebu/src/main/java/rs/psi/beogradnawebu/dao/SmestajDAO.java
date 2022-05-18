@@ -9,6 +9,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import rs.psi.beogradnawebu.misc.FilterForm;
+import rs.psi.beogradnawebu.model.LajkSmestaja;
 import rs.psi.beogradnawebu.model.Smestaj;
 import rs.psi.beogradnawebu.model.TipSmestaja;
 
@@ -137,6 +138,34 @@ public class SmestajDAO implements DAO<Smestaj>{
             log.info("Neuspesna operacija");
             return null;
         }
+    }
+
+
+    public Smestaj getAvgAcc(int id){
+        List<LajkSmestaja> lajkovi = jdbcTemplate.query("SELECT * FROM lajk_smestaja WHERE idkorisnik = ?",LajkSmestajaCDAO.rowMapper,id);
+        int numOfLikes = lajkovi.size();
+        Smestaj avgSmestaj = new Smestaj();
+        avgSmestaj.setCena(0);
+        avgSmestaj.setBrojSoba(0);
+        avgSmestaj.setImaLift(0);
+        avgSmestaj.setSpratonost(0);
+        avgSmestaj.setKvadratura(0);
+
+        for(LajkSmestaja l : lajkovi){
+            Smestaj s = jdbcTemplate.query("SELECT * FROM smestaj WHERE idsmestaj = ?",rowMapper,l.getIdsmestaj()).get(0);
+            avgSmestaj.setKvadratura(avgSmestaj.getKvadratura()+s.getKvadratura());
+            avgSmestaj.setSpratonost(avgSmestaj.getSpratonost() + s.getSpratonost());
+            avgSmestaj.setImaLift(avgSmestaj.getImaLift() + s.getImaLift());
+            avgSmestaj.setBrojSoba(avgSmestaj.getBrojSoba() + s.getBrojSoba());
+            avgSmestaj.setCena(avgSmestaj.getCena() + s.getCena());
+        }
+        avgSmestaj.setKvadratura(avgSmestaj.getKvadratura()/numOfLikes);
+        avgSmestaj.setSpratonost(avgSmestaj.getSpratonost()/numOfLikes);
+        avgSmestaj.setImaLift(avgSmestaj.getImaLift()/numOfLikes);
+        avgSmestaj.setBrojSoba(avgSmestaj.getBrojSoba()/numOfLikes);
+        avgSmestaj.setCena(avgSmestaj.getCena()/numOfLikes);
+        return  avgSmestaj;
+
     }
 
     public double mapBrojSoba(String str){

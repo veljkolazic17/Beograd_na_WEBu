@@ -141,7 +141,7 @@ public class SmestajDAO implements DAO<Smestaj>{
     }
 
 
-    public Smestaj getAvgAcc(int id){
+    public Smestaj getAvgAcc(long id){
         List<LajkSmestaja> lajkovi = jdbcTemplate.query("SELECT * FROM lajk_smestaja WHERE idkorisnik = ?",LajkSmestajaCDAO.rowMapper,id);
         int numOfLikes = lajkovi.size();
         Smestaj avgSmestaj = new Smestaj();

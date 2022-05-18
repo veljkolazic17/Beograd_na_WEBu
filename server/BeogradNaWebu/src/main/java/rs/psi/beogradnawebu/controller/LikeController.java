@@ -18,7 +18,7 @@ import rs.psi.beogradnawebu.misc.FilterForm;
 import rs.psi.beogradnawebu.model.Korisnik;
 import rs.psi.beogradnawebu.model.LajkSmestaja;
 import rs.psi.beogradnawebu.model.Smestaj;
-
+import rs.psi.beogradnawebu.recalg.MMLVRecommenderImpl;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.security.Principal;
@@ -32,15 +32,19 @@ public class LikeController {
     private final SmestajDAO smestajDAO;
     private final KorisnikDAO korisnikDAO;
     private final LajkSmestajaCDAO lajkSmestajaCDAO;
-    public LikeController(SmestajDAO smestajDAO,KorisnikDAO korisnikDAO,LajkSmestajaCDAO lajkSmestajaCDAO){
+    private final MMLVRecommenderImpl mmlvRecommender;
+    public LikeController(SmestajDAO smestajDAO,KorisnikDAO korisnikDAO,LajkSmestajaCDAO lajkSmestajaCDAO,MMLVRecommenderImpl mmlvRecommender){
         this.smestajDAO = smestajDAO;
         this.korisnikDAO = korisnikDAO;
         this.lajkSmestajaCDAO = lajkSmestajaCDAO;
+        this.mmlvRecommender = mmlvRecommender;
     }
     @PostMapping("/like/{idSmestaj}")
     public String likeSmestaj(Principal principal,@PathVariable Integer idSmestaj){
         //Korisnik k =korisnikDAO.getByUsername(principal.getName()).orElse(null);
         Smestaj s = smestajDAO.get(idSmestaj).orElse(null);
+        //Updatuj tezine za korisnika k na osnovu stana s;
+        //mmlvRecommender.update(k,s);
        // if(s!=null && k!=null) {
             LajkSmestaja l = new LajkSmestaja();
             l.setIdkorisnik(1);

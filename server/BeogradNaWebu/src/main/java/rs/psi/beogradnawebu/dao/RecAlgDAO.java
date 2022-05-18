@@ -43,7 +43,7 @@ public class RecAlgDAO implements DAO<Recalgdata>{
     };
 
     @Override
-    public List list() {
+    public List<Recalgdata> list() {
         List<Recalgdata> recalgdata = jdbcTemplate.query("select * from recalgdata",rowMapper);
         return recalgdata;
     }
@@ -72,7 +72,7 @@ public class RecAlgDAO implements DAO<Recalgdata>{
     }
 
     @Override
-    public Optional get(int id) {
+    public Optional<Recalgdata> get(int id) {
         Recalgdata recalgdata = null;
         try{
             recalgdata = jdbcTemplate.queryForObject("select * from recalgdata where idkorisnik = ?",rowMapper,id);

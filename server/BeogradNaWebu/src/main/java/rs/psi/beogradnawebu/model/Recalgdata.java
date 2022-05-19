@@ -21,6 +21,7 @@ public class Recalgdata {
   private double weightCena;
 
 
+
   public long getIdkorisnik() {
     return idkorisnik;
   }

@@ -107,56 +107,108 @@ public class MMLVRecommenderImpl implements Recommender {
                         recalgdata.setRangeMaxSpratnost(accommodation.getSpratonost());
                         recAlgDAO.create(recalgdata);
                 } else {
-                        int change = 0;
+
                         if (accommodation.getCena() > recalgdata.getRangeMaxCena()) {
 
                                 recalgdata.setRangeMaxCena(accommodation.getCena());
-                                change = 1;
+
 
                         } else if (accommodation.getCena() < recalgdata.getRangeMinCena()) {
                                 recalgdata.setRangeMinCena(accommodation.getCena());
-                                change = 1;
+
+
+                        }
+                        else{
+                                ShiftParam shiftParam = shiftRange(recalgdata.getRangeMinCena(),recalgdata.getRangeMaxCena(),accommodation.getCena());
+                                if(shiftParam.ref.equals("MIN")){
+                                        recalgdata.setRangeMinCena(recalgdata.getRangeMinCena() + shiftParam.shift);
+                                }else {
+                                        recalgdata.setRangeMaxCena(recalgdata.getRangeMaxCena() - shiftParam.shift);
+                                }
 
                         }
                         if (accommodation.getSpratonost() > recalgdata.getRangeMaxSpratnost()) {
                                 recalgdata.setRangeMaxSpratnost(accommodation.getSpratonost());
-                                change = 1;
-
                         } else if (accommodation.getSpratonost() < recalgdata.getRangeMinSpratnost()) {
                                 recalgdata.setRangeMinSpratnost(accommodation.getSpratonost());
-                                change = 1;
 
+
+                        }
+                        else {
+                                ShiftParam sh = shiftRange(recalgdata.getRangeMinSpratnost(),recalgdata.getRangeMaxSpratnost(),accommodation.getSpratonost());
+                                if(sh.ref.equals("MIN")){
+                                        recalgdata.setRangeMinSpratnost((long)(recalgdata.getRangeMinSpratnost() + sh.shift));
+                                }
+                                else {
+                                        recalgdata.setRangeMaxSpratnost((long)(recalgdata.getRangeMaxSpratnost() - sh.shift));
+                                }
                         }
                         if (accommodation.getKvadratura() > recalgdata.getRangeMaxKvadratura()) {
                                 recalgdata.setRangeMaxKvadratura(accommodation.getKvadratura());
-                                change = 1;
+
 
                         } else if (accommodation.getKvadratura() < recalgdata.getRangeMinKvadratura()) {
                                 recalgdata.setRangeMinKvadratura(accommodation.getKvadratura());
-                                change = 1;
+
 
                         }
                         if (accommodation.getBrojSoba() > recalgdata.getRangeMaxBrojSoba()) {
                                 recalgdata.setRangeMaxBrojSoba(accommodation.getBrojSoba());
-                                change = 1;
+
 
                         } else if (accommodation.getBrojSoba()< recalgdata.getRangeMinBrojSoba()) {
                                 recalgdata.setRangeMinBrojSoba(accommodation.getBrojSoba());
-                                change = 1;
 
+
+                        }
+                        else {
+                                ShiftParam shiftParam = shiftRange(recalgdata.getRangeMinBrojSoba(),recalgdata.getRangeMaxBrojSoba(),accommodation.getBrojSoba());
+                                if(shiftParam.ref.equals("MIN")){
+                                        recalgdata.setRangeMinBrojSoba(recalgdata.getRangeMinBrojSoba() + shiftParam.shift);
+                                }
+                                else {
+                                        recalgdata.setRangeMaxBrojSoba(recalgdata.getRangeMaxBrojSoba() - shiftParam.shift);
+                                }
                         }
                         if (accommodation.getImaLift() > recalgdata.getRangeMaxImaLift()) {
                                 recalgdata.setRangeMaxImaLift(accommodation.getImaLift());
-                                change = 1;
+
 
                         } else if (accommodation.getImaLift() < recalgdata.getRangeMinImaLift()) {
                                 recalgdata.setRangeMinImaLift(accommodation.getImaLift());
-                                change = 1;
+
 
                         }
-                        if(change == 1)
-                                recAlgDAO.update(recalgdata,(int)recalgdata.getIdkorisnik());
-
+                        else {
+                                ShiftParam shiftParam = shiftRange(recalgdata.getRangeMinImaLift(),recalgdata.getRangeMaxImaLift(),accommodation.getImaLift());
+                                if(shiftParam.ref.equals("MIN")){
+                                        recalgdata.setRangeMinImaLift((long)(recalgdata.getRangeMinImaLift() + shiftParam.shift));
+                                }
+                                else {
+                                        recalgdata.setRangeMaxImaLift((long)(recalgdata.getRangeMaxImaLift() - shiftParam.shift));
+                                }
+                        }
+                        recAlgDAO.update(recalgdata,(int)recalgdata.getIdkorisnik());
                 }
+        }
+
+        // Klasa koju koristimo da odredimo na osnovu cega i koliko da promenimo granice
+        private static class ShiftParam{
+                double shift;
+                String ref;
+        }
+
+        private ShiftParam shiftRange(double min,double max,double val){
+                double mid = (max - min)/2;
+                ShiftParam shiftParam = new ShiftParam();
+                if(val > mid){
+                        shiftParam.ref = "MIN";
+                        shiftParam.shift = Math.min(max - val, val - mid);
+                }
+                else if(val < mid){
+                        shiftParam.ref = "MAX";
+                        shiftParam.shift = Math.min(val - min, mid - val);
+                }
+                return shiftParam;
         }
 }

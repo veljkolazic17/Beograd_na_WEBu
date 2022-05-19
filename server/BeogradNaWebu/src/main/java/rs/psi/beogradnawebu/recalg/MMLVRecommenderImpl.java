@@ -152,6 +152,14 @@ public class MMLVRecommenderImpl implements Recommender {
 
 
                         }
+                        else{
+                                ShiftParam shiftParam = shiftRange(recalgdata.getRangeMinKvadratura(),recalgdata.getRangeMaxKvadratura(),accommodation.getKvadratura());
+                                if(shiftParam.ref.equals("MIN")){
+                                        recalgdata.setRangeMinKvadratura((long)(recalgdata.getRangeMinKvadratura() + shiftParam.shift));
+                                }else {
+                                        recalgdata.setRangeMaxKvadratura((long)(recalgdata.getRangeMaxKvadratura() - shiftParam.shift));
+                                }
+                        }
                         if (accommodation.getBrojSoba() > recalgdata.getRangeMaxBrojSoba()) {
                                 recalgdata.setRangeMaxBrojSoba(accommodation.getBrojSoba());
 

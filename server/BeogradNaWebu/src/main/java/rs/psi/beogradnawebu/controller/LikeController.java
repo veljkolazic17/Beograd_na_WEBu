@@ -5,24 +5,16 @@ package rs.psi.beogradnawebu.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import rs.psi.beogradnawebu.dao.KorisnikDAO;
 import rs.psi.beogradnawebu.dao.LajkSmestajaCDAO;
 import rs.psi.beogradnawebu.dao.SmestajDAO;
-import rs.psi.beogradnawebu.misc.FilterForm;
-import rs.psi.beogradnawebu.model.Korisnik;
 import rs.psi.beogradnawebu.model.LajkSmestaja;
 import rs.psi.beogradnawebu.model.Smestaj;
 import rs.psi.beogradnawebu.recalg.MMLVRecommenderImpl;
-import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.security.Principal;
-import java.util.List;
+
 
 
 @Controller
@@ -43,9 +35,10 @@ public class LikeController {
     public String likeSmestaj(Principal principal,@PathVariable Integer idSmestaj){
         //Korisnik k =korisnikDAO.getByUsername(principal.getName()).orElse(null);
         Smestaj s = smestajDAO.get(idSmestaj).orElse(null);
+        if(s == null) return "redirect:/pregledsmestaja";
         //Updatuj tezine za korisnika k na osnovu stana s;
         //mmlvRecommender.update(k,s);
-       // if(s!=null && k!=null) {
+        //if(s!=null && k!=null) {
             LajkSmestaja l = new LajkSmestaja();
             l.setIdkorisnik(1);
             //l.setIdkorisnik(k.getIdkorisnik());
@@ -65,6 +58,7 @@ public class LikeController {
         //Korisnik k =korisnikDAO.getByUsername(principal.getName()).orElse(null);
         // if(s!=null && k!=null) {
         Smestaj s =smestajDAO.get(idSmestaj).orElse(null);
+        if(s == null) return "redirect:/pregledsmestaja";
         s.setBrojLajkova(s.getBrojLajkova() - 1);
         smestajDAO.update(s,idSmestaj);
         lajkSmestajaCDAO.delete(new int[]{1,idSmestaj});

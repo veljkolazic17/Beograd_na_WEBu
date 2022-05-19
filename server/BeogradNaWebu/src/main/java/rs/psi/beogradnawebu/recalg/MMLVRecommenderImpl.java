@@ -62,23 +62,23 @@ public class MMLVRecommenderImpl implements Recommender {
                 Recalgdata recalgdata = recAlgDAO.get((int)user.getIdkorisnik()).orElse(null);
                 if(recalgdata == null) return false;
                 scaledAttribute = 10 - 10 * Math.abs(accommodation.getCena() - avgAcc.getCena())
-                        / ((recalgdata.getRangeMaxCena() - recalgdata.getRangeMinCena()));
+                        / ((Math.max(recalgdata.getRangeMaxCena(),accommodation.getCena()) - Math.min(recalgdata.getRangeMinCena(),accommodation.getCena())));
                 rating += scaledAttribute * recalgdata.getWeightCena();
 
                 scaledAttribute = 10 - 10 * Math.abs(accommodation.getSpratonost() - avgAcc.getSpratonost())
-                        /(double) ((recalgdata.getRangeMaxSpratnost() - recalgdata.getRangeMinSpratnost()));
+                        /(double) (Math.max(recalgdata.getRangeMaxSpratnost(),accommodation.getSpratonost()) - Math.min(recalgdata.getRangeMinSpratnost(),accommodation.getSpratonost()));
                 rating += scaledAttribute * recalgdata.getWeigthSpratonst();
 
                 scaledAttribute = 10 - 10 * Math.abs(accommodation.getKvadratura() - avgAcc.getKvadratura())
-                        / (double)((recalgdata.getRangeMaxKvadratura() - recalgdata.getRangeMinKvadratura()));
+                        / (double)((Math.max(recalgdata.getRangeMaxKvadratura(),accommodation.getKvadratura()) - Math.min(recalgdata.getRangeMinKvadratura(),accommodation.getKvadratura())));
                 rating += scaledAttribute * recalgdata.getWeightKvadratura();
 
                 scaledAttribute = 10 - 10 * Math.abs(accommodation.getBrojSoba() - avgAcc.getBrojSoba())
-                        / ((recalgdata.getRangeMaxBrojSoba() - recalgdata.getRangeMinBrojSoba()));
+                        / ((Math.max(recalgdata.getRangeMaxBrojSoba(),accommodation.getBrojSoba()) - Math.min(recalgdata.getRangeMinBrojSoba(),accommodation.getBrojSoba())));
                 rating += scaledAttribute * recalgdata.getWeightBrojSoba();
 
                 scaledAttribute = 10 - 10 * Math.abs(accommodation.getImaLift() - avgAcc.getImaLift())
-                        /(double) ((recalgdata.getRangeMaxImaLift() - recalgdata.getRangeMinImaLift()));
+                        /(double) (Math.max(recalgdata.getRangeMaxImaLift(),accommodation.getImaLift()) - Math.min(recalgdata.getRangeMinImaLift(),accommodation.getImaLift()));
                 rating += scaledAttribute * recalgdata.getWeightImaLift();
 
 

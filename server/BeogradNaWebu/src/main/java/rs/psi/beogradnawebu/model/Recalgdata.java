@@ -8,15 +8,12 @@ public class Recalgdata {
   private double rangeMaxBrojSoba;
   private long rangeMinSpratnost;
   private long rangeMaxSpratnost;
-  private long rangeMinImaLift;
-  private long rangeMaxImaLift;
   private long rangeMinKvadratura;
   private long rangeMaxKvadratura;
   private double rangeMinCena;
   private double rangeMaxCena;
   private double weightBrojSoba;
   private double weigthSpratonst;
-  private double weightImaLift;
   private double weightKvadratura;
   private double weightCena;
 
@@ -64,24 +61,6 @@ public class Recalgdata {
 
   public void setRangeMaxSpratnost(long rangeMaxSpratnost) {
     this.rangeMaxSpratnost = rangeMaxSpratnost;
-  }
-
-
-  public long getRangeMinImaLift() {
-    return rangeMinImaLift;
-  }
-
-  public void setRangeMinImaLift(long rangeMinImaLift) {
-    this.rangeMinImaLift = rangeMinImaLift;
-  }
-
-
-  public long getRangeMaxImaLift() {
-    return rangeMaxImaLift;
-  }
-
-  public void setRangeMaxImaLift(long rangeMaxImaLift) {
-    this.rangeMaxImaLift = rangeMaxImaLift;
   }
 
 
@@ -136,15 +115,6 @@ public class Recalgdata {
 
   public void setWeigthSpratonst(double weigthSpratonst) {
     this.weigthSpratonst = weigthSpratonst;
-  }
-
-
-  public double getWeightImaLift() {
-    return weightImaLift;
-  }
-
-  public void setWeightImaLift(double weightImaLift) {
-    this.weightImaLift = weightImaLift;
   }
 
 

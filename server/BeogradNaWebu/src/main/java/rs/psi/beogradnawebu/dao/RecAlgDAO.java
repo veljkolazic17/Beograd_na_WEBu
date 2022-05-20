@@ -28,15 +28,12 @@ public class RecAlgDAO implements DAO<Recalgdata>{
         recalgdata.setRangeMaxBrojSoba(rs.getDouble("range_max_broj_soba"));
         recalgdata.setRangeMinSpratnost(rs.getInt("range_min_spratnost"));
         recalgdata.setRangeMaxSpratnost(rs.getInt("range_max_spratnost"));
-        recalgdata.setRangeMinImaLift(rs.getInt("range_min_ima_lift"));
-        recalgdata.setRangeMaxImaLift(rs.getInt("range_max_ima_lift"));
         recalgdata.setRangeMinKvadratura(rs.getInt("range_min_kvadratura"));
         recalgdata.setRangeMaxKvadratura(rs.getInt("range_max_kvadratura"));
         recalgdata.setRangeMinCena(rs.getDouble("range_min_cena"));
         recalgdata.setRangeMaxCena(rs.getDouble("range_max_cena"));
         recalgdata.setWeightBrojSoba(rs.getDouble("weight_broj_soba"));
         recalgdata.setWeigthSpratonst(rs.getDouble("weight_spratnost"));
-        recalgdata.setWeightImaLift(rs.getDouble("weight_ima_lift"));
         recalgdata.setWeightKvadratura(rs.getDouble("weight_kvadratura"));
         recalgdata.setWeightCena(rs.getDouble("weight_cena"));
         return recalgdata;
@@ -57,15 +54,12 @@ public class RecAlgDAO implements DAO<Recalgdata>{
                 recalgdata.getRangeMaxBrojSoba(),
                 recalgdata.getRangeMinSpratnost(),
                 recalgdata.getRangeMaxSpratnost(),
-                recalgdata.getRangeMinImaLift(),
-                recalgdata.getRangeMaxImaLift(),
                 recalgdata.getRangeMinKvadratura(),
                 recalgdata.getRangeMaxKvadratura(),
                 recalgdata.getRangeMinCena(),
                 recalgdata.getRangeMaxCena(),
                 recalgdata.getWeightBrojSoba(),
                 recalgdata.getWeigthSpratonst(),
-                recalgdata.getWeightImaLift(),
                 recalgdata.getWeightKvadratura(),
                 recalgdata.getWeightCena()
                 );
@@ -85,21 +79,18 @@ public class RecAlgDAO implements DAO<Recalgdata>{
     @Override
     public void update(Recalgdata recalgdata, int id) {
         try{
-            jdbcTemplate.update("update recalgdata set idkorisnik = ?, range_min_broj_soba = ?, range_max_broj_soba = ?, range_min_spratnost = ?, range_max_spratnost = ?, range_min_ima_lift = ?, range_max_ima_lift = ?, range_min_kvadratura = ?, range_max_kvadratura = ?, range_min_cena = ?, range_max_cena = ?, weight_broj_soba = ?, weight_spratnost = ?, weight_ima_lift = ?, weight_kvadratura = ?, weight_cena = ? where idkorisnik = ?",
+            jdbcTemplate.update("update recalgdata set idkorisnik = ?, range_min_broj_soba = ?, range_max_broj_soba = ?, range_min_spratnost = ?, range_max_spratnost = ?,  range_min_kvadratura = ?, range_max_kvadratura = ?, range_min_cena = ?, range_max_cena = ?, weight_broj_soba = ?, weight_spratnost = ?,  weight_kvadratura = ?, weight_cena = ? where idkorisnik = ?",
                     recalgdata.getIdkorisnik(),
                     recalgdata.getRangeMinBrojSoba(),
                     recalgdata.getRangeMaxBrojSoba(),
                     recalgdata.getRangeMinSpratnost(),
                     recalgdata.getRangeMaxSpratnost(),
-                    recalgdata.getRangeMinImaLift(),
-                    recalgdata.getRangeMaxImaLift(),
                     recalgdata.getRangeMinKvadratura(),
                     recalgdata.getRangeMaxKvadratura(),
                     recalgdata.getRangeMinCena(),
                     recalgdata.getRangeMaxCena(),
                     recalgdata.getWeightBrojSoba(),
                     recalgdata.getWeigthSpratonst(),
-                    recalgdata.getWeightImaLift(),
                     recalgdata.getWeightKvadratura(),
                     recalgdata.getWeightCena(),
                     id

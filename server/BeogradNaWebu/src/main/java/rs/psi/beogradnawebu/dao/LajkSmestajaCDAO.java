@@ -82,4 +82,9 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
         LajkSmestaja lajkSmestaja = smestajList.get(smestajList.size() - 1);
         return smestajDAO.get((int)(lajkSmestaja.getIdsmestaj()));
     }
+
+    public Optional<List<LajkSmestaja>> getLikes(int idkorisnik){
+        List<LajkSmestaja> likes = jdbcTemplate.query("SELECT * FROM lajk_smestaja WHERE idkorisnik = ?",rowMapper,idkorisnik);
+        return Optional.of(likes);
+    }
 }

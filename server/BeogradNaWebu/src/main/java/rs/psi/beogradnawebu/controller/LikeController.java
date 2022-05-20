@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import rs.psi.beogradnawebu.dao.KorisnikDAO;
 import rs.psi.beogradnawebu.dao.LajkSmestajaCDAO;
 import rs.psi.beogradnawebu.dao.SmestajDAO;
+import rs.psi.beogradnawebu.model.Korisnik;
 import rs.psi.beogradnawebu.model.LajkSmestaja;
 import rs.psi.beogradnawebu.model.Smestaj;
 import rs.psi.beogradnawebu.recalg.MMLVRecommenderImpl;
@@ -33,41 +34,32 @@ public class LikeController {
     }
     @PostMapping("/like/{idSmestaj}")
     public String likeSmestaj(Principal principal,@PathVariable Integer idSmestaj){
-        //Korisnik k =korisnikDAO.getByUsername(principal.getName()).orElse(null);
+        Korisnik k =korisnikDAO.getUserByUsername(principal.getName()).orElse(null);
         Smestaj s = smestajDAO.get(idSmestaj).orElse(null);
-        if(s == null) return "redirect:/pregledsmestaja";
+        if(s == null || k == null) return "redirect:/pregledsmestaja";
         //Updatuj tezine za korisnika k na osnovu stana s;
-        //mmlvRecommender.update(k,s);
-        //if(s!=null && k!=null) {
-            LajkSmestaja l = new LajkSmestaja();
-            l.setIdkorisnik(1);
-            //l.setIdkorisnik(k.getIdkorisnik());
-            l.setIdsmestaj(s.getIdsmestaj());
-            lajkSmestajaCDAO.create(l);
+        mmlvRecommender.update(k,s);
+        LajkSmestaja l = new LajkSmestaja();
+        l.setIdkorisnik(k.getIdkorisnik());
+        l.setIdsmestaj(s.getIdsmestaj());
+        lajkSmestajaCDAO.create(l);
         s.setBrojLajkova(s.getBrojLajkova()+1);
         smestajDAO.update(s,idSmestaj);
-        //}
-        //else {
-            log.info("Error!");
-        //}
         return "redirect:/pregledsmestaja";
 
     }
     @PostMapping("/unlike/{idSmestaj}")
     public String unlikeSmestaj(Principal principal,@PathVariable Integer idSmestaj){
-        //Korisnik k =korisnikDAO.getByUsername(principal.getName()).orElse(null);
-        // if(s!=null && k!=null) {
-        Smestaj s =smestajDAO.get(idSmestaj).orElse(null);
-        if(s == null) return "redirect:/pregledsmestaja";
-        s.setBrojLajkova(s.getBrojLajkova() - 1);
-        smestajDAO.update(s,idSmestaj);
-        lajkSmestajaCDAO.delete(new int[]{1,idSmestaj});
-
-        //l.setIdkorisnik(k.getIdkorisnik());
-        //}
-        //else {
+        Korisnik k = korisnikDAO.getUserByUsername(principal.getName()).orElse(null);
+        Smestaj s = smestajDAO.get(idSmestaj).orElse(null);
+        if(s != null && k!=null) {
+            s.setBrojLajkova(s.getBrojLajkova() - 1);
+            smestajDAO.update(s, idSmestaj);
+            lajkSmestajaCDAO.delete(new int[]{(int) k.getIdkorisnik(), idSmestaj});
+        }
+        else {
         log.info("Error!");
-        //}
+        }
         return "redirect:/pregledsmestaja";
 
     }

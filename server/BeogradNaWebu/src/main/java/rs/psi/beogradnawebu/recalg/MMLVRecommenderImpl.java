@@ -42,10 +42,6 @@ public class MMLVRecommenderImpl implements Recommender {
                 if (recalgdata.getWeightBrojSoba() + delta > 1) recalgdata.setWeightBrojSoba(1);
                 else recalgdata.setWeightBrojSoba(Math.max(recalgdata.getWeightBrojSoba() + delta, 0.1));
 
-                delta = (5 - 10 * Math.abs(lastLiked.getImaLift() - liked.getImaLift()) / (double)(recalgdata.getRangeMaxImaLift() - recalgdata.getRangeMinImaLift())) / 45;
-                if (recalgdata.getWeightImaLift() + delta > 1) recalgdata.setWeightImaLift(1);
-                else recalgdata.setWeightImaLift(Math.max(recalgdata.getWeightImaLift() + delta, 0.1));
-
                 delta = (5 - 10 * Math.abs(lastLiked.getSpratonost() - liked.getSpratonost()) /(double) (recalgdata.getRangeMaxSpratnost() - recalgdata.getRangeMinSpratnost())) / 45;
                 if (recalgdata.getWeigthSpratonst() + delta > 1) recalgdata.setWeigthSpratonst(1);
                 else recalgdata.setWeigthSpratonst(Math.max(recalgdata.getWeigthSpratonst() + delta, 0.1));
@@ -77,13 +73,11 @@ public class MMLVRecommenderImpl implements Recommender {
                         / ((Math.max(recalgdata.getRangeMaxBrojSoba(),accommodation.getBrojSoba()) - Math.min(recalgdata.getRangeMinBrojSoba(),accommodation.getBrojSoba())));
                 rating += scaledAttribute * recalgdata.getWeightBrojSoba();
 
-                scaledAttribute = 10 - 10 * Math.abs(accommodation.getImaLift() - avgAcc.getImaLift())
-                        /(double) (Math.max(recalgdata.getRangeMaxImaLift(),accommodation.getImaLift()) - Math.min(recalgdata.getRangeMinImaLift(),accommodation.getImaLift()));
-                rating += scaledAttribute * recalgdata.getWeightImaLift();
 
 
 
-                rating /= (recalgdata.getWeightBrojSoba() + recalgdata.getWeightCena() + recalgdata.getWeightImaLift()+
+
+                rating /= (recalgdata.getWeightBrojSoba() + recalgdata.getWeightCena()+
                         recalgdata.getWeigthSpratonst() + recalgdata.getWeightKvadratura());
 
                 System.out.println(rating);
@@ -95,16 +89,19 @@ public class MMLVRecommenderImpl implements Recommender {
                 Recalgdata recalgdata = recAlgDAO.get((int)user.getIdkorisnik()).orElse(null);
                 if (recalgdata == null) {
                         recalgdata = new Recalgdata();
+                        recalgdata.setIdkorisnik(user.getIdkorisnik());
                         recalgdata.setRangeMinCena(accommodation.getCena());
-                        recalgdata.setRangeMaxCena(accommodation.getCena());
-                        recalgdata.setRangeMaxBrojSoba(accommodation.getBrojSoba());
+                        recalgdata.setRangeMaxCena(accommodation.getCena()+1);
+                        recalgdata.setRangeMaxBrojSoba(accommodation.getBrojSoba()+1);
                         recalgdata.setRangeMinBrojSoba(accommodation.getBrojSoba());
-                        recalgdata.setRangeMinImaLift(accommodation.getImaLift());
-                        recalgdata.setRangeMaxImaLift(accommodation.getImaLift());
                         recalgdata.setRangeMinKvadratura(accommodation.getKvadratura());
-                        recalgdata.setRangeMaxKvadratura(accommodation.getKvadratura());
+                        recalgdata.setRangeMaxKvadratura(accommodation.getKvadratura()+1);
                         recalgdata.setRangeMinSpratnost(accommodation.getSpratonost());
-                        recalgdata.setRangeMaxSpratnost(accommodation.getSpratonost());
+                        recalgdata.setRangeMaxSpratnost(accommodation.getSpratonost()+1);
+                        recalgdata.setWeigthSpratonst(0.5);
+                        recalgdata.setWeightKvadratura(0.5);
+                        recalgdata.setWeightCena(0.5);
+                        recalgdata.setWeightBrojSoba(0.5);
                         recAlgDAO.create(recalgdata);
                 } else {
 
@@ -178,24 +175,7 @@ public class MMLVRecommenderImpl implements Recommender {
                                         recalgdata.setRangeMaxBrojSoba(recalgdata.getRangeMaxBrojSoba() - shiftParam.shift);
                                 }
                         }
-                        if (accommodation.getImaLift() > recalgdata.getRangeMaxImaLift()) {
-                                recalgdata.setRangeMaxImaLift(accommodation.getImaLift());
 
-
-                        } else if (accommodation.getImaLift() < recalgdata.getRangeMinImaLift()) {
-                                recalgdata.setRangeMinImaLift(accommodation.getImaLift());
-
-
-                        }
-                        else {
-                                ShiftParam shiftParam = shiftRange(recalgdata.getRangeMinImaLift(),recalgdata.getRangeMaxImaLift(),accommodation.getImaLift());
-                                if(shiftParam.ref.equals("MIN")){
-                                        recalgdata.setRangeMinImaLift((long)(recalgdata.getRangeMinImaLift() + shiftParam.shift));
-                                }
-                                else {
-                                        recalgdata.setRangeMaxImaLift((long)(recalgdata.getRangeMaxImaLift() - shiftParam.shift));
-                                }
-                        }
                         recAlgDAO.update(recalgdata,(int)recalgdata.getIdkorisnik());
                 }
         }

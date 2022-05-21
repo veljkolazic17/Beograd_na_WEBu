@@ -216,3 +216,8 @@ svg {
     float: none;
     display: block;
 }
+
+.errorMessages {
+    color: red;
+    padding-left: 10px;
+}

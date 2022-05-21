@@ -98,7 +98,7 @@
         </div>
 
         <div id="desniPanelRegistracija">
-            <form id="formaReg" class="forma" action="/registracija" method="post" enctype="utf8" th:object="${registracija}">
+            <form id="formaReg" class="forma" th:action="@{/registracija}" method="post" enctype="utf8" th:object="${registracija}">
                 <table>
                     <tr> <td colspan="2">
                         <p>Email adresa:</p>
@@ -107,7 +107,7 @@
                         <input class="inputLogin" type="email" name="email"
                                placeholder="Unesite svoju email adresu."
                                size="50" maxlength="50" th:field="*{email}" />
-                        <p th:each="greska: ${#fields.errors('email')}" th:text="${greska}">Validaciona greska</p>
+                        <p th:each="greska: ${#fields.errors('email')}" th:text="${greska}" class="errorMessages">Validaciona greska</p>
                     </td> </tr>
 
                     <tr> <td colspan="2">
@@ -117,7 +117,7 @@
                         <input class="inputLogin" type="text" name="usernameReg"
                                placeholder="Unesite korisničko ime (do 30 karaktera)."
                                size="50" maxlength="30" th:field="*{korime}" />
-                        <p th:each="greska: ${#fields.errors('korime')}" th:text="${greska}">Validaciona greska</p>
+                        <p th:each="greska: ${#fields.errors('korime')}" th:text="${greska}" class="errorMessages">Validaciona greska</p>
                     </td> </tr>
 
                     <tr> <td colspan="2">
@@ -127,7 +127,7 @@
                         <input class="inputLogin" type="password" name="passwordFirst"
                                placeholder="Unesite šifru (do 30 karaktera)."
                                size="50" maxlength="30" th:field="*{sifra}" />
-                        <p th:each="greska: ${#fields.errors('sifra')}" th:text="${greska}">Validaciona greska</p>
+                        <p th:each="greska: ${#fields.errors('sifra')}" th:text="${greska}" class="errorMessages">Validaciona greska</p>
                     </td> </tr>
 
                     <tr> <td colspan="2">
@@ -137,6 +137,7 @@
                         <input class="inputLogin" type="password" name="passwordSecond"
                                placeholder="Unesite šifru ponovo."
                                size="50" maxlength="30" th:field="*{potvrdaSifre}" />
+                        <p th:each="greska: ${#fields.errors('potvrdaSifre')}" th:text="${greska}" class="errorMessages">Validaciona greska</p>
                     </td> </tr>
 
                     <tr> <td colspan="2">
@@ -167,5 +168,14 @@
     </div>
 
     <script src="js/index.js"></script>
+
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            let animacijaLosaRegistracija = /*[[${animacijaLosaRegistracija}]]*/ false;
+            if (animacijaLosaRegistracija)
+                animacijaRegistracijeNastaje();
+
+        });
+    </script>
 </body>
 </html>

@@ -14,6 +14,12 @@ public class SifraValidator implements ConstraintValidator<ValidnaSifra, Object>
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context){
         RegistracijaDTO korisnik = (RegistracijaDTO) obj;
-        return korisnik.getSifra().equals(korisnik.getPotvrdaSifre());
+        boolean val = korisnik.getSifra().equals(korisnik.getPotvrdaSifre());
+        if(!val) {
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate(context.getDefaultConstraintMessageTemplate())
+                    .addPropertyNode( "potvrdaSifre" ).addConstraintViolation();
+        }
+        return val;
     }
 }

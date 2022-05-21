@@ -1,7 +1,9 @@
 package rs.psi.beogradnawebu.dto;
 
+import rs.psi.beogradnawebu.annotations.JedinstvenEmail;
 import rs.psi.beogradnawebu.annotations.ValidanEmail;
 import rs.psi.beogradnawebu.annotations.ValidnaSifra;
+import rs.psi.beogradnawebu.annotations.ValidnoKorime;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -10,6 +12,7 @@ import javax.validation.constraints.NotNull;
 public class RegistracijaDTO {
     @NotNull
     @NotEmpty
+    @ValidnoKorime // rucno napravljen validator, korime ne sme postojati
     private String korime;
 
     @NotNull
@@ -18,6 +21,7 @@ public class RegistracijaDTO {
     private String potvrdaSifre;
 
     @ValidanEmail // rucno napravljen validator
+    @JedinstvenEmail // rucno napravljen validator
     @NotNull
     @NotEmpty
     private String email;

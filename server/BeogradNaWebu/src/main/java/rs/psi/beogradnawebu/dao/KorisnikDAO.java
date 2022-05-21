@@ -79,7 +79,7 @@ public class KorisnikDAO implements DAO<Korisnik> {
         try{
             korisnik = jdbcTemplate.queryForObject("select * from korisnik where username = ?",rowMapper,username);
         }catch(Exception exception){
-            log.info("Korisnik nije pronadjen: " + username);
+            log.info("Korisnik nije pronađen: " + username);
         }
         return Optional.ofNullable(korisnik);
     }

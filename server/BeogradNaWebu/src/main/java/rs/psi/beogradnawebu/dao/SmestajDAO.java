@@ -2,18 +2,15 @@ package rs.psi.beogradnawebu.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import rs.psi.beogradnawebu.misc.FilterForm;
+import rs.psi.beogradnawebu.dto.FilterDTO;
 import rs.psi.beogradnawebu.model.LajkSmestaja;
 import rs.psi.beogradnawebu.model.Smestaj;
 import rs.psi.beogradnawebu.model.TipSmestaja;
 
-import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,7 +105,7 @@ public class SmestajDAO implements DAO<Smestaj>{
         }
     }
 
-    public List<Smestaj> searchByFilters(FilterForm filters){
+    public List<Smestaj> searchByFilters(FilterDTO filters){
         try {
             long id_tip;
             if(filters.getTipSmestaja().equals("nullSmestaj")){

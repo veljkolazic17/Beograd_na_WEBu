@@ -46,15 +46,22 @@ input[type="button"] {
 
 @keyframes animacijaLoginNestaje {
     from {margin-top: 0;}
-    to {margin-top: -1000px;}
+    to {
+        margin-top: -100vh; /* fallback vrednost, ne radi ispod 800px */
+        margin-top: min(-100vh, -800px);
+    }
 }
 
 @keyframes animacijaLoginNastaje {
-    from {margin-top: -1000px;}
+    from {
+        margin-top: -100vh; /* fallback vrednost, ne radi ispod 800px */
+        margin-top: min(-100vh, -800px);
+    }
     to {margin-top: 0;}
 }
 
 #desniPanelWrapper {
+    position: relative;
     width: fit-content;
     height: 100%;
     margin: auto;
@@ -62,9 +69,21 @@ input[type="button"] {
 }
 
 #desniPanel {
-    height: calc(100% - 100px);
-    width: 100%;
-    padding-top: 100px;
+    position: absolute;
+    height: fit-content;
+    width: fit-content;
+    top: 50%;
+    transform: translateY(-50%);
+    transition-property: all;
+    animation-play-state: paused;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+#desniPanelPokrivac {
+    position: relative;
+    height: 100%;
+    width: 600px;
     transition-property: all;
     animation-play-state: paused;
     animation-duration: 2s;
@@ -72,10 +91,11 @@ input[type="button"] {
 }
 
 #desniPanelRegistracija {
-    float: left;
-    height: calc(100% - 250px);
+    position: relative;
+    height: fit-content;
     width: 100%;
-    padding-top: 250px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 svg {

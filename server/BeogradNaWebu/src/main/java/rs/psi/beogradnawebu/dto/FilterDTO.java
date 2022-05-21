@@ -1,9 +1,9 @@
-package rs.psi.beogradnawebu.misc;
+package rs.psi.beogradnawebu.dto;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class FilterForm {
+public class FilterDTO {
 
     @NotNull
     private String Lokacija;

@@ -5,15 +5,21 @@ document.addEventListener("DOMContentLoaded", function() {
         var leviPanel = document.getElementById("leviPanel");
         var leviPanelWidth = getComputedStyle(leviPanel).width;
         leviPanelWidth = parseInt(leviPanelWidth.substring(0, leviPanelWidth.length - 1));
-        if(leviPanelWidth > window.innerWidth * 0.60) {
+
+        var desniPanelWrapper = document.getElementById("desniPanelWrapper");
+        var desniPanelWrapperWidth = getComputedStyle(desniPanelWrapper).width;
+        desniPanelWrapperWidth = parseInt(desniPanelWrapperWidth.substring(0, desniPanelWrapperWidth.length - 1));
+
+        if(document.body.clientWidth - leviPanelWidth <= desniPanelWrapperWidth) {
             leviPanel.style.marginLeft = "-" + leviPanelWidth + "px";
         } else {
             leviPanel.style.marginLeft = "0";
         }
     }
-    
+
     windowResize();
     window.addEventListener('resize', windowResize);
+
 
     document.getElementById("zaboravljenaSifra").addEventListener('click', function() {
         document.getElementById("zaboravljenaSifraPozadina").style.display = "block";
@@ -44,13 +50,19 @@ function predjiNaStranicu(register) {
 
 function animacijaRegistracijeNastaje() {
     var desniPanel = document.getElementById("desniPanel");
+    var desniPanelPokrivac = document.getElementById("desniPanelPokrivac");
     desniPanel.style.animationName = "animacijaLoginNestaje";
     desniPanel.style.animationPlayState = "running";
+    desniPanelPokrivac.style.animationName = "animacijaLoginNestaje";
+    desniPanelPokrivac.style.animationPlayState = "running";
 }
 
 
 function animacijaRegistracijeNestaje() {
     var desniPanel = document.getElementById("desniPanel");
+    var desniPanelPokrivac = document.getElementById("desniPanelPokrivac");
     desniPanel.style.animationName = "animacijaLoginNastaje";
     desniPanel.style.animationPlayState = "running";
+    desniPanelPokrivac.style.animationName = "animacijaLoginNastaje";
+    desniPanelPokrivac.style.animationPlayState = "running";
 }

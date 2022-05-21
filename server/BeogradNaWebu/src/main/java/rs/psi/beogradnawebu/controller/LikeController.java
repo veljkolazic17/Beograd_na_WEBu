@@ -34,32 +34,32 @@ public class LikeController {
     }
     @PostMapping("/like/{idSmestaj}")
     public String likeSmestaj(Principal principal,@PathVariable Integer idSmestaj){
-        Korisnik k =korisnikDAO.getUserByUsername(principal.getName()).orElse(null);
-        Smestaj s = smestajDAO.get(idSmestaj).orElse(null);
-        if(s == null || k == null) return "redirect:/pregledsmestaja";
-        //Updatuj tezine za korisnika k na osnovu stana s;
-        mmlvRecommender.update(k,s);
-        LajkSmestaja l = new LajkSmestaja();
-        l.setIdkorisnik(k.getIdkorisnik());
-        l.setIdsmestaj(s.getIdsmestaj());
-        lajkSmestajaCDAO.create(l);
-        s.setBrojLajkova(s.getBrojLajkova()+1);
-        smestajDAO.update(s,idSmestaj);
+//        Korisnik k =korisnikDAO.getUserByUsername(principal.getName()).orElse(null);
+//        Smestaj s = smestajDAO.get(idSmestaj).orElse(null);
+//        if(s == null || k == null) return "redirect:/pregledsmestaja";
+//        //Updatuj tezine za korisnika k na osnovu stana s;
+//        mmlvRecommender.update(k,s);
+//        LajkSmestaja l = new LajkSmestaja();
+//        l.setIdkorisnik(k.getIdkorisnik());
+//        l.setIdsmestaj(s.getIdsmestaj());
+//        lajkSmestajaCDAO.create(l);
+//        s.setBrojLajkova(s.getBrojLajkova()+1);
+//        smestajDAO.update(s,idSmestaj);
         return "redirect:/pregledsmestaja";
 
     }
     @PostMapping("/unlike/{idSmestaj}")
     public String unlikeSmestaj(Principal principal,@PathVariable Integer idSmestaj){
-        Korisnik k = korisnikDAO.getUserByUsername(principal.getName()).orElse(null);
-        Smestaj s = smestajDAO.get(idSmestaj).orElse(null);
-        if(s != null && k!=null) {
-            s.setBrojLajkova(s.getBrojLajkova() - 1);
-            smestajDAO.update(s, idSmestaj);
-            lajkSmestajaCDAO.delete(new int[]{(int) k.getIdkorisnik(), idSmestaj});
-        }
-        else {
-        log.info("Error!");
-        }
+//        Korisnik k = korisnikDAO.getUserByUsername(principal.getName()).orElse(null);
+//        Smestaj s = smestajDAO.get(idSmestaj).orElse(null);
+//        if(s != null && k!=null) {
+//            s.setBrojLajkova(s.getBrojLajkova() - 1);
+//            smestajDAO.update(s, idSmestaj);
+//            lajkSmestajaCDAO.delete(new int[]{(int) k.getIdkorisnik(), idSmestaj});
+//        }
+//        else {
+//        log.info("Error!");
+//        }
         return "redirect:/pregledsmestaja";
 
     }

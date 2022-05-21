@@ -58,11 +58,11 @@ public class FilterController {
     @GetMapping
     public String listSmestaj(Principal principal, Model model){
         model.addAttribute("filterData",new FilterForm());
-        if(principal.getName() == null)
-            model.addAttribute("username",null);
-        else{
-            model.addAttribute("username",principal.getName());
-        }
+//        if(principal.getName() == null)
+           model.addAttribute("username",null);
+//        else{
+//            model.addAttribute("username",principal.getName());
+//        }
         return "glavnaStranicaGost";
     }
 }

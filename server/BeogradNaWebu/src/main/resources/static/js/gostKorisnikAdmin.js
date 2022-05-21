@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var smestaji = document.getElementsByClassName("smestaji");
     var username = JSON.parse(sessionStorage.getItem("username"));
     var currClicked = null;
-    var isLiked;
+    var isLiked = false;
     var smestajList =JSON.parse(sessionStorage.getItem("smestajList"));
     for(let i = 0; i < smestaji.length; i++) {
         smestaji[i].addEventListener("click", function(ev) {
@@ -41,8 +41,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     if(smestajList[i].idtipSmestaja > 0){
                         opis+= "Tip smestaja: " + smestajList[i].idtipSmestaja + '<br>';
                     }
-                    $.ajax({url:"isLiked/"+username+"/"+smestajList[currClicked].idsmestaj,type:"GET"});
-                    isLiked = JSON.parse(sessionStorage.getItem("isliked"));
+                    //$.ajax({url:"isLiked/"+username+"/"+smestajList[currClicked].idsmestaj,type:"GET"});
+                    //isLiked = JSON.parse(sessionStorage.getItem("isliked"));
                     if(isLiked){
                         document.getElementById("lajkNaSlici").innerHTML =fullHeart;
                     }

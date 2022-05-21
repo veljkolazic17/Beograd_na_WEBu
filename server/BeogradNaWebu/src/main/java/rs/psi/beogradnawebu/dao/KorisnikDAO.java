@@ -77,7 +77,7 @@ public class KorisnikDAO implements DAO<Korisnik> {
     public Optional<Korisnik> getUserByUsername(String username){
         Korisnik korisnik = null;
         try{
-            korisnik = jdbcTemplate.queryForObject("select * from korisnik where username = ?",rowMapper,username);
+            korisnik = jdbcTemplate.queryForObject("select * from korisnik where korisnickoime = ?",rowMapper,username);
         }catch(Exception exception){
             log.info("Korisnik nije pronadjen: " + username);
         }

@@ -58,20 +58,21 @@
 
             <h1 id="naslov">Beograd na WEB-u</h1>
 
-            <form class="forma" action="login" method="post">
+            <form class="forma" th:action="@{/ulogujSe}" method="post" th:object="${registracija}">
                 <table>
                     <tr> <td colspan="2">
                         <p>Korisničko ime:</p>
                     </td> </tr>
                     <tr> <td colspan="2">
-                        <input id="username" class="inputLogin" type="text" name="username" placeholder="Unesite svoje korisničko ime." size="50" maxlength="30" />
+                        <input id="username" class="inputLogin" type="text" name="korime" placeholder="Unesite svoje korisničko ime." size="50" maxlength="30" />
                     </td> </tr>
 
                     <tr> <td colspan="2">
                         <p>Šifra:</p>
                     </td> </tr>
                     <tr> <td colspan="2">
-                        <input class="inputLogin" type="password" name="password" placeholder="Unesite svoju šifru." size="50" maxlength="30" />
+                        <input class="inputLogin" type="password" name="sifra" placeholder="Unesite svoju šifru." size="50" maxlength="30" />
+                        <p th:if="${greskaPriLoginu}">Pogrešni kredencijali.</p>
                     </td> </tr>
 
                     <tr>
@@ -80,7 +81,7 @@
                         </td>
 
                         <td>
-                            <input class="loginButtons" type="button" value="Prijavi se" onclick="predjiNaStranicu('')" />
+                            <input class="loginButtons" type="submit" value="Prijavi se" />
                         </td>
                     </tr>
 

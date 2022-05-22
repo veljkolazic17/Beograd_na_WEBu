@@ -43,11 +43,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSec) throws Exception {
         httpSec.authorizeRequests()
-                .antMatchers("/glavnaStranicaAdmin").hasRole("ADMIN")
-                .antMatchers("/glavnaStranicaKorisnik").hasAnyRole("ADMIN", "KORISNIK")
                 .antMatchers("/login").permitAll()
+                .antMatchers("/logout").hasAnyRole("KORISNIK", "ADMIN")
                 .antMatchers("/").permitAll()
-                .and().formLogin().loginPage("/index");
+                .and().formLogin().loginPage("/login")
+                .and().logout().logoutSuccessUrl("/");
     }
 
     @Bean

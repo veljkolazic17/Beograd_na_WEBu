@@ -3,7 +3,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import rs.psi.beogradnawebu.dao.KorisnikDAO;
 import rs.psi.beogradnawebu.dao.LajkSmestajaCDAO;
 import rs.psi.beogradnawebu.dao.SmestajDAO;
-import rs.psi.beogradnawebu.misc.FilterForm;
+import rs.psi.beogradnawebu.dto.FilterDTO;
 import rs.psi.beogradnawebu.model.LajkSmestaja;
 import rs.psi.beogradnawebu.model.Smestaj;
 
@@ -40,7 +39,7 @@ public class FilterController {
     }
 
     @PostMapping("/filter")
-    public String filterSmestaj(@Valid @ModelAttribute("filterData") FilterForm filterData, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
+    public String filterSmestaj(@Valid @ModelAttribute("filterData") FilterDTO filterData, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
         List<Smestaj> smestajList = smestajDAO.searchByFilters(filterData);
         redirectAttributes.addFlashAttribute("smestajList",smestajList);
         return "redirect:/pregledsmestaja";
@@ -56,13 +55,8 @@ public class FilterController {
 
 
     @GetMapping
-    public String listSmestaj(Principal principal, Model model){
-        model.addAttribute("filterData",new FilterForm());
-//        if(principal.getName() == null)
-           model.addAttribute("username",null);
-//        else{
-//            model.addAttribute("username",principal.getName());
-//        }
+    public String listSmestaj(Model model){
+        model.addAttribute("filterData",new FilterDTO());
         return "glavnaStranicaGost";
     }
 }

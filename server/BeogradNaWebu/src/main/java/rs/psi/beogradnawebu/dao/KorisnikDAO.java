@@ -15,7 +15,7 @@ import java.util.Optional;
 @Component
 public class KorisnikDAO implements DAO<Korisnik> {
 
-    private static final Logger log = LoggerFactory.getLogger(KomentarDAO.class);
+    private static final Logger log = LoggerFactory.getLogger(KorisnikDAO.class);
     private JdbcTemplate jdbcTemplate;
 
     public static RowMapper<Korisnik> rowMapper = (rs, rowNum) -> {
@@ -77,9 +77,19 @@ public class KorisnikDAO implements DAO<Korisnik> {
     public Optional<Korisnik> getUserByUsername(String username){
         Korisnik korisnik = null;
         try{
-            korisnik = jdbcTemplate.queryForObject("select * from korisnik where korisnickoime = ?",rowMapper,username);
+            korisnik = jdbcTemplate.queryForObject("select * from korisnik where korisnickoIme = ?", rowMapper, username);
         }catch(Exception exception){
-            log.info("Korisnik nije pronadjen: " + username);
+            log.info("Korisnik nije pronađen: " + username);
+        }
+        return Optional.ofNullable(korisnik);
+    }
+
+    public Optional<Korisnik> getUserByEmail(String email){
+        Korisnik korisnik = null;
+        try{
+            korisnik = jdbcTemplate.queryForObject("select * from korisnik where email = ?", rowMapper, email);
+        }catch(Exception exception){
+            log.info("Email nije pronađen: " + email);
         }
         return Optional.ofNullable(korisnik);
     }

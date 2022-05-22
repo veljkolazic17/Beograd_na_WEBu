@@ -55,14 +55,14 @@ public class MMLVRecommenderImpl implements Recommender {
 
                 double scaledAttribute;
                 double rating = 0;
-                Smestaj avgAcc = smestajDAO.getAvgAcc(user.getIdkorisnik());
+                SmestajDAO.AvgData avgAcc = smestajDAO.getAvgAcc(user.getIdkorisnik());
                 Recalgdata recalgdata = recAlgDAO.get((int)user.getIdkorisnik()).orElse(null);
                 if(recalgdata == null) return false;
-                scaledAttribute = 10 - 10 * Math.abs(accommodation.getCena() - avgAcc.getCena())
+                scaledAttribute = 10 - 10 * Math.abs(accommodation.getCena() - avgAcc.cena)
                         / ((Math.max(recalgdata.getRangeMaxCena(),accommodation.getCena()) - Math.min(recalgdata.getRangeMinCena(),accommodation.getCena())));
                 rating += scaledAttribute * recalgdata.getWeightCena();
 
-                scaledAttribute = 10 - 10 * Math.abs(accommodation.getSpratonost() - avgAcc.getSpratonost())
+                scaledAttribute = 10 - 10 * Math.abs(accommodation.getSpratonost() - avgAcc.spratnost)
                         /(double) (Math.max(recalgdata.getRangeMaxSpratnost(),accommodation.getSpratonost()) - Math.min(recalgdata.getRangeMinSpratnost(),accommodation.getSpratonost()));
                 rating += scaledAttribute * recalgdata.getWeigthSpratonst();
 
@@ -73,6 +73,7 @@ public class MMLVRecommenderImpl implements Recommender {
                 scaledAttribute = 10 - 10 * Math.abs(accommodation.getBrojSoba() - avgAcc.getBrojSoba())
                         / ((Math.max(recalgdata.getRangeMaxBrojSoba(),accommodation.getBrojSoba()) - Math.min(recalgdata.getRangeMinBrojSoba(),accommodation.getBrojSoba())));
                 rating += scaledAttribute * recalgdata.getWeightBrojSoba();
+
 
 
 

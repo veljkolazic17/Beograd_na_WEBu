@@ -8,10 +8,13 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import rs.psi.beogradnawebu.dto.FilterDTO;
+import rs.psi.beogradnawebu.model.Korisnik;
 import rs.psi.beogradnawebu.model.LajkSmestaja;
 import rs.psi.beogradnawebu.model.Smestaj;
 import rs.psi.beogradnawebu.model.TipSmestaja;
+import rs.psi.beogradnawebu.recalg.MMLVRecommenderImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -182,31 +185,25 @@ public class SmestajDAO implements DAO<Smestaj>{
     }
 
 
-    public Smestaj getAvgAcc(long id){
-        List<LajkSmestaja> lajkovi = jdbcTemplate.query("SELECT * FROM lajk_smestaja WHERE idkorisnik = ?",LajkSmestajaCDAO.rowMapper,id);
-        int numOfLikes = lajkovi.size();
-        Smestaj avgSmestaj = new Smestaj();
-        avgSmestaj.setCena(0);
-        avgSmestaj.setBrojSoba(0);
-        avgSmestaj.setImaLift(0);
-        avgSmestaj.setSpratonost(0);
-        avgSmestaj.setKvadratura(0);
+    public AvgData getAvgAcc(long id){
 
-        for(LajkSmestaja l : lajkovi){
-            Smestaj s = jdbcTemplate.query("SELECT * FROM smestaj WHERE idsmestaj = ?",rowMapper,l.getIdsmestaj()).get(0);
-            avgSmestaj.setKvadratura(avgSmestaj.getKvadratura()+s.getKvadratura());
-            avgSmestaj.setSpratonost(avgSmestaj.getSpratonost() + s.getSpratonost());
-            avgSmestaj.setImaLift(avgSmestaj.getImaLift() + s.getImaLift());
-            avgSmestaj.setBrojSoba(avgSmestaj.getBrojSoba() + s.getBrojSoba());
-            avgSmestaj.setCena(avgSmestaj.getCena() + s.getCena());
+        RowMapper<AvgData> localMapper = (rs, rowNum) -> {
+            AvgData avgData = new AvgData();
+            avgData.cena = rs.getDouble("avgCena");
+            avgData.kvadratura = rs.getDouble("avgKvadratura");
+            avgData.spratnost = rs.getDouble("avgSpratnost");
+            avgData.broj_soba = rs.getDouble("avgBrojSoba");
+            return avgData;
+        };
+        AvgData avg = null;
+        try {
+             avg = jdbcTemplate.queryForObject("SELECT AVG(cena) as avgCena,AVG(kvadratura) as avgKvadratura " +
+                    ",AVG(spratonost) as avgSpratnost,AVG(broj_soba) as avgBrojSoba " +
+                    " FROM smestaj JOIN lajk_smestaja USING(idsmestaj) WHERE idkorisnik = ?",localMapper,id);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        avgSmestaj.setKvadratura(avgSmestaj.getKvadratura()/numOfLikes);
-        avgSmestaj.setSpratonost(avgSmestaj.getSpratonost()/numOfLikes);
-        avgSmestaj.setImaLift(avgSmestaj.getImaLift()/numOfLikes);
-        avgSmestaj.setBrojSoba(avgSmestaj.getBrojSoba()/numOfLikes);
-        avgSmestaj.setCena(avgSmestaj.getCena()/numOfLikes);
-        return  avgSmestaj;
-
+       return avg;
     }
 
     public double mapBrojSoba(String str){

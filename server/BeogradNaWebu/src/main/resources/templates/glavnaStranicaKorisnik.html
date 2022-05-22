@@ -42,10 +42,10 @@
             <button id="dugmePredlozeniSmestaji" class="col">
                 Pregled predloženih smeštaja
             </button>
-            
-            <button id="dugmeSviSmestaji" class="col">
-                Pregled svih smeštaja
-            </button>
+
+            <form th:action="@{/pregledpredlozenihsmestaja}" method="get">
+                <input type="submit" value="Predlozeni smestaji baba" />
+            </form>
         </nav>
 
         <div id="nalogPanelPozadina">
@@ -162,7 +162,7 @@
         </div>
     </div>
 
-    <form th:object="${filterData}" th:action="@{/pregledsmestaja/filter}" method="post">
+    <form th:object="${filterData}" th:action="@{/pregledsmestaja/filter/0}" method="post">
         <div id="filteriPanelPozadina">
             <div id="filteriPanel">
                 <table id="filteriTabela">

@@ -39,12 +39,13 @@ public class LikeController {
         this.mmlvRecommender = mmlvRecommender;
     }
     @GetMapping("/isliked/{username}/{idsmestaj}")
-    public String isLiked(@PathParam("username") String username, @PathParam("idsmestaj") Integer idsmestaj, RedirectAttributes redirectAttributes){
+    public String isLiked(@PathVariable("username") String username, @PathVariable("idsmestaj") Integer idsmestaj, RedirectAttributes redirectAttributes){
         Korisnik k = korisnikDAO.getUserByUsername(username).orElse(null);
         if(k==null)return "redirect:/pregledsmestaja";
         int idkorisnik = (int)k.getIdkorisnik();
         LajkSmestaja lajkSmestaja = lajkSmestajaCDAO.get(new int[]{idkorisnik,idsmestaj}).orElse(null);
-        redirectAttributes.addFlashAttribute("isliked",lajkSmestaja != null);
+        Boolean b = lajkSmestaja!=null;
+        redirectAttributes.addFlashAttribute("isliked",b);
         return "redirect:/pregledsmestaja";
     }
     @PostMapping("/like/{idSmestaj}")

@@ -27,6 +27,7 @@ import rs.psi.beogradnawebu.model.Smestaj;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -44,9 +45,11 @@ public class FilterController {
         this.korisnikDAO = korisnikDAO;
     }
 
-    @PostMapping("/filter")
-    public String filterSmestaj(@Valid @ModelAttribute("filterData") FilterDTO filterData, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
-        List<Smestaj> smestajList = smestajDAO.searchByFilters(filterData);
+
+
+    @PostMapping("/filter/{nstranica}")
+    public String filterSmestaj(@AuthenticationPrincipal User user,@PathVariable("nstranica") int nstranica,@Valid @ModelAttribute("filterData") FilterDTO filterData, RedirectAttributes redirectAttributes){
+        List<Smestaj> smestajList = smestajDAO.searchByFilters(filterData,nstranica);
         redirectAttributes.addFlashAttribute("smestajList",smestajList);
         return "redirect:/pregledsmestaja";
     }

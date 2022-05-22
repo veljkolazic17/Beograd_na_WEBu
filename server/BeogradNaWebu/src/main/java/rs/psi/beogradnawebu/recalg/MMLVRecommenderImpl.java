@@ -50,13 +50,11 @@ public class MMLVRecommenderImpl implements Recommender {
 
         }
         @Override
-        public boolean recommend(Korisnik user, Smestaj accommodation) {
+        public boolean recommend(Recalgdata recalgdata, SmestajDAO.AvgData avgAcc, Smestaj accommodation) {
                 // Skaliranje svakog atributa smestaja na vrednosti [0.0 - 10.0]
 
                 double scaledAttribute;
                 double rating = 0;
-                SmestajDAO.AvgData avgAcc = smestajDAO.getAvgAcc(user.getIdkorisnik());
-                Recalgdata recalgdata = recAlgDAO.get((int)user.getIdkorisnik()).orElse(null);
                 if(recalgdata == null) return false;
                 scaledAttribute = 10 - 10 * Math.abs(accommodation.getCena() - avgAcc.cena)
                         / ((Math.max(recalgdata.getRangeMaxCena(),accommodation.getCena()) - Math.min(recalgdata.getRangeMinCena(),accommodation.getCena())));

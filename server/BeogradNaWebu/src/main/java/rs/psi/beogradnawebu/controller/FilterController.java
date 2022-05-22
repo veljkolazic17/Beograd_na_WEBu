@@ -3,6 +3,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,8 +60,12 @@ public class FilterController {
 
 
     @GetMapping
-    public String listSmestaj(Model model){
+    public String listSmestaj(@AuthenticationPrincipal User korisnik,Model model){
         model.addAttribute("filterData",new FilterDTO());
-        return "glavnaStranicaGost";
+        if(korisnik!=null)
+            return  "glavnaStranicaKorisnik";
+        else
+            return "glavnaStranicaGost";
     }
+
 }

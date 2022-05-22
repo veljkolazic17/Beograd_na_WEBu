@@ -44,10 +44,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     //$.ajax({url:"isLiked/"+username+"/"+smestajList[currClicked].idsmestaj,type:"GET"});
                     //isLiked = JSON.parse(sessionStorage.getItem("isliked"));
                     if(isLiked){
-                        document.getElementById("lajkNaSlici").innerHTML =fullHeart;
+                        document.getElementById("lajkNaSlici").children[0].innerHTML =fullHeart;
                     }
                     else {
-                        document.getElementById("lajkNaSlici").innerHTML =emptyHeart;
+                        document.getElementById("lajkNaSlici").children[0].innerHTML =emptyHeart;
                     }
 
 

@@ -31,7 +31,7 @@
         <header class="row">
             <span id="dugmeNalog" class="col-3"></span>
             <p class="col-6">Beograd na WEB-u</p>
-            <span class="col-3"><a href="login.html" th:href="@{login.html}">Izlaz iz režima gosta</a></span>
+            <span class="col-3"><a  th:href="@{/}">Izlaz iz režima gosta</a></span>
         </header>
     
         <nav class="row">
@@ -66,7 +66,7 @@
                     <img class="slikaSmestaja" src="../static/images/nekiApartman.jpg" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
                     <div class="opisSmestaja">
                         Broj soba: <th:block th:text="${smestaj.getBrojSoba()}"></th:block> <br />
-                        Spratnost: <th:block th:text="${smestaj.getSpratonost()}"></th:block>  sprat, <br />
+                        Cena: <th:block th:text="${smestaj.getCena()}"></th:block>  €, <br />
                         Kvadratura: <th:block th:text="${smestaj.getKvadratura()}"></th:block>m<sup>2</sup>
                     </div>
                 </article>
@@ -88,7 +88,7 @@
         <div id="pregledPredlozenogSmestaja" class="row pregled">
             <section class="col" id="smestajiSekcija">
                 <article class="smestaji">
-                    <img class="slikaSmestaja" src="../static/images/nekiApartman.jpg" th:src="@{/images/nekiApartman.jpg}" alt="primer apartmana" />
+                    <img class="slikaSmestaja" src="../static/images/nekiApartman.jpg"  alt="primer apartmana" />
                     <div class="opisSmestaja">
                         Broj soba: Trosoban i preko<br />
                         Spratnost: 5. sprat, <br />

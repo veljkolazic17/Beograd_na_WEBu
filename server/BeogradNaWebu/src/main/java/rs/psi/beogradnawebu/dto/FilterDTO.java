@@ -5,23 +5,19 @@ import javax.validation.constraints.Size;
 
 public class FilterDTO {
 
-    @NotNull
+
     private String Lokacija;
-    @NotNull
+
     private String BrojSoba;
-    @NotNull
+
     private String TipSmestaja;
-    @NotNull
-    @Size(min = 1, max = 1000)
+
     private int KvadraturaOd;
-    @NotNull
-    @Size(min = 1, max = 1000)
+
     private int KvadraturaDo;
-    @NotNull
-    @Size(min = 1, max = 10000)
+
     private double CenaOd;
-    @NotNull
-    @Size(min = 1, max = 10000)
+
     private double CenaDo;
 
     private boolean NijePrvi;

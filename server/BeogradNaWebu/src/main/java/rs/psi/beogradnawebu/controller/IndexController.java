@@ -40,9 +40,9 @@ public class IndexController {
             String auth = temp.iterator().next().getAuthority();
 
             if(auth.equals("KORISNIK")) {
-                return "glavnaStranicaKorisnik";
+                return "redirect:/pregledsmestaja";
             } else {
-                return "glavnaStranicaAdmin";
+                return "redirect:/pregledsmestaja";
             }
         }
         else {
@@ -68,7 +68,7 @@ public class IndexController {
             return "login";
         }
         korisnikServis.registrujNovogKorisnika(regDTO);
-        return "glavnaStranicaKorisnik";
+        return "redirect:/pregledsmestaja";
     }
 
 }

@@ -11,8 +11,8 @@ import java.util.HashMap;
 @Service
 public class Kuca4Zida extends Scraper4Zida {
 
-    @PostConstruct
-    void postConstuct() {
+
+    public void callScraper() {
         scrape(); // automatsko pozivanje metode scrape
         smestaj.deleteWithFalseTag(2); // brisanje kuca koji se ne nalaze vise na sajtu
         smestaj.setAllTags(2);// ponistavanje tagova

@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // podesavanje prikazanih smestaja da prikazu svoju sliku na panelu za konkretni smestaj
     var smestaji = document.getElementsByClassName("smestaji");
-    var username = JSON.parse(sessionStorage.getItem("username"));
+    var user = JSON.parse(sessionStorage.getItem("user"));
+
     var currClicked = null;
     var isLiked = false;
     var smestajList =JSON.parse(sessionStorage.getItem("smestajList"));
@@ -41,8 +42,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     if(smestajList[i].idtipSmestaja > 0){
                         opis+= "Tip smestaja: " + smestajList[i].idtipSmestaja + '<br>';
                     }
-                    //$.ajax({url:"isLiked/"+username+"/"+smestajList[currClicked].idsmestaj,type:"GET"});
-                    //isLiked = JSON.parse(sessionStorage.getItem("isliked"));
+                    $.ajax({url:"isliked/"+user.korisnickoime+"/"+smestajList[currClicked].idsmestaj,type:"GET"});
+                    isLiked = JSON.parse(sessionStorage.getItem("isliked"));
                     if(isLiked){
                         document.getElementById("lajkNaSlici").children[0].innerHTML =fullHeart;
                     }

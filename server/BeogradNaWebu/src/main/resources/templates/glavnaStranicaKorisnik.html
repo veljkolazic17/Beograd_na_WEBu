@@ -17,10 +17,10 @@
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
         var smestajList = [[${smestajList}]];
-        var username = [[${username}]];
+        var user = [[${user}]];
         var isliked = [[${isliked}]];
         sessionStorage.setItem("smestajList",JSON.stringify(smestajList));
-        sessionStorage.setItem("user",JSON.stringify(username));
+        sessionStorage.setItem("user",JSON.stringify(user));
         sessionStorage.setItem("isliked",JSON.stringify(isliked));
         console.log(smestajList);
         /*]]>*/

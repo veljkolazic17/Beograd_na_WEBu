@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/logout").hasAnyRole("KORISNIK", "ADMIN")
                 .antMatchers("/").permitAll()
                 .and().formLogin().loginPage("/login").failureForwardUrl("/?error")
-                .and().logout().logoutSuccessUrl("/");
+                .and().logout().logoutSuccessUrl("/").and().csrf().disable().cors();
     }
 
     @Bean

@@ -28,6 +28,7 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
 
     public LajkSmestajaCDAO(JdbcTemplate jdbcTemplate,SmestajDAO smestajDAO) {
         this.jdbcTemplate = jdbcTemplate;
+        this.smestajDAO = smestajDAO;
     }
 
     @Override
@@ -78,7 +79,7 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
         //PROVERITI DA LI KORISNIK POSTOJI !!!!
         List<LajkSmestaja> smestajList = jdbcTemplate.query("select * from lajk_smestaja where idkorisnik = ?",rowMapper,idkorisnik);
         if(smestajList.size() == 0)
-            return null;
+            return Optional.empty();
         LajkSmestaja lajkSmestaja = smestajList.get(smestajList.size() - 1);
         return smestajDAO.get((int)(lajkSmestaja.getIdsmestaj()));
     }

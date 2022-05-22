@@ -14,7 +14,7 @@ import java.util.Optional;
 @Component
 public class RecAlgDAO implements DAO<Recalgdata>{
 
-    private static final Logger log = LoggerFactory.getLogger(KomentarDAO.class);
+    private static final Logger log = LoggerFactory.getLogger(RecAlgDAO.class);
     private JdbcTemplate jdbcTemplate;
 
     public RecAlgDAO(JdbcTemplate jdbcTemplate){
@@ -23,7 +23,7 @@ public class RecAlgDAO implements DAO<Recalgdata>{
 
     public static RowMapper<Recalgdata> rowMapper = (rs, rowNum) -> {
         Recalgdata recalgdata = new Recalgdata();
-        recalgdata.setIdkorisnik(rs.getLong("idkorisnik"));
+        recalgdata.setIdkorisnik(rs.getInt("idkorisnik"));
         recalgdata.setRangeMinBrojSoba(rs.getDouble("range_min_broj_soba"));
         recalgdata.setRangeMaxBrojSoba(rs.getDouble("range_max_broj_soba"));
         recalgdata.setRangeMinSpratnost(rs.getInt("range_min_spratnost"));
@@ -48,7 +48,7 @@ public class RecAlgDAO implements DAO<Recalgdata>{
     @Override
     public void create(Recalgdata recalgdata) {
         jdbcTemplate.update(
-                "insert into recalgdata values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                "insert into recalgdata values(?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 recalgdata.getIdkorisnik(),
                 recalgdata.getRangeMinBrojSoba(),
                 recalgdata.getRangeMaxBrojSoba(),
@@ -69,9 +69,10 @@ public class RecAlgDAO implements DAO<Recalgdata>{
     public Optional<Recalgdata> get(int id) {
         Recalgdata recalgdata = null;
         try{
-            recalgdata = jdbcTemplate.queryForObject("select * from recalgdata where idkorisnik = ?",rowMapper,id);
+            recalgdata = jdbcTemplate.queryForObject("select * from recalgdata where idkorisnik = ?;",rowMapper,  id);
         }catch(Exception exception){
             log.info("Recalgdata nije pronadjen: " + id);
+            exception.printStackTrace();
         }
         return Optional.ofNullable(recalgdata);
     }

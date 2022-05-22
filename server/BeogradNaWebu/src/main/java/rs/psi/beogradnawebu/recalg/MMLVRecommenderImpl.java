@@ -45,6 +45,7 @@ public class MMLVRecommenderImpl implements Recommender {
                 delta = (5 - 10 * Math.abs(lastLiked.getSpratonost() - liked.getSpratonost()) /(double) (recalgdata.getRangeMaxSpratnost() - recalgdata.getRangeMinSpratnost())) / 45;
                 if (recalgdata.getWeigthSpratonst() + delta > 1) recalgdata.setWeigthSpratonst(1);
                 else recalgdata.setWeigthSpratonst(Math.max(recalgdata.getWeigthSpratonst() + delta, 0.1));
+                recAlgDAO.update(recalgdata,(int) recalgdata.getIdkorisnik());
 
 
         }

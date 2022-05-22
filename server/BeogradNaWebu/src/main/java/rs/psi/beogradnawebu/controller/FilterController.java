@@ -20,6 +20,7 @@ import rs.psi.beogradnawebu.dao.KorisnikDAO;
 import rs.psi.beogradnawebu.dao.LajkSmestajaCDAO;
 import rs.psi.beogradnawebu.dao.SmestajDAO;
 import rs.psi.beogradnawebu.dto.FilterDTO;
+import rs.psi.beogradnawebu.model.Korisnik;
 import rs.psi.beogradnawebu.model.LajkSmestaja;
 import rs.psi.beogradnawebu.model.Smestaj;
 
@@ -50,20 +51,17 @@ public class FilterController {
         return "redirect:/pregledsmestaja";
     }
 
-    @GetMapping("/isliked/{username}/{idsmestaj}")
-    public String isLiked(@PathParam("username") String username, @PathParam("idsmestaj") int idsmestaj,RedirectAttributes redirectAttributes){
-        int idkorisnik = (int)korisnikDAO.getUserByUsername(username).get().getIdkorisnik();
-        LajkSmestaja lajkSmestaja = lajkSmestajaCDAO.get(new int[]{idkorisnik,idsmestaj}).orElse(null);
-        redirectAttributes.addFlashAttribute("isliked",lajkSmestaja != null);
-        return "redirect:/pregledsmestaja";
-    }
+
 
 
     @GetMapping
     public String listSmestaj(@AuthenticationPrincipal User korisnik,Model model){
         model.addAttribute("filterData",new FilterDTO());
-        if(korisnik!=null)
-            return  "glavnaStranicaKorisnik";
+        if(korisnik!=null) {
+            Korisnik k = korisnikDAO.getUserByUsername(korisnik.getUsername()).get();
+            model.addAttribute("user",k);
+            return "glavnaStranicaKorisnik";
+        }
         else
             return "glavnaStranicaGost";
     }

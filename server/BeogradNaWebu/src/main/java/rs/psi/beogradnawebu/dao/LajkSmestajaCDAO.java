@@ -9,6 +9,7 @@ import rs.psi.beogradnawebu.model.Korisnik;
 import rs.psi.beogradnawebu.model.LajkSmestaja;
 import rs.psi.beogradnawebu.model.Smestaj;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,4 +89,33 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
         List<LajkSmestaja> likes = jdbcTemplate.query("SELECT * FROM lajk_smestaja WHERE idkorisnik = ?", rowMapper, idkorisnik);
         return Optional.of(likes);
     }
+
+
+
+    ///?????????????????????????????????????????
+    public Optional<List<Boolean>> isLiked(int idkorisnik, List<Smestaj> smestajs){
+        List<LajkSmestaja> lajkSmestajas = null;
+        String upit = "select * from lajk_smestaj where idkorisnik=" + idkorisnik + "and(";
+        for(Smestaj smestaj : smestajs){
+            upit += "idsmestaj=" + smestaj.getIdsmestaj() + " or ";
+        }
+        upit = upit.substring(0, upit.length() - 3);
+        upit += ")";
+        try{
+            lajkSmestajas = jdbcTemplate.query(upit,rowMapper);
+        }catch (Exception e){
+
+        }
+        if(lajkSmestajas == null) return  null;
+
+        List<Boolean> result = new ArrayList<>();
+        for(Smestaj smestaj : smestajs) {
+            for(LajkSmestaja lajkSmestaja : lajkSmestajas){
+
+            }
+        }
+        return null;
+    }
+
+
 }

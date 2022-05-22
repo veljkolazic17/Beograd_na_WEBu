@@ -66,11 +66,11 @@ public class MMLVRecommenderImpl implements Recommender {
                         /(double) (Math.max(recalgdata.getRangeMaxSpratnost(),accommodation.getSpratonost()) - Math.min(recalgdata.getRangeMinSpratnost(),accommodation.getSpratonost()));
                 rating += scaledAttribute * recalgdata.getWeigthSpratonst();
 
-                scaledAttribute = 10 - 10 * Math.abs(accommodation.getKvadratura() - avgAcc.getKvadratura())
+                scaledAttribute = 10 - 10 * Math.abs(accommodation.getKvadratura() - avgAcc.kvadratura)
                         / (double)((Math.max(recalgdata.getRangeMaxKvadratura(),accommodation.getKvadratura()) - Math.min(recalgdata.getRangeMinKvadratura(),accommodation.getKvadratura())));
                 rating += scaledAttribute * recalgdata.getWeightKvadratura();
 
-                scaledAttribute = 10 - 10 * Math.abs(accommodation.getBrojSoba() - avgAcc.getBrojSoba())
+                scaledAttribute = 10 - 10 * Math.abs(accommodation.getBrojSoba() - avgAcc.broj_soba)
                         / ((Math.max(recalgdata.getRangeMaxBrojSoba(),accommodation.getBrojSoba()) - Math.min(recalgdata.getRangeMinBrojSoba(),accommodation.getBrojSoba())));
                 rating += scaledAttribute * recalgdata.getWeightBrojSoba();
 

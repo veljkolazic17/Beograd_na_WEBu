@@ -1,6 +1,8 @@
 package rs.psi.beogradnawebu.recalg;
 
+import rs.psi.beogradnawebu.dao.SmestajDAO;
 import rs.psi.beogradnawebu.model.Korisnik;
+import rs.psi.beogradnawebu.model.Recalgdata;
 import rs.psi.beogradnawebu.model.Smestaj;
 
 //Interfejs za preporucivanje smestaja
@@ -16,7 +18,7 @@ public interface Recommender {
        Ona proverava da li korisniku(user) odgovara dati smestaj i vraca true ukoliko je tako.
        U suprotnom vraca false.
     */
-    boolean recommend(Korisnik user,Smestaj accommodation);
+    boolean recommend(Recalgdata data, SmestajDAO.AvgData avgAcc, Smestaj accommodation);
 
    /* 
       Funkcija koja updatuje u bazi maksimume i minimume lajkova korisnika    

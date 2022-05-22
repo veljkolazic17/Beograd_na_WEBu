@@ -18,7 +18,11 @@
         <header class="row">
             <span id="dugmeNalog" class="col-3">Vaš nalog</span>
             <p class="col-6">Beograd na WEB-u</p>
-            <span class="col-3"><a href="login.html">Odjavi se</a></span>
+            <span class="col-3">
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Odjavi se" />
+                </form>
+            </span>
         </header>
     
         <nav class="row">
@@ -33,8 +37,8 @@
 
         <div id="nalogPanelPozadina">
             <div id="nalogPanel" style="top: calc(50vh - 142px / 2); height: 142px;">
-                <p>Korisničko ime: korisnik</p>
-                <p>Email: kor*****@*********</p>
+                <p th:text="'Korisničko ime:' + ${korime}">Greška</p>
+                <p th:text="'Email:' + ${email}">Greška</p>
 
                 <div id="nalogPanelAdminDugmeWrapper">
                     <input id="ukljanjanjeKorisnikaDugme" type="button" value="Ukljanjanje korisnika" >

@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/logout").hasAnyRole("KORISNIK", "ADMIN")
                 .antMatchers("/").permitAll()
-                .and().formLogin().loginPage("/login")
+                .and().formLogin().loginPage("/login").failureForwardUrl("/?error")
                 .and().logout().logoutSuccessUrl("/");
     }
 

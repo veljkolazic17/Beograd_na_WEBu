@@ -2,6 +2,7 @@ package rs.psi.beogradnawebu.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -17,14 +18,12 @@ import java.util.Optional;
 @Component
 public class SmestajDAO implements DAO<Smestaj>{
 
-    private static final Logger log = LoggerFactory.getLogger(KomentarDAO.class);
+    private static final Logger log = LoggerFactory.getLogger(SmestajDAO.class);
     private final JdbcTemplate jdbcTemplate;
-
     public static RowMapper<Smestaj> rowMapper = (rs, rowNum) -> {
         Smestaj smestaj = new Smestaj();
         smestaj.setIdsmestaj(rs.getLong("idsmestaj"));
         smestaj.setOrgPutanja(rs.getString("org_putanja"));
-        smestaj.setSlika(rs.getString("slika"));
         smestaj.setBrojLajkova(rs.getLong("broj_lajkova"));
         smestaj.setLokacija(rs.getString("lokacija"));
         smestaj.setBrojSoba(rs.getDouble("broj_soba"));
@@ -33,6 +32,9 @@ public class SmestajDAO implements DAO<Smestaj>{
         smestaj.setIdtipSmestaja(rs.getLong("idtip_smestaja"));
         smestaj.setKvadratura(rs.getLong("kvadratura"));
         smestaj.setCena(rs.getDouble("cena"));
+        smestaj.setPostoji(rs.getLong("postoji"));
+        smestaj.setBrojSajta(rs.getLong("broj_sajta"));
+        smestaj.setSlika(rs.getString("slika"));
         return smestaj;
     };
 
@@ -43,17 +45,15 @@ public class SmestajDAO implements DAO<Smestaj>{
     @Override
     public List<Smestaj> list() {
         return jdbcTemplate.query("SELECT * FROM smestaj",rowMapper);
-
     }
 
     @Override
     public void create(Smestaj smestaj) {
        try {
-            jdbcTemplate.update("INSERT INTO smestaj (org_putanja,slika,broj_lajkova,lokacija,broj_soba,spratonost,ima_lift,idtip_smestaja,kvadratura,cena) " +
-                            "VALUES (?,?,?,?,?,?,?,?,?,?)",
+            jdbcTemplate.update("INSERT INTO smestaj (org_putanja,broj_lajkova,lokacija,broj_soba,spratonost,ima_lift,idtip_smestaja,kvadratura,cena,postoji,broj_sajta,slika) " +
+                            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
 
                     smestaj.getOrgPutanja(),
-                    smestaj.getSlika(),
                     smestaj.getBrojLajkova(),
                     smestaj.getLokacija(),
                     smestaj.getBrojSoba(),
@@ -61,12 +61,15 @@ public class SmestajDAO implements DAO<Smestaj>{
                     smestaj.getImaLift(),
                     smestaj.getIdtipSmestaja(),
                     smestaj.getKvadratura(),
-                    smestaj.getCena());
+                    smestaj.getCena(),
+                    smestaj.getPostoji(),
+                    smestaj.getBrojSajta(),
+                    smestaj.getSlika());
+
         }
         catch (Exception e){
             log.info("Neispravan smestaj");
        }
-
     }
 
     @Override
@@ -85,20 +88,31 @@ public class SmestajDAO implements DAO<Smestaj>{
     @Override
     public void update(Smestaj smestaj, int id) {
         try{
-            jdbcTemplate.update("UPDATE smestaj SET org_putanja = ?,slika = ?,broj_lajkova = ?,lokacija = ?,broj_soba = ?, spratonost = ?, ima_lift = ?, idtip_smestaja = ?, kvadratura = ?, cena = ? " +
-                    "WHERE idsmestaj = ?",smestaj.getOrgPutanja(),smestaj.getSlika(),smestaj.getBrojLajkova(),smestaj.getLokacija(),smestaj.getBrojSoba(),smestaj.getSpratonost(),smestaj.getImaLift(),smestaj.getIdtipSmestaja(),smestaj.getKvadratura(),smestaj.getCena(),id);
+            jdbcTemplate.update("UPDATE smestaj SET org_putanja = ?,broj_lajkova = ?,lokacija = ?,broj_soba = ?, spratonost = ?, ima_lift = ?, idtip_smestaja = ?, kvadratura = ?, cena = ? , postoji = ? , broj_sajta = ?, slika = ?" +
+                    "WHERE idsmestaj = ?"
+                    ,smestaj.getOrgPutanja()
+                    ,smestaj.getBrojLajkova()
+                    ,smestaj.getLokacija()
+                    ,smestaj.getBrojSoba()
+                    ,smestaj.getSpratonost()
+                    ,smestaj.getImaLift()
+                    ,smestaj.getIdtipSmestaja()
+                    ,smestaj.getKvadratura()
+                    ,smestaj.getCena()
+                    ,smestaj.getPostoji()
+                    ,smestaj.getBrojSajta()
+                    ,smestaj.getSlika()
+                    ,id);
         }
         catch (Exception e){
             log.info("Nije pronadjen smestaj sa ID: " + id);
         }
-
     }
 
     @Override
     public void delete(int id) {
         try {
             jdbcTemplate.update("DELETE FROM smestaj WHERE idsmestaj = ?",id);
-
         }
         catch (Exception e){
             log.info("Nije pronadjen smestaj sa ID: " + id);
@@ -111,7 +125,6 @@ public class SmestajDAO implements DAO<Smestaj>{
             if(filters.getTipSmestaja().equals("nullSmestaj")){
                 id_tip = 0;
             }
-
             else {
                 TipSmestaja id_tipS = jdbcTemplate.queryForObject("SELECT * FROM tip_smestaja WHERE ime_tipa = ?", TipSmestajaDAO.rowMapper, filters.getTipSmestaja());
 
@@ -134,6 +147,37 @@ public class SmestajDAO implements DAO<Smestaj>{
         catch (Exception e){
             log.info("Neuspesna operacija");
             return null;
+        }
+    }
+
+    public boolean checkIfExist(String href) {
+        try {
+            Smestaj smestaj = jdbcTemplate.queryForObject("SELECT * FROM smestaj WHERE org_putanja LIKE ?", SmestajDAO.rowMapper, href);
+            if(smestaj == null) return false;
+            jdbcTemplate.update("UPDATE smestaj SET postoji = ? WHERE idsmestaj = ?", 1, smestaj.getIdsmestaj()); // azuriranje taga na true
+            return true;
+        } catch (EmptyResultDataAccessException e) {
+            return false; // jdbcTemplate.queryForObject ukoliko ne pronadje baca exeption LOL
+        }
+        catch(Exception e) {
+            log.info("Neuspesna operacija exist");
+            return false;
+        }
+    }
+
+    public void deleteWithFalseTag(int brojSajta) {
+        try {
+            jdbcTemplate.update("DELETE FROM smestaj WHERE postoji = ? AND broj_sajta = ?", 0, brojSajta);
+        } catch (Exception e) {
+            log.info("Operacija nije uspela");
+        }
+    }
+
+    public void setAllTags(int brojSajta) {
+        try {
+            jdbcTemplate.update("UPDATE smestaj SET postoji = ? AND broj_sajta = ?", 0, brojSajta); // azuriranje tagova na false
+        } catch(Exception e) {
+            log.info("Neuspesna operacija");
         }
     }
 

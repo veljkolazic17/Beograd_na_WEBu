@@ -2,14 +2,16 @@ package rs.psi.beogradnawebu.controller;
 
 
 
+import net.minidev.json.JSONObject;
+import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import rs.psi.beogradnawebu.dao.KorisnikDAO;
 import rs.psi.beogradnawebu.dao.LajkSmestajaCDAO;
@@ -21,10 +23,10 @@ import rs.psi.beogradnawebu.recalg.MMLVRecommenderImpl;
 
 import javax.websocket.server.PathParam;
 import java.security.Principal;
+import java.util.HashMap;
 
 
-
-@Controller
+@RestController
 public class LikeController {
     private static final Logger log = LoggerFactory.getLogger(FilterController.class);
 
@@ -38,18 +40,25 @@ public class LikeController {
         this.lajkSmestajaCDAO = lajkSmestajaCDAO;
         this.mmlvRecommender = mmlvRecommender;
     }
-    @GetMapping("/isliked/{username}/{idsmestaj}")
-    public String isLiked(@PathVariable("username") String username, @PathVariable("idsmestaj") Integer idsmestaj, RedirectAttributes redirectAttributes){
+
+    @GetMapping(value = "/isliked/{username}/{idsmestaj}")
+    public ResponseEntity<Boolean> isLiked(@PathVariable("username") String username, @PathVariable("idsmestaj") Integer idsmestaj){
         Korisnik k = korisnikDAO.getUserByUsername(username).orElse(null);
-        if(k==null)return "redirect:/pregledsmestaja";
+        if(k==null){
+//            HashMap<String,Boolean> hashMap = new HashMap<>();
+//            hashMap.put("isliked",false);
+            return new ResponseEntity<Boolean>(false, HttpStatus.OK);//new JSONObject(hashMap);
+        }
         int idkorisnik = (int)k.getIdkorisnik();
         LajkSmestaja lajkSmestaja = lajkSmestajaCDAO.get(new int[]{idkorisnik,idsmestaj}).orElse(null);
-        Boolean b = lajkSmestaja!=null;
-        redirectAttributes.addFlashAttribute("isliked",b);
-        return "redirect:/pregledsmestaja";
+//        HashMap<String,Boolean> hashMap = new HashMap<>();
+//        hashMap.put("isliked",lajkSmestaja!=null);
+        return new ResponseEntity<Boolean>(lajkSmestaja!=null, HttpStatus.OK);//new JSONObject(hashMap);
     }
+
+
     @PostMapping("/like/{idSmestaj}")
-    public String likeSmestaj(@AuthenticationPrincipal User korisnik, @PathVariable Integer idSmestaj){
+    public ResponseEntity<String> likeSmestaj(@AuthenticationPrincipal User korisnik, @PathVariable Integer idSmestaj){
         Korisnik k =korisnikDAO.getUserByUsername(korisnik.getUsername()).orElse(null);
         Smestaj s = smestajDAO.get(idSmestaj).orElse(null);
         //Updatuj tezine za korisnika k na osnovu stana s;
@@ -64,12 +73,13 @@ public class LikeController {
         }
         else {
             log.info("Error!");
+            return ResponseEntity.status(500).build();
         }
-        return "redirect:/pregledsmestaja";
+        return ResponseEntity.status(200).build();
 
     }
     @PostMapping("/unlike/{idSmestaj}")
-    public String unlikeSmestaj(@AuthenticationPrincipal User korisnik,@PathVariable Integer idSmestaj){
+    public ResponseEntity<String> unlikeSmestaj(@AuthenticationPrincipal User korisnik,@PathVariable Integer idSmestaj){
         Korisnik k =korisnikDAO.getUserByUsername(korisnik.getUsername()).orElse(null);
         Smestaj s =smestajDAO.get(idSmestaj).orElse(null);
         if(s!=null && k!=null) {
@@ -80,8 +90,8 @@ public class LikeController {
         }
         else {
             log.info("Error!");
+            return ResponseEntity.status(500).build();
         }
-        return "redirect:/pregledsmestaja";
-
+        return ResponseEntity.status(200).build();
     }
 }

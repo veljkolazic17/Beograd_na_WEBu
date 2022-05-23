@@ -12,12 +12,15 @@ document.addEventListener("DOMContentLoaded", function() {
     var isLiked = JSON.parse(sessionStorage.getItem("isliked"));
     var smestajList =JSON.parse(sessionStorage.getItem("smestajList"));
     for(let i = 0; i < smestaji.length; i++) {
-        smestaji[i].addEventListener("click", function(ev) {
+            smestaji[i].addEventListener("click", function(ev) {
+                currClicked = i;
+                $.ajax({url:"isliked/"+user.korisnickoime+"/"+smestajList[currClicked].idsmestaj,type:"GET"
+                    ,success:function (data){
+                        isLiked = data;
+                    },async:false});
 
             document.getElementById("prikazStana").style.display = "block";
 
-
-            currClicked = i;
 
             var opis = "";
 
@@ -43,21 +46,6 @@ document.addEventListener("DOMContentLoaded", function() {
                         opis+= "Tip smestaja: " + smestajList[i].idtipSmestaja + '<br>';
                     }
 
-                    $.ajax({url:"isliked/"+user.korisnickoime+"/"+smestajList[currClicked].idsmestaj,type:"GET"
-                    ,success:function (data){
-                        isLiked = data;
-                        },async:false});
-
-
-
-                    if(isLiked)
-                        document.getElementById("lajkNaSlici").children[0].innerHTML =fullHeart;
-                    else
-                        document.getElementById("lajkNaSlici").children[0].innerHTML =emptyHeart;
-
-
-
-
 
             document.getElementById("opisKonkretnogSmestaja").innerHTML = opis
             document.getElementById("likeCounter").innerHTML = smestajList[currClicked].brojLajkova
@@ -67,13 +55,17 @@ document.addEventListener("DOMContentLoaded", function() {
             // });
             document.getElementById("link").setAttribute("href", smestajList[i].orgPutanja)
 
-
-
             var evTarget = ev.target;
             if(evTarget.getAttribute("class") != "smestaji")
                 evTarget = evTarget.parentElement;
             document.getElementById("slikaKonkretnogSmestaja")
             .setAttribute("src", smestajList[i].slika);
+
+            if(isLiked)
+                document.getElementById("lajkNaSlici").children[0].innerHTML =fullHeart;
+            else
+                document.getElementById("lajkNaSlici").children[0].innerHTML =emptyHeart;
+
         });
     }
     document.getElementById("dugmeSviSmestaji").addEventListener('click',function () {

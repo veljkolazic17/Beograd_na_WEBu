@@ -23,5 +23,5 @@ public interface Recommender {
    /* 
       Funkcija koja updatuje u bazi maksimume i minimume lajkova korisnika    
    */
-    void updateRange(Korisnik user, Smestaj accommodation);
+    int updateRange(Korisnik user, Smestaj accommodation);
 }

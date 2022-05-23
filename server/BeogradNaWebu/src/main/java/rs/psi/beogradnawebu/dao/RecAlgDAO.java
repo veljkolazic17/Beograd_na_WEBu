@@ -72,7 +72,6 @@ public class RecAlgDAO implements DAO<Recalgdata>{
             recalgdata = jdbcTemplate.queryForObject("select * from recalgdata where idkorisnik = ?;",rowMapper,  id);
         }catch(Exception exception){
             log.info("Recalgdata nije pronadjen: " + id);
-            exception.printStackTrace();
         }
         return Optional.ofNullable(recalgdata);
     }

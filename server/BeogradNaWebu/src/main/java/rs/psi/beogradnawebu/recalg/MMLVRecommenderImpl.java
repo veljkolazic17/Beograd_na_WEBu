@@ -23,7 +23,8 @@ public class MMLVRecommenderImpl implements Recommender {
         }
         @Override
         public void update(Korisnik user, Smestaj liked) {
-                updateRange(user, liked);
+                int res = updateRange(user, liked);
+                if(res == 0) return;
                 Smestaj lastLiked = lajkSmestajaCDAO.getLast((int)user.getIdkorisnik()).orElse(null);
                 Recalgdata recalgdata = recAlgDAO.get((int)user.getIdkorisnik()).orElse(null);
 
@@ -97,7 +98,7 @@ public class MMLVRecommenderImpl implements Recommender {
                 return false;
         }
         @Override
-        public void updateRange(Korisnik user, Smestaj accommodation) {
+        public int updateRange(Korisnik user, Smestaj accommodation) {
                 Recalgdata recalgdata = recAlgDAO.get((int)user.getIdkorisnik()).orElse(null);
                 if (recalgdata == null) {
                         recalgdata = new Recalgdata();
@@ -121,6 +122,7 @@ public class MMLVRecommenderImpl implements Recommender {
                         recalgdata.setWeightCena(0.5);
                         recalgdata.setWeightBrojSoba(0.5);
                         recAlgDAO.create(recalgdata);
+                        return 0;
                 } else {
                         if(accommodation.getCena() > 0) {
                                 if (accommodation.getCena() > recalgdata.getRangeMaxCena()) {
@@ -196,6 +198,7 @@ public class MMLVRecommenderImpl implements Recommender {
                         }
 
                         recAlgDAO.update(recalgdata,(int)recalgdata.getIdkorisnik());
+                        return 1;
                 }
         }
 

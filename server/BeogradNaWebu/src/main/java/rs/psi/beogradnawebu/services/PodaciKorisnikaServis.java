@@ -42,8 +42,8 @@ public class PodaciKorisnikaServis implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(1);
         String dozvola = "NONE";
         switch((int)korisnik.getUloga()) {
-            case 0: dozvola = "KORISNIK"; break;
-            case 1: dozvola = "ADMIN"; break;
+            case 0: dozvola = "ROLE_KORISNIK"; break;
+            case 1: dozvola = "ROLE_ADMIN"; break;
         }
         authorities.add(new SimpleGrantedAuthority(dozvola));
         // OBAVEZNO PROMENITI!!!

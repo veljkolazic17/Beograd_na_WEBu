@@ -43,10 +43,17 @@ document.addEventListener("DOMContentLoaded", function() {
                         opis+= "Tip smestaja: " + smestajList[i].idtipSmestaja + '<br>';
                     }
 
-                    document.getElementById("lajkNaSlici").children[0].innerHTML =fullHeart;
+                    $.ajax({url:"isliked/"+user.korisnickoime+"/"+smestajList[currClicked].idsmestaj,type:"GET"
+                    ,success:function (data){
+                        isLiked = data;
+                        },async:false});
 
 
-                    //document.getElementById("lajkNaSlici").children[0].innerHTML =emptyHeart;
+
+                    if(isLiked)
+                        document.getElementById("lajkNaSlici").children[0].innerHTML =fullHeart;
+                    else
+                        document.getElementById("lajkNaSlici").children[0].innerHTML =emptyHeart;
 
 
 
@@ -69,7 +76,9 @@ document.addEventListener("DOMContentLoaded", function() {
             .setAttribute("src", smestajList[i].slika);
         });
     }
-
+    document.getElementById("dugmeSviSmestaji").addEventListener('click',function () {
+            $.ajax({url:"/pregledpredlozenihsmestaja",type:"GET"})
+    })
     // prikaz panela za filtere
     document.getElementById("dugmeFilteri").addEventListener('click', function() {
         document.getElementById("filteriPanelPozadina").style.display = "block";
@@ -177,13 +186,13 @@ document.addEventListener("DOMContentLoaded", function() {
             element.children[1].innerHTML = parseInt(element.children[1].innerHTML) + 1;
             element.children[0].innerHTML = fullHeart;
             smestajList[currClicked].brojLajkova+=1;
-            $.ajax({url:"like/"+smestajList[currClicked].idsmestaj,type:"POST",async:false})
+            $.ajax({url:"like/"+smestajList[currClicked].idsmestaj,type:"POST"})
 
         } else {
             element.children[1].innerHTML = parseInt(element.children[1].innerHTML) - 1;
             element.children[0].innerHTML = emptyHeart;
             smestajList[currClicked].brojLajkova-=1;
-            $.ajax({url:"unlike/"+smestajList[currClicked].idsmestaj,type:"POST",async:false})
+            $.ajax({url:"unlike/"+smestajList[currClicked].idsmestaj,type:"POST"})
         }
 
 

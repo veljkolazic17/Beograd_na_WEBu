@@ -16,6 +16,7 @@
 
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
+        sessionStorage.clear();
         var smestajList = [[${smestajList}]];
         sessionStorage.setItem("smestajList",JSON.stringify(smestajList));
         console.log(smestajList);

@@ -1,23 +1,25 @@
 // Marko Mirković 197/19
 
 document.addEventListener("DOMContentLoaded", function() {
-     // promena glavnog prozora.
-     document.getElementById("dugmeSviSmestaji").addEventListener("click", function() {
+    // promena glavnog prozora.
+    document.getElementById("dugmeSviSmestaji").addEventListener("click", function() {
         document.getElementById("pregledSmestaja").style.display = "flex";
         document.getElementById("pregledPredlozenogSmestaja").style.display = "none";
-        
+
         document.getElementById("dugmePredlozeniSmestaji").style.backgroundColor = "#bf6943";
         document.getElementById("dugmeSviSmestaji").style.backgroundColor = "#ef8354";
     });
-    
+
     document.getElementById("dugmePredlozeniSmestaji").addEventListener("click", function prikaziSvePredlozeneSmestaje() {
         document.getElementById("pregledSmestaja").style.display = "none";
         document.getElementById("pregledPredlozenogSmestaja").style.display = "flex";
-        
+
         document.getElementById("dugmePredlozeniSmestaji").style.backgroundColor = "#ef8354";
         document.getElementById("dugmeSviSmestaji").style.backgroundColor = "#bf6943";
+        $.ajax({url:"/pregledpredlozenihsmestaja",type:"GET"})
+
     });
-    
+
     // prikaz prozora za potvrdu
     document.getElementById("dugmeNalog").addEventListener("click", function(ev) {
         if(ev.target !== ev.currentTarget) return;
@@ -31,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("prozorZaPotvrdu").children[0].remove();
         while(document.getElementById("prozorZaPotvrduDugmadWrapper").children.length > 0)
             document.getElementById("prozorZaPotvrduDugmadWrapper").children[0].remove();
-        
+
         document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
     });
 
@@ -198,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             p1.innerHTML = "Potvrđivanjem ove opcije aplikacija \"Beograd na WEB-u\" će prestati da Vas obaveštava o novom smeštaju putem Vašeg mail-a.";
         }
-        
+
         div1.append(p1);
         prozor.insertBefore(div1, prozor.children[prozor.children.length - 1]);
 
@@ -251,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function() {
         p1.style.textAlign = "center";
         p1.style.width = "100%";
         p1.innerHTML = "Da li ste sigurni da želite da obrišete istoriju sviđanja?<br/ ><b>Ovime ćete uticati na algoritam preporuke.</b>";
-        
+
         div1.append(p1);
         prozor.insertBefore(div1, prozor.children[prozor.children.length - 1]);
 
@@ -274,6 +276,7 @@ document.addEventListener("DOMContentLoaded", function() {
         dugmeZaPotvrdu.addEventListener("click", function() {
             dugmeZaObustavljanje.remove();
             dugmeZaPotvrdu.remove();
+            $.ajax({url:"userdata/",type:"POST"});
             document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
         });
 
@@ -327,7 +330,7 @@ document.addEventListener("DOMContentLoaded", function() {
             divZaLajk.append(noviDivZaSVG);
             var lajkBrojac = document.createElement("p");
             lajkBrojac.innerHTML = 0;
-            
+
             noviWrapper.append(divZaLajk);
             divZaLajk.append(lajkBrojac);
 
@@ -386,7 +389,7 @@ document.addEventListener("DOMContentLoaded", function() {
             noviKomentarBox.append(noviWrapper);
 
             noviKomentarBox.append(noviKomentarTekst);
-            
+
             document.getElementById("komentariPanel").removeChild(noviKomentar);
             document.getElementById("noviKomentar").before(noviKomentarBox);
         });
@@ -411,17 +414,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // lajk na slici
     var emptyHeart = "<svg version=\"1.1\" class=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\"" +
-    "xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 500 472.44\"" +
-    " enable-background=\"new 0 0 500 472.44\" xml:space=\"preserve\"><path fill=\"#F5F0F6\"" +
-    " stroke=\"#F5F0F6\" stroke-width=\"2\" stroke-miterlimit=\"10\"" + 
-    " d=\"M53.4,260.54C-88.12,122.11,105.22-75.54,246.74,62.89c136.1-139.14,340.48,60.77,204.37,199.91l-97.58,99.76l-95.76,97.89L53.4,260.54z\"/>" + 
-    "<path fill=\"#FFFFFF\" stroke=\"#010202\" stroke-miterlimit=\"10\" d=\"M148.51,184.31\"/><path fill=\"#FFFFFF\" stroke=\"#010202\"" + 
-    " stroke-miterlimit=\"10\" d=\"M282.97,115.94\"/></svg>";
-    var fullHeart = "<svg version=\"1.1\" class=\"Layer_2\" xmlns=\"http://www.w3.org/2000/svg\" " + 
-    "xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" " +
-    "viewBox=\"0 0 500 472.44\" enable-background=\"new 0 0 500 472.44\" xml:space=\"preserve\">" + 
-    "<path fill=\"#DB1549\" stroke=\"#F5F0F6\" stroke-width=\"2\" stroke-miterlimit=\"10\" d=\"M53.4,260.54 " +
-    "C-88.12,122.11,105.22-75.54,246.74,62.89c136.1-139.14,340.48,60.77,204.37,199.91l-97.58,99.76l-95.76,97.89L53.4,260.54z\"/></svg>";
+        "xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 500 472.44\"" +
+        " enable-background=\"new 0 0 500 472.44\" xml:space=\"preserve\"><path fill=\"#F5F0F6\"" +
+        " stroke=\"#F5F0F6\" stroke-width=\"2\" stroke-miterlimit=\"10\"" +
+        " d=\"M53.4,260.54C-88.12,122.11,105.22-75.54,246.74,62.89c136.1-139.14,340.48,60.77,204.37,199.91l-97.58,99.76l-95.76,97.89L53.4,260.54z\"/>" +
+        "<path fill=\"#FFFFFF\" stroke=\"#010202\" stroke-miterlimit=\"10\" d=\"M148.51,184.31\"/><path fill=\"#FFFFFF\" stroke=\"#010202\"" +
+        " stroke-miterlimit=\"10\" d=\"M282.97,115.94\"/></svg>";
+    var fullHeart = "<svg version=\"1.1\" class=\"Layer_2\" xmlns=\"http://www.w3.org/2000/svg\" " +
+        "xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" " +
+        "viewBox=\"0 0 500 472.44\" enable-background=\"new 0 0 500 472.44\" xml:space=\"preserve\">" +
+        "<path fill=\"#DB1549\" stroke=\"#F5F0F6\" stroke-width=\"2\" stroke-miterlimit=\"10\" d=\"M53.4,260.54 " +
+        "C-88.12,122.11,105.22-75.54,246.74,62.89c136.1-139.14,340.48,60.77,204.37,199.91l-97.58,99.76l-95.76,97.89L53.4,260.54z\"/></svg>";
 
     document.getElementById("lajkNaSlici").addEventListener("click", function(ev) {
         var element = document.getElementById("lajkNaSlici");
@@ -434,5 +437,5 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    
+
 });

@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
     document.getElementById("dugmeSviSmestaji").addEventListener('click',function () {
-            $.ajax({url:"/pregledpredlozenihsmestaja",type:"GET"})
+
     })
     // prikaz panela za filtere
     document.getElementById("dugmeFilteri").addEventListener('click', function() {
@@ -132,7 +132,10 @@ document.addEventListener("DOMContentLoaded", function() {
             dugme.style.borderBottomRightRadius = "0";
         }
     });
-
+    document.getElementById("dugmeNalog").addEventListener("click", function(ev) {
+        if(ev.target !== ev.currentTarget) return;
+        document.getElementById("nalogPanelPozadina").style.display = "block";
+    });
     // izlaz iz panela za filtere
     document.getElementById("filteriPanelPozadina").addEventListener("click", function(ev) {
         if(ev.target !== ev.currentTarget) return;
@@ -146,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function() {
         for (let i = 0; i < sviInputi.length; i++) {
             switch(sviInputi[i].getAttribute("type")) {
                 case "text":
-                    sviInputi[i].value = "";
+                    sviInputi[i].value = 0;
                     break;
                 case "checkbox":
                     sviInputi[i].checked = false;
@@ -177,17 +180,19 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     document.getElementById("lajkNaSlici").addEventListener("click", function(ev) {
         var element = document.getElementById("lajkNaSlici");
-        if(element.children[0].children[0].getAttribute("class") == "Layer_1") {
-            element.children[1].innerHTML = parseInt(element.children[1].innerHTML) + 1;
-            element.children[0].innerHTML = fullHeart;
-            smestajList[currClicked].brojLajkova+=1;
-            $.ajax({url:"like/"+smestajList[currClicked].idsmestaj,type:"POST"})
+        if(user!=null) {
+            if (element.children[0].children[0].getAttribute("class") == "Layer_1") {
+                element.children[1].innerHTML = parseInt(element.children[1].innerHTML) + 1;
+                element.children[0].innerHTML = fullHeart;
+                smestajList[currClicked].brojLajkova += 1;
+                $.ajax({url: "like/" + smestajList[currClicked].idsmestaj, type: "POST"})
 
-        } else {
-            element.children[1].innerHTML = parseInt(element.children[1].innerHTML) - 1;
-            element.children[0].innerHTML = emptyHeart;
-            smestajList[currClicked].brojLajkova-=1;
-            $.ajax({url:"unlike/"+smestajList[currClicked].idsmestaj,type:"POST"})
+            } else {
+                element.children[1].innerHTML = parseInt(element.children[1].innerHTML) - 1;
+                element.children[0].innerHTML = emptyHeart;
+                smestajList[currClicked].brojLajkova -= 1;
+                $.ajax({url: "unlike/" + smestajList[currClicked].idsmestaj, type: "POST"})
+            }
         }
 
 

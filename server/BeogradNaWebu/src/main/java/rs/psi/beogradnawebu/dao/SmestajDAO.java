@@ -53,7 +53,7 @@ public class SmestajDAO implements DAO<Smestaj>{
 
     @Override
     public void create(Smestaj smestaj) {
-       try {
+        try {
             jdbcTemplate.update("INSERT INTO smestaj (org_putanja,broj_lajkova,lokacija,broj_soba,spratonost,ima_lift,idtip_smestaja,kvadratura,cena,postoji,broj_sajta,slika) " +
                             "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
 
@@ -73,7 +73,7 @@ public class SmestajDAO implements DAO<Smestaj>{
         }
         catch (Exception e){
             log.info("Neispravan smestaj");
-       }
+        }
     }
 
     @Override
@@ -93,7 +93,7 @@ public class SmestajDAO implements DAO<Smestaj>{
     public void update(Smestaj smestaj, int id) {
         try{
             jdbcTemplate.update("UPDATE smestaj SET org_putanja = ?,broj_lajkova = ?,lokacija = ?,broj_soba = ?, spratonost = ?, ima_lift = ?, idtip_smestaja = ?, kvadratura = ?, cena = ? , postoji = ? , broj_sajta = ?, slika = ?" +
-                    "WHERE idsmestaj = ?"
+                            "WHERE idsmestaj = ?"
                     ,smestaj.getOrgPutanja()
                     ,smestaj.getBrojLajkova()
                     ,smestaj.getLokacija()
@@ -113,6 +113,10 @@ public class SmestajDAO implements DAO<Smestaj>{
         }
     }
 
+    public void decLikes(int idUser){
+        jdbcTemplate.update("update smestaj set broj_lajkova = broj_lajkova - 1 where idsmestaj in " +
+                " (select idsmestaj from lajk_smestaja where idkorisnik = ?)",idUser);
+    }
     @Override
     public void delete(int id) {
         try {
@@ -125,7 +129,7 @@ public class SmestajDAO implements DAO<Smestaj>{
 
     public List<Smestaj> getByOffset(int offset){
         try {
-           return jdbcTemplate.query("SELECT * FROM smestaj LIMIT 100 "+((offset == 0)?"":"offset "+offset*100),rowMapper);
+            return jdbcTemplate.query("SELECT * FROM smestaj LIMIT 100 "+((offset == 0)?"":"offset "+offset*100),rowMapper);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -216,14 +220,15 @@ public class SmestajDAO implements DAO<Smestaj>{
         };
         AvgData avg = null;
         try {
-             avg = jdbcTemplate.queryForObject("SELECT AVG(cena) as avgCena,AVG(kvadratura) as avgKvadratura " +
+            avg = jdbcTemplate.queryForObject("SELECT AVG(cena) as avgCena,AVG(kvadratura) as avgKvadratura " +
                     ",AVG(spratonost) as avgSpratnost,AVG(broj_soba) as avgBrojSoba " +
                     " FROM smestaj JOIN lajk_smestaja USING(idsmestaj) WHERE idkorisnik = ?",localMapper,id);
         }catch (Exception e){
             e.printStackTrace();
         }
-       return avg;
+        return avg;
     }
+
 
     public double mapBrojSoba(String str){
         return switch (str) {

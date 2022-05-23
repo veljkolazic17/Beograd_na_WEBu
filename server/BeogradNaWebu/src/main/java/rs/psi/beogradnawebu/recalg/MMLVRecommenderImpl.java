@@ -187,7 +187,7 @@ public class MMLVRecommenderImpl implements Recommender {
         }
 
         private ShiftParam shiftRange(double min,double max,double val){
-                double mid = (max - min)/2;
+                double mid = (max + min)/2;
                 ShiftParam shiftParam = new ShiftParam();
                 if(val > mid){
                         shiftParam.ref = "MIN";

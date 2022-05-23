@@ -74,6 +74,9 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
             log.info("Nije moguce izbrisati lajksmestaja");
         }
     }
+    public void deleteLikes(int idUser){
+        jdbcTemplate.update("delete from lajk_smestaja where idkorisnik = ?",idUser);
+    }
 
     public Optional<Smestaj> getLast(int idkorisnik) {
         //int idkorisnik = (int)korisnik.getIdkorisnik();
@@ -92,30 +95,9 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
 
 
 
-    ///?????????????????????????????????????????
-    public Optional<List<Boolean>> isLiked(int idkorisnik, List<Smestaj> smestajs){
-        List<LajkSmestaja> lajkSmestajas = null;
-        String upit = "select * from lajk_smestaj where idkorisnik=" + idkorisnik + "and(";
-        for(Smestaj smestaj : smestajs){
-            upit += "idsmestaj=" + smestaj.getIdsmestaj() + " or ";
-        }
-        upit = upit.substring(0, upit.length() - 3);
-        upit += ")";
-        try{
-            lajkSmestajas = jdbcTemplate.query(upit,rowMapper);
-        }catch (Exception e){
 
-        }
-        if(lajkSmestajas == null) return  null;
 
-        List<Boolean> result = new ArrayList<>();
-        for(Smestaj smestaj : smestajs) {
-            for(LajkSmestaja lajkSmestaja : lajkSmestajas){
 
-            }
-        }
-        return null;
-    }
 
 
 }

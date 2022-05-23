@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -59,6 +60,8 @@ public class LikeController {
 
     @PostMapping("/like/{idSmestaj}")
     public ResponseEntity<String> likeSmestaj(@AuthenticationPrincipal User korisnik, @PathVariable Integer idSmestaj){
+        System.out.println("USO U METODU!");
+        if(korisnik == null) return null;
         Korisnik k =korisnikDAO.getUserByUsername(korisnik.getUsername()).orElse(null);
         Smestaj s = smestajDAO.get(idSmestaj).orElse(null);
         //Updatuj tezine za korisnika k na osnovu stana s;

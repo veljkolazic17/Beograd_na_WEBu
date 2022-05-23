@@ -1,6 +1,7 @@
 package rs.psi.beogradnawebu;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import rs.psi.beogradnawebu.services.PodaciKorisnikaServis;
 
 @EnableWebSecurity
+@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private JdbcTemplate jdbcTemplate;
@@ -42,12 +44,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSec) throws Exception {
-        httpSec.authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/logout").hasAnyRole("KORISNIK", "ADMIN")
-                .antMatchers("/").permitAll()
-                .and().formLogin().loginPage("/login").failureForwardUrl("/?error")
-                .and().logout().logoutSuccessUrl("/").and().csrf().disable().cors();
+                httpSec
+                        .authorizeRequests()
+                        .antMatchers("/login").permitAll()
+                        .antMatchers("/logout").hasAnyRole("KORISNIK", "ADMIN")
+//                        .antMatchers("/like/**").hasAnyRole("KORISNIK", "ADMIN")
+//                        .antMatchers("/unlike/**").hasAnyRole("KORISNIK", "ADMIN")
+//                        .antMatchers("/isliked/**").hasAnyRole("KORISNIK", "ADMIN")
+                        .antMatchers("/**").permitAll()
+                        .and().formLogin().loginPage("/login").failureForwardUrl("/?error")
+                        .and().logout().logoutSuccessUrl("/").and().csrf().disable().cors();
     }
 
     @Bean

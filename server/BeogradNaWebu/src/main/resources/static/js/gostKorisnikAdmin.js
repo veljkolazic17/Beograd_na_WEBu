@@ -14,10 +14,13 @@ document.addEventListener("DOMContentLoaded", function() {
     for(let i = 0; i < smestaji.length; i++) {
             smestaji[i].addEventListener("click", function(ev) {
                 currClicked = i;
-                $.ajax({url:"isliked/"+user.korisnickoime+"/"+smestajList[currClicked].idsmestaj,type:"GET"
-                    ,success:function (data){
-                        isLiked = data;
-                    },async:false});
+                if(user != null){
+                    $.ajax({url:"isliked/"+user.korisnickoime+"/"+smestajList[currClicked].idsmestaj,type:"GET"
+                        ,success:function (data){
+                            isLiked = data;
+                        },async:false});
+                }
+
 
             document.getElementById("prikazStana").style.display = "block";
 

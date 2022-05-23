@@ -40,15 +40,13 @@
     </header>
 
     <nav class="row">
-        <button id="dugmePredlozeniSmestaji" class="col">
-            Pregled predlozenih smeštaja
-        </button>
-        <button id="dugmeSviSmestaji" class="col">
-            Pregled svih smeštaja
-        </button>
-        <!--            <form  th:action="@{/pregledpredlozenihsmestaja}" method="get">-->
-        <!--                <input type="submit" value="Predlozeni smestaji baba" />-->
-        <!--            </form>-->
+        <form class = "col" th:action="@{/pregledsmestaja}" method="get">
+            <input id="dugmeSviSmestaji" type="submit" value="Svi smestaji" />
+        </form>
+
+        <form class = "col" th:action="@{/pregledpredlozenihsmestaja}" method="get">
+            <input id="dugmePredlozeniSmestaji" type="submit" value="Predlozeni smestaji" />
+        </form>
     </nav>
 
     <div id="nalogPanelPozadina">

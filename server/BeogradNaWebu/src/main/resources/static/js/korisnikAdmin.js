@@ -1,13 +1,14 @@
 // Marko Mirković 197/19
 
 document.addEventListener("DOMContentLoaded", function() {
+    var lista;
     // promena glavnog prozora.
     document.getElementById("dugmeSviSmestaji").addEventListener("click", function() {
         document.getElementById("pregledSmestaja").style.display = "flex";
         document.getElementById("pregledPredlozenogSmestaja").style.display = "none";
-
         document.getElementById("dugmePredlozeniSmestaji").style.backgroundColor = "#bf6943";
         document.getElementById("dugmeSviSmestaji").style.backgroundColor = "#ef8354";
+
     });
 
     document.getElementById("dugmePredlozeniSmestaji").addEventListener("click", function prikaziSvePredlozeneSmestaje() {
@@ -16,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         document.getElementById("dugmePredlozeniSmestaji").style.backgroundColor = "#ef8354";
         document.getElementById("dugmeSviSmestaji").style.backgroundColor = "#bf6943";
-        $.ajax({url:"/pregledpredlozenihsmestaja",type:"GET"})
+
 
     });
 
@@ -171,7 +172,10 @@ document.addEventListener("DOMContentLoaded", function() {
         dugmeZaPotvrdu.addEventListener("click", function() {
             dugmeZaObustavljanje.remove();
             dugmeZaPotvrdu.remove();
+
             document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
+
+
         });
 
         document.getElementById("prozorZaPotvrduPozadina").style.display = "block";
@@ -276,8 +280,12 @@ document.addEventListener("DOMContentLoaded", function() {
         dugmeZaPotvrdu.addEventListener("click", function() {
             dugmeZaObustavljanje.remove();
             dugmeZaPotvrdu.remove();
-            $.ajax({url:"userdata/",type:"POST"});
             document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
+            $.ajax({url:"userdata/",type:"POST"});
+            window.location.reload(true);
+            return false;
+
+
         });
 
         document.getElementById("prozorZaPotvrduPozadina").style.display = "block";
@@ -426,16 +434,7 @@ document.addEventListener("DOMContentLoaded", function() {
         "<path fill=\"#DB1549\" stroke=\"#F5F0F6\" stroke-width=\"2\" stroke-miterlimit=\"10\" d=\"M53.4,260.54 " +
         "C-88.12,122.11,105.22-75.54,246.74,62.89c136.1-139.14,340.48,60.77,204.37,199.91l-97.58,99.76l-95.76,97.89L53.4,260.54z\"/></svg>";
 
-    document.getElementById("lajkNaSlici").addEventListener("click", function(ev) {
-        var element = document.getElementById("lajkNaSlici");
-        if(element.children[0].children[0].getAttribute("class") == "Layer_1") {
-            element.children[1].innerHTML = parseInt(element.children[1].innerHTML) + 1;
-            element.children[0].innerHTML = fullHeart;
-        } else {
-            element.children[1].innerHTML = parseInt(element.children[1].innerHTML) - 1;
-            element.children[0].innerHTML = emptyHeart;
-        }
-    });
+
 
 
 });

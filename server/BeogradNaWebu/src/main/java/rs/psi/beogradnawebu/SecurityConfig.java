@@ -48,12 +48,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .authorizeRequests()
                         .antMatchers("/login").permitAll()
                         .antMatchers("/logout").hasAnyRole("KORISNIK", "ADMIN")
-//                        .antMatchers("/like/**").hasAnyRole("KORISNIK", "ADMIN")
-//                        .antMatchers("/unlike/**").hasAnyRole("KORISNIK", "ADMIN")
-//                        .antMatchers("/isliked/**").hasAnyRole("KORISNIK", "ADMIN")
+                        .antMatchers("/like/**").hasAnyRole("KORISNIK", "ADMIN")
+                        .antMatchers("/unlike/**").hasAnyRole("KORISNIK", "ADMIN")
+                        .antMatchers("/isliked/**").hasAnyRole("KORISNIK", "ADMIN")
                         .antMatchers("/**").permitAll()
                         .and().formLogin().loginPage("/login").failureForwardUrl("/?error")
-                        .and().logout().logoutSuccessUrl("/").and().csrf().disable().cors();
+                        .and().logout().logoutSuccessUrl("/")
+                        .and().csrf().disable().cors();
     }
 
     @Bean

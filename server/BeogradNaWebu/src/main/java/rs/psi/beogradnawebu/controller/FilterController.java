@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -42,8 +43,6 @@ public class FilterController {
         this.korisnikDAO = korisnikDAO;
     }
 
-
-
     @PostMapping("/filter/{nstranica}")
     public String filterSmestaj(@AuthenticationPrincipal User user,@PathVariable("nstranica") int nstranica,@Valid @ModelAttribute("filterData") FilterDTO filterData, RedirectAttributes redirectAttributes){
         List<Smestaj> smestajList = smestajDAO.searchByFilters(filterData,nstranica);
@@ -51,11 +50,9 @@ public class FilterController {
         return "redirect:/pregledsmestaja";
     }
 
-
-
-
     @GetMapping
     public String listSmestaj(@AuthenticationPrincipal User korisnik,Model model){
+
         model.addAttribute("filterData",new FilterDTO());
         if(korisnik!=null) {
             Korisnik k = korisnikDAO.getUserByUsername(korisnik.getUsername()).get();
@@ -65,5 +62,4 @@ public class FilterController {
         else
             return "glavnaStranicaGost";
     }
-
 }

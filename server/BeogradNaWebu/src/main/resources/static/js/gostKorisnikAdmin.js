@@ -194,9 +194,5 @@ document.addEventListener("DOMContentLoaded", function() {
                 $.ajax({url: "unlike/" + smestajList[currClicked].idsmestaj, type: "POST"})
             }
         }
-
-
     });
-
-
 });

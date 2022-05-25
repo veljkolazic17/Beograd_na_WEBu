@@ -33,6 +33,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.getElementById("zaboravljenaSifraPotvrdi").addEventListener("click", function(ev) {
         if(ev.target !== ev.currentTarget) return;
+        var korisnickoIme = document.getElementById("zaboravljenaSifraPanelUsername").value;
+        $.ajax({url: "userdata/passwordresetvialemail/" + korisnickoIme, type: "POST"})
         document.getElementById("zaboravljenaSifraPozadina").style.display = "none";
     });
 });

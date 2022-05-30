@@ -36,14 +36,7 @@ public class IndexController {
             String email = korisnikDAO.getUserByUsername(korisnik.getUsername()).get().getEmail();
             model.addAttribute("email", email);
 
-            Collection<GrantedAuthority> temp = korisnik.getAuthorities();
-            String auth = temp.iterator().next().getAuthority();
-
-            if(auth.equals("KORISNIK")) {
-                return "redirect:/pregledsmestaja";
-            } else {
-                return "redirect:/pregledsmestaja";
-            }
+            return "redirect:/pregledsmestaja";
         }
         else {
             RegistracijaDTO regDTO = new RegistracijaDTO();

@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import rs.psi.beogradnawebu.dao.KorisnikDAO;
 import rs.psi.beogradnawebu.model.Korisnik;
-import rs.psi.beogradnawebu.mailService.MailService;
-import rs.psi.beogradnawebu.passwordGenerator.SimplePasswordGenerator;
+import rs.psi.beogradnawebu.services.MailService;
+import rs.psi.beogradnawebu.services.SimplePasswordGenerator;
 
 
 @RestController

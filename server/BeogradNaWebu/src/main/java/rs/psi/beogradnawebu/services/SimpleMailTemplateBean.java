@@ -1,4 +1,4 @@
-package rs.psi.beogradnawebu.mailService;
+package rs.psi.beogradnawebu.services;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,7 +10,7 @@ public class SimpleMailTemplateBean {
     public SimpleMailMessage templateSimpleMessage() {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setText(
-                "Ova poruka je generisana od strane racunara. Nemojte odgovati na nju!\n\n%s\n\nSrecno pronalazenje smestaja!\nVas BeogradNaWebu."
+                "Ova poruka je generisana od strane računara. Nemojte odgovati na nju!\n\n%s\n\nSrećno pronalaženje smeštaja!\nVas BeogradNaWebu."
         );
         return message;
     }

@@ -6,6 +6,7 @@ body {
     width: 100vw;
     background-color: #f5f0f6;
     font-family: Verdana, sans-serif;
+    overflow-x: hidden;
 }
 
 a {
@@ -44,9 +45,45 @@ header span {
     text-align: center;
     height: fit-content;
     font-size: 14px;
-    top: 19.5px;
+    top: 18px;
     cursor: pointer;
 }
+
+header>form>input {
+    background-color: transparent;
+    font-size: 14px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 16px;
+    color: white;
+    border: none;
+}
+
+nav>form {
+    display: inline-block;
+    width: 50%;
+    padding: 0;
+}
+
+nav>form>input {
+    background-color: #ef8354;
+    color: #f5f0f6;
+    font-size: 12px;
+    border: 0;
+    height: 36px;
+    width: 100%;
+}
+
+#dugmeSviSmestaji {
+    border-bottom-right-radius: 35px;
+}
+
+#dugmePredlozeniSmestaji {
+    border-bottom-left-radius: 35px;
+    background-color: #bf6943;
+}
+
 
 #nalogPanelPozadina {
     position: fixed;
@@ -177,29 +214,12 @@ header span {
 }
 
 
-#dugmeSviSmestaji {
-    border-bottom-right-radius: 35px;
-}
-
-#dugmePredlozeniSmestaji {
-    border-bottom-left-radius: 35px;
-    background-color: #bf6943;
-}
-
 .pregled {
     background-color: #2d3142;
     margin-top: 2.5vh;
     margin-bottom: 2.5vh;
     border-radius: 25px;
     padding: 12px 0 12px 0;
-}
-
-nav button {
-    background-color: #ef8354;
-    color: #f5f0f6;
-    font-size: 12px;
-    border: 0;
-    height: 36px;
 }
 
 #pregledPredlozenogSmestaja {

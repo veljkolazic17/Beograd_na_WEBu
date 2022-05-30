@@ -134,6 +134,10 @@ svg {
     margin-bottom: 7px;
 }
 
+input[type="submit"] {
+    cursor: pointer;
+}
+
 .inputLogin {
     border-radius: 25px;
     border-color: #ef8354;

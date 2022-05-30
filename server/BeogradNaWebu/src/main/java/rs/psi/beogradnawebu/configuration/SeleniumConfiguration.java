@@ -14,13 +14,13 @@ public class SeleniumConfiguration {
 
     @PostConstruct
     void postConstuct() {
-        System.setProperty("webdriver.chrome.driver", "drivers\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "server\\BeogradNaWebu\\drivers\\chromedriver.exe");
     }
 
     @Bean
     public ChromeDriver driver() {
         ChromeOptions options = new ChromeOptions();
-        options.setHeadless(true); //za rad chroma u headless rezimu, tj. u pozadini*/
+        options.setHeadless(true); //za rad chroma u headless rezimu, tj. u pozadini
         return new ChromeDriver(options);
     }
 }

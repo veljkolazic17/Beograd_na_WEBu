@@ -1,4 +1,4 @@
-package rs.psi.beogradnawebu.passwordGenerator;
+package rs.psi.beogradnawebu.services;
 
 import org.passay.CharacterData;
 import org.passay.CharacterRule;

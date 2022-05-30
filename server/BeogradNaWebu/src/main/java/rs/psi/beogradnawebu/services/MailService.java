@@ -1,4 +1,4 @@
-package rs.psi.beogradnawebu.mailService;
+package rs.psi.beogradnawebu.services;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;

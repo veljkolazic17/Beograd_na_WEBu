@@ -19,6 +19,10 @@
         sessionStorage.clear();
         var smestajList = [[${smestajList}]];
         sessionStorage.setItem("smestajList",JSON.stringify(smestajList));
+
+        var filterData = [[${filterf}]];
+        sessionStorage.setItem("filterf",JSON.stringify(filterData));
+
         console.log(smestajList);
         /*]]>*/
     </script>
@@ -56,7 +60,7 @@
                     <p id="izabraniFilteriNaslov">Izabrani filteri:</p>
 
                     <div id="izabraniFilteri">
-                        &times;&nbsp;Broj soba: <br />&nbsp;Trosoban i preko
+
                     </div>
                 </div>
             </aside>

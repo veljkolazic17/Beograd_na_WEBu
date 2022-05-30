@@ -16,12 +16,17 @@
 
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
+    sessionStorage.clear();
     var smestajList = [[${smestajList}]];
     var user = [[${user}]];
     var isliked = [[${isliked}]];
     sessionStorage.setItem("smestajList",JSON.stringify(smestajList));
     sessionStorage.setItem("user",JSON.stringify(user));
     sessionStorage.setItem("isliked",JSON.stringify(isliked));
+
+    var filterData = [[${filterf}]];
+    sessionStorage.setItem("filterf",JSON.stringify(filterData));
+
     console.log(smestajList);
     /*]]>*/
 </script>
@@ -84,7 +89,7 @@
                 <p id="izabraniFilteriNaslov">Izabrani filteri:</p>
 
                 <div id="izabraniFilteri">
-                    &times;&nbsp;Broj soba: <br />&nbsp;Trosoban i preko
+
                 </div>
             </div>
         </aside>

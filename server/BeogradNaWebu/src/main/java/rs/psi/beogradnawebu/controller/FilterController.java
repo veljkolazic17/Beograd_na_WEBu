@@ -45,6 +45,7 @@ public class FilterController {
 
     @PostMapping("/filter/{nstranica}")
     public String filterSmestaj(@AuthenticationPrincipal User user,@PathVariable("nstranica") int nstranica,@Valid @ModelAttribute("filterData") FilterDTO filterData, RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("filterf",filterData);
         List<Smestaj> smestajList;
         if(filterData!= null) {
             smestajList = smestajDAO.searchByFilters(filterData, nstranica);

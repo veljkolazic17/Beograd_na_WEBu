@@ -1,5 +1,11 @@
 package rs.psi.beogradnawebu.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -14,6 +20,8 @@ import rs.psi.beogradnawebu.dto.RegistracijaDTO;
 import rs.psi.beogradnawebu.model.Korisnik;
 import rs.psi.beogradnawebu.services.KorisnikServis;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Optional;
@@ -22,6 +30,8 @@ import java.util.Optional;
 public class IndexController {
     private KorisnikServis korisnikServis;
     private KorisnikDAO korisnikDAO;
+
+    private static final Logger log = LoggerFactory.getLogger(FilterController.class);
 
     public IndexController(KorisnikServis korisnikServis, KorisnikDAO korisnikDAO){
         this.korisnikServis = korisnikServis;
@@ -61,13 +71,18 @@ public class IndexController {
     }
 
     @PostMapping("/registracija")
-    public String registracija(@ModelAttribute("registracija") @Valid RegistracijaDTO regDTO, BindingResult bindingResult, Model model) {
+    public String registracija(HttpServletRequest request, @ModelAttribute("registracija") @Valid RegistracijaDTO regDTO, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
             model.addAttribute("animacijaLosaRegistracija", true);
             model.addAttribute("greska", false);
             return "login";
         }
         korisnikServis.registrujNovogKorisnika(regDTO);
+        try {
+            request.login(regDTO.getKorime(), regDTO.getSifra());
+        } catch (ServletException e) {
+            log.info("Nije moguce ulogovati korisnika!");
+        }
         return "redirect:/pregledsmestaja";
     }
 

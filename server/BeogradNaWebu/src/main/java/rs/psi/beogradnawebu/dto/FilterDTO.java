@@ -21,7 +21,6 @@ public class FilterDTO {
     private double CenaDo;
 
     private boolean NijePrvi;
-    private boolean NijePoslednji;
     private boolean ImaLift;
 
     public String getLokacija() {
@@ -88,14 +87,6 @@ public class FilterDTO {
         NijePrvi = nijePrvi;
     }
 
-    public boolean isNijePoslednji() {
-        return NijePoslednji;
-    }
-
-    public void setNijePoslednji(boolean nijePoslednji) {
-        NijePoslednji = nijePoslednji;
-    }
-
     public boolean isImaLift() {
         return ImaLift;
     }
@@ -115,7 +106,6 @@ public class FilterDTO {
                 ", CenaOd=" + CenaOd +
                 ", CenaDo=" + CenaDo +
                 ", NijePrvi=" + NijePrvi +
-                ", NijePoslednji=" + NijePoslednji +
                 ", ImaLift=" + ImaLift +
                 '}';
     }

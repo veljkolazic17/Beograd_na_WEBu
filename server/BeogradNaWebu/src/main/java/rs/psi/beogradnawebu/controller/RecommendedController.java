@@ -56,12 +56,12 @@ public class RecommendedController {
             int i = 0;
             result = new ArrayList<>();
             while(true){
-                List<Smestaj> smestajList = smestajDAO.getByOffset(i);
+                List<Smestaj> smestajList = smestajDAO.getByOffset(i,100);
                 if(smestajList.isEmpty()){
                     break;
                 }
                 for(Smestaj s : smestajList){
-                   if(mmlvRecommender.recommend(recalgdata,avgAcc,s)) result.add(s);
+                   if(mmlvRecommender.recommend(recalgdata,avgAcc,s) || recalgdata == null) result.add(s);
 
                     if(result.size() == 10) break;
                 }

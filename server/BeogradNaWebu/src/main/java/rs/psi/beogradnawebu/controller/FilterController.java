@@ -45,7 +45,13 @@ public class FilterController {
 
     @PostMapping("/filter/{nstranica}")
     public String filterSmestaj(@AuthenticationPrincipal User user,@PathVariable("nstranica") int nstranica,@Valid @ModelAttribute("filterData") FilterDTO filterData, RedirectAttributes redirectAttributes){
-        List<Smestaj> smestajList = smestajDAO.searchByFilters(filterData,nstranica);
+        List<Smestaj> smestajList;
+        if(filterData!= null) {
+            smestajList = smestajDAO.searchByFilters(filterData, nstranica);
+        }
+        else {
+            smestajList = smestajDAO.getByOffset(nstranica,10);
+        }
         redirectAttributes.addFlashAttribute("smestajList",smestajList);
         return "redirect:/pregledsmestaja";
     }
@@ -54,6 +60,10 @@ public class FilterController {
     public String listSmestaj(@AuthenticationPrincipal User korisnik,Model model){
         model.addAttribute("filterData",new FilterDTO());
         if(korisnik!=null) {
+            if(!model.containsAttribute("smestajList")) {
+                List<Smestaj> smestajList = smestajDAO.getByOffset(0, 10);
+                model.addAttribute("smestajList", smestajList);
+            }
             Korisnik k = korisnikDAO.getUserByUsername(korisnik.getUsername()).get();
             model.addAttribute("user",k);
             if(k.getUloga() == 0)
@@ -61,7 +71,10 @@ public class FilterController {
             else
                 return "glavnaStranicaAdmin";
         }
-        else
+        else {
+            List<Smestaj> smestajList = smestajDAO.getByOffset(0, 10);
+            model.addAttribute("smestajList", smestajList);
             return "glavnaStranicaGost";
+        }
     }
 }

@@ -104,7 +104,7 @@ public class MMLVRecommenderImpl implements Recommender {
                         recalgdata = new Recalgdata();
                         recalgdata.setIdkorisnik(user.getIdkorisnik());
                         recalgdata.setRangeMinCena(accommodation.getCena());
-                        recalgdata.setRangeMaxCena(accommodation.getCena());
+                        recalgdata.setRangeMaxCena(accommodation.getCena()*2);
                         recalgdata.setRangeMaxBrojSoba(accommodation.getBrojSoba()*2);
                         recalgdata.setRangeMinBrojSoba(accommodation.getBrojSoba());
                         recalgdata.setRangeMinKvadratura(accommodation.getKvadratura());

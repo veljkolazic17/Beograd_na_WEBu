@@ -245,27 +245,25 @@ nav>form>input {
     cursor: pointer;
 }
 
-#levaKolonaSmestaja:last-child {
+.levaKolonaSmestaja:last-child {
     margin-bottom: 0;
 }
 
-#levaKolonaSmestaja:last-child {
+.levaKolonaSmestaja:last-child {
     margin-bottom: 0;
 }
 
-#levaKolonaSmestaja {
+.levaKolonaSmestaja {
     display: inline-block;
     width: calc(50% - 6px);
-    position: relative;
-    left: 0;
     vertical-align: top;
 }
 
-#desnaKolonaSmestaja {
+.desnaKolonaSmestaja {
     display: inline-block;
     width: calc(50% - 6px);
-    position: relative;
-    right: 0;
+    margin-left: 12px;
+    float: right;
     vertical-align: top;
 }
 

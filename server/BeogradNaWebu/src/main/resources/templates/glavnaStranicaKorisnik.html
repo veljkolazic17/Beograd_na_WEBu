@@ -23,6 +23,9 @@
     sessionStorage.setItem("user",JSON.stringify(user));
     sessionStorage.setItem("isliked",JSON.stringify(isliked));
     console.log(smestajList);
+
+    let putanjaZaPromenuEmaila = /*[[@{promena/email}]]*/ "/";
+    let prikazPredlozenih = /*[[${prikazPredlozenih}]]*/ false;
     /*]]>*/
 </script>
 
@@ -67,14 +70,28 @@
 
     <div id="pregledSmestaja" class="row pregled">
         <section class="col-10">
-            <article class="smestaji" th:each="smestaj : ${smestajList}">
-                <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
-                <div class="opisSmestaja">
-                    Broj soba: <th:block th:text="${smestaj.getBrojSoba()}"></th:block> <br />
-                    Cena: <th:block th:text="${smestaj.getCena()}"></th:block>  €, <br />
-                    Kvadratura: <th:block th:text="${smestaj.getKvadratura()}"></th:block>m<sup>2</sup>
-                </div>
-            </article>
+            <div class="levaKolonaSmestaja">
+                <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 0 && prikazPredlozenih == false}">
+                    <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
+                    <p class="opisSmestaja">
+                        <th:block th:if="${smestaj.getLokacija() != ''}" th:utext="'<b>Lokacija:</b> ' + ${smestaj.getLokacija()} + '<br />'"></th:block>
+                        <th:block th:if="${smestaj.getBrojSoba() > 0}" th:utext="'<b>Broj soba:</b> ' + ${smestaj.getBrojSoba()} + '<br />'"></th:block>
+                        <th:block th:utext="'<b>Cena:</b> ' + ${smestaj.getCena()}"></th:block>  €<br />
+                        <th:block th:utext="'<b>Kvadratura:</b> ' + ${smestaj.getKvadratura()}"></th:block>m<sup>2</sup>
+                    </p>
+                </article>
+            </div>
+            <div class="desnaKolonaSmestaja">
+                <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 1 && prikazPredlozenih == false}">
+                    <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
+                    <p class="opisSmestaja">
+                        <th:block th:if="${smestaj.getLokacija() != ''}" th:utext="'<b>Lokacija:</b> ' + ${smestaj.getLokacija()} + '<br />'"></th:block>
+                        <th:block th:if="${smestaj.getBrojSoba() > 0}" th:utext="'<b>Broj soba:</b> ' + ${smestaj.getBrojSoba()} + '<br />'"></th:block>
+                        <th:block th:utext="'<b>Cena:</b> ' + ${smestaj.getCena()}"></th:block>  €<br />
+                        <th:block th:utext="'<b>Kvadratura:</b> ' + ${smestaj.getKvadratura()}"></th:block>m<sup>2</sup>
+                    </p>
+                </article>
+            </div>
         </section>
 
         <aside class="col-2" id="filteri">
@@ -92,8 +109,8 @@
 
     <div id="pregledPredlozenogSmestaja" class="row pregled">
         <section class="col">
-            <div id="levaKolonaSmestaja">
-                <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 0}">
+            <div class="levaKolonaSmestaja">
+                <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 0 && prikazPredlozenih == true}">
                     <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
                     <p class="opisSmestaja">
                         <th:block th:if="${smestaj.getLokacija() != ''}" th:utext="'<b>Lokacija:</b> ' + ${smestaj.getLokacija()} + '<br />'"></th:block>
@@ -103,8 +120,8 @@
                     </p>
                 </article>
             </div>
-            <div id="desnaKolonaSmestaja">
-                <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 1}">
+            <div class="desnaKolonaSmestaja">
+                <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 1 && prikazPredlozenih == true}">
                     <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
                     <p class="opisSmestaja">
                         <th:block th:if="${smestaj.getLokacija() != ''}" th:utext="'<b>Lokacija:</b> ' + ${smestaj.getLokacija()} + '<br />'"></th:block>
@@ -114,7 +131,6 @@
                     </p>
                 </article>
             </div>
-
         </section>
     </div>
 </main>
@@ -292,10 +308,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"  integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-<script th:inline="javascript">
-    let putanjaZaPromenuEmaila = /*[[@{promena/email}]]*/ "/";
-    let prikazPredlozenih = /*[[${prikazPredlozenih}]]*/ false;
-</script>
 <script src="../static/js/gostKorisnikAdmin.js" th:src="@{/js/gostKorisnikAdmin.js}"></script>
 <script src="../static/js/korisnikAdmin.js" th:src="@{/js/korisnikAdmin.js}"></script>
 <script>

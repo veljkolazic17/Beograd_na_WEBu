@@ -58,26 +58,31 @@
                 </div>
             </div>
         </div>
-    
+
         <div id="pregledSmestaja" class="row pregled">
-            <section class="col-10" id="smestajiSekcija">
-                <article class="smestaji">
-                    <img class="slikaSmestaja" src="../static/images/nekiApartman.jpg" alt="primer apartmana" />
-
-                    <div class="opisSmestaja">
-                        Broj soba: Trosoban i preko<br />
-                        Spratnost: 5. sprat, <br />
-                        Kvadratura: 50m<sup>2</sup>
-                    </div>
-                </article>
-                <article class="smestaji">
-                    <img class="slikaSmestaja" src="../static/images/nekiApartman2.jpg" alt="primer apartmana 2" />
-
-                    <div class="opisSmestaja">
-                        Broj soba: Trosoban i preko<br />
-                        Spratnost: 3. sprat
-                    </div>
-                </article>
+            <section class="col-10">
+                <div class="levaKolonaSmestaja">
+                    <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 0}">
+                        <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
+                        <p class="opisSmestaja">
+                            <th:block th:if="${smestaj.getLokacija() != ''}" th:utext="'<b>Lokacija:</b> ' + ${smestaj.getLokacija()} + '<br />'"></th:block>
+                            <th:block th:if="${smestaj.getBrojSoba() > 0}" th:utext="'<b>Broj soba:</b> ' + ${smestaj.getBrojSoba()} + '<br />'"></th:block>
+                            <th:block th:utext="'<b>Cena:</b> ' + ${smestaj.getCena()}"></th:block>  €<br />
+                            <th:block th:utext="'<b>Kvadratura:</b> ' + ${smestaj.getKvadratura()}"></th:block>m<sup>2</sup>
+                        </p>
+                    </article>
+                </div>
+                <div class="desnaKolonaSmestaja">
+                    <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 1}">
+                        <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
+                        <p class="opisSmestaja">
+                            <th:block th:if="${smestaj.getLokacija() != ''}" th:utext="'<b>Lokacija:</b> ' + ${smestaj.getLokacija()} + '<br />'"></th:block>
+                            <th:block th:if="${smestaj.getBrojSoba() > 0}" th:utext="'<b>Broj soba:</b> ' + ${smestaj.getBrojSoba()} + '<br />'"></th:block>
+                            <th:block th:utext="'<b>Cena:</b> ' + ${smestaj.getCena()}"></th:block>  €<br />
+                            <th:block th:utext="'<b>Kvadratura:</b> ' + ${smestaj.getKvadratura()}"></th:block>m<sup>2</sup>
+                        </p>
+                    </article>
+                </div>
             </section>
 
             <aside class="col-2" id="filteri">
@@ -92,17 +97,31 @@
                 </div>
             </aside>
         </div>
-    
+
         <div id="pregledPredlozenogSmestaja" class="row pregled">
-            <section class="col" id="smestajiSekcija">
-                <article class="smestaji">
-                    <img class="slikaSmestaja" src="../static/images/nekiApartman.jpg" alt="primer apartmana" />
-                    <div class="opisSmestaja">
-                        Broj soba: Trosoban i preko<br />
-                        Spratnost: 5. sprat, <br />
-                        Kvadratura: 50m<sup>2</sup>
-                    </div>
-                </article>
+            <section class="col">
+                <div class="levaKolonaSmestaja">
+                    <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 0}">
+                        <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
+                        <p class="opisSmestaja">
+                            <th:block th:if="${smestaj.getLokacija() != ''}" th:utext="'<b>Lokacija:</b> ' + ${smestaj.getLokacija()} + '<br />'"></th:block>
+                            <th:block th:if="${smestaj.getBrojSoba() > 0}" th:utext="'<b>Broj soba:</b> ' + ${smestaj.getBrojSoba()} + '<br />'"></th:block>
+                            <th:block th:utext="'<b>Cena:</b> ' + ${smestaj.getCena()}"></th:block>  €<br />
+                            <th:block th:utext="'<b>Kvadratura:</b> ' + ${smestaj.getKvadratura()}"></th:block>m<sup>2</sup>
+                        </p>
+                    </article>
+                </div>
+                <div class="desnaKolonaSmestaja">
+                    <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 1}">
+                        <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
+                        <p class="opisSmestaja">
+                            <th:block th:if="${smestaj.getLokacija() != ''}" th:utext="'<b>Lokacija:</b> ' + ${smestaj.getLokacija()} + '<br />'"></th:block>
+                            <th:block th:if="${smestaj.getBrojSoba() > 0}" th:utext="'<b>Broj soba:</b> ' + ${smestaj.getBrojSoba()} + '<br />'"></th:block>
+                            <th:block th:utext="'<b>Cena:</b> ' + ${smestaj.getCena()}"></th:block>  €<br />
+                            <th:block th:utext="'<b>Kvadratura:</b> ' + ${smestaj.getKvadratura()}"></th:block>m<sup>2</sup>
+                        </p>
+                    </article>
+                </div>
             </section>
         </div>
     </main>

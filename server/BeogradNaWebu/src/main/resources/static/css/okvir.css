@@ -228,11 +228,13 @@ nav>form>input {
 
 .smestaji {
     /*
-    Ovom formulom dobijamo da se uvek 4 smestaja prikazuju na ekranu.
+    Ovom formulom dobijamo da se uvek 2 smestaja prikazuju na ekranu.
     Prva zagrada je velicina sekcije ispod header-a (glavni prozor).
     Ostatak je oduzimanje margine.
+    height: calc((100vh - 60px - 36px - 5vh - 24px) * 0.5 - 9px);
     */
-    height: calc((100vh - 60px - 36px - 5vh - 24px) * 0.25 - 9px);
+    position: relative;
+    min-height: 200px;
     width: 100%;
     margin-bottom: 12px;
     border-color: #ef8354;
@@ -243,8 +245,28 @@ nav>form>input {
     cursor: pointer;
 }
 
-.smestaji:last-of-type {
+#levaKolonaSmestaja:last-child {
     margin-bottom: 0;
+}
+
+#levaKolonaSmestaja:last-child {
+    margin-bottom: 0;
+}
+
+#levaKolonaSmestaja {
+    display: inline-block;
+    width: calc(50% - 6px);
+    position: relative;
+    left: 0;
+    vertical-align: top;
+}
+
+#desnaKolonaSmestaja {
+    display: inline-block;
+    width: calc(50% - 6px);
+    position: relative;
+    right: 0;
+    vertical-align: top;
 }
 
 #dugmeFilteri {
@@ -397,15 +419,18 @@ input:focus {
 }
 
 .slikaSmestaja {
-    height: 100%;
+    position: relative;
+    height: auto;
+    width: 100%;
     padding: 5px;
-    max-width: 60%;
     border-radius: 25px;
 }
 
 .opisSmestaja {
-    display: inline-block;
+    text-align: center;
     padding: 5px;
+    padding-bottom: 10px;
+    margin: 0;
 }
 
 #prikazStana {

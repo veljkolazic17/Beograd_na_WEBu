@@ -75,6 +75,7 @@ public class IndexController {
             request.login(regDTO.getKorime(), regDTO.getSifra());
         } catch (ServletException e) {
             log.info("Nije moguce ulogovati korisnika!");
+            return "login";
         }
         return "redirect:/pregledsmestaja";
     }

@@ -1,25 +1,21 @@
 // Marko Mirković 197/19
 
+function prikaziSveSmestaje() {
+    document.getElementById("pregledSmestaja").style.display = "flex";
+    document.getElementById("pregledPredlozenogSmestaja").style.display = "none";
+    document.getElementById("dugmePredlozeniSmestaji").style.backgroundColor = "#bf6943";
+    document.getElementById("dugmeSviSmestaji").style.backgroundColor = "#ef8354";
+}
+function prikaziSvePredlozeneSmestaje() {
+    document.getElementById("pregledSmestaja").style.display = "none";
+    document.getElementById("pregledPredlozenogSmestaja").style.display = "flex";
+
+    document.getElementById("dugmePredlozeniSmestaji").style.backgroundColor = "#ef8354";
+    document.getElementById("dugmeSviSmestaji").style.backgroundColor = "#bf6943";
+}
+
+
 document.addEventListener("DOMContentLoaded", function() {
-    var lista;
-    // promena glavnog prozora.
-    document.getElementById("dugmeSviSmestaji").addEventListener("click", function() {
-        document.getElementById("pregledSmestaja").style.display = "flex";
-        document.getElementById("pregledPredlozenogSmestaja").style.display = "none";
-        document.getElementById("dugmePredlozeniSmestaji").style.backgroundColor = "#bf6943";
-        document.getElementById("dugmeSviSmestaji").style.backgroundColor = "#ef8354";
-
-    });
-
-    document.getElementById("dugmePredlozeniSmestaji").addEventListener("click", function prikaziSvePredlozeneSmestaje() {
-        document.getElementById("pregledSmestaja").style.display = "none";
-        document.getElementById("pregledPredlozenogSmestaja").style.display = "flex";
-
-        document.getElementById("dugmePredlozeniSmestaji").style.backgroundColor = "#ef8354";
-        document.getElementById("dugmeSviSmestaji").style.backgroundColor = "#bf6943";
-
-
-    });
 
     // prikaz prozora za potvrdu
     document.getElementById("dugmeNalog").addEventListener("click", function(ev) {
@@ -30,8 +26,20 @@ document.addEventListener("DOMContentLoaded", function() {
     // izlaz iz prozora za potvrdu 
     document.getElementById("prozorZaPotvrduPozadina").addEventListener("click", function(ev) {
         if(ev.target !== ev.currentTarget) return;
-        while(document.getElementById("prozorZaPotvrdu").children[0].getAttribute("id") != "prozorZaPotvrduDugmadWrapper")
-            document.getElementById("prozorZaPotvrdu").children[0].remove();
+        let prozor = document.getElementById("prozorZaPotvrdu");
+        if(prozor.children[0].tagName.toLowerCase() == "form") {
+            let forma = prozor.children[0];
+            while(forma.children[0].getAttribute("id") != "prozorZaPotvrduDugmadWrapper")
+                forma.children[0].remove();
+            let wrapper = forma.children[0];
+            prozor.children[0].remove();
+            forma.remove();
+            prozor.append(wrapper);
+        } else {
+            while(prozor.children[0].getAttribute("id") != "prozorZaPotvrduDugmadWrapper")
+                prozor.children[0].remove();
+        }
+
         while(document.getElementById("prozorZaPotvrduDugmadWrapper").children.length > 0)
             document.getElementById("prozorZaPotvrduDugmadWrapper").children[0].remove();
 
@@ -127,6 +135,13 @@ document.addEventListener("DOMContentLoaded", function() {
         prozor.style.top = "calc(50vh - 180px / 2)";
         prozor.style.width = "550px";
 
+        var forma = document.createElement("form");
+        forma.style.width = "100%";
+        forma.style.height = "100%";
+        forma.style.padding = "0";
+        forma.method = "POST";
+        forma.action = putanjaZaPromenuEmaila;
+
         var div1 = document.createElement("div");
         div1.style.width = "100%";
         div1.style.height = "calc(50% - 50px / 2)";
@@ -138,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function() {
         input1.setAttribute("type", "email");
         input1.style.width = "75%";
         div1.append(input1);
-        prozor.insertBefore(div1, prozor.children[prozor.children.length - 1]);
+        forma.append(div1);
 
         var div2 = document.createElement("div");
         div2.style.width = "100%";
@@ -151,17 +166,21 @@ document.addEventListener("DOMContentLoaded", function() {
         input2.setAttribute("type", "email");
         input2.style.width = "75%";
         div2.append(input2);
-        prozor.insertBefore(div2, prozor.children[prozor.children.length - 1]);
+        forma.append(div2);
 
         var dugmeZaObustavljanje = document.createElement("input");
         var dugmeZaPotvrdu = document.createElement("input");
         dugmeZaObustavljanje.setAttribute("type", "button");
-        dugmeZaPotvrdu.setAttribute("type", "button");
-        document.getElementById("prozorZaPotvrduDugmadWrapper").append(dugmeZaObustavljanje);
-        document.getElementById("prozorZaPotvrduDugmadWrapper").append(dugmeZaPotvrdu);
-
+        dugmeZaPotvrdu.setAttribute("type", "submit");
         dugmeZaObustavljanje.value = "Otkaži";
         dugmeZaPotvrdu.value = "Potvrdi";
+
+        var prozorZaPotvrduDugmadWrapper = document.getElementById("prozorZaPotvrduDugmadWrapper");
+        document.getElementById("prozorZaPotvrduDugmadWrapper").append(dugmeZaObustavljanje);
+        document.getElementById("prozorZaPotvrduDugmadWrapper").append(dugmeZaPotvrdu);
+        // wrapper je vec u HTML-u pa ga privremeno sklanjamo
+        prozorZaPotvrduDugmadWrapper.remove();
+        forma.append(prozorZaPotvrduDugmadWrapper);
 
         dugmeZaObustavljanje.addEventListener("click", function() {
             dugmeZaObustavljanje.remove();
@@ -169,15 +188,7 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
         });
 
-        dugmeZaPotvrdu.addEventListener("click", function() {
-            dugmeZaObustavljanje.remove();
-            dugmeZaPotvrdu.remove();
-
-            document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
-
-
-        });
-
+        prozor.append(forma);
         document.getElementById("prozorZaPotvrduPozadina").style.display = "block";
     });
 

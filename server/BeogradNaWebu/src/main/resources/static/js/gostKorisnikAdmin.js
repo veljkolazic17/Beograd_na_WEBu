@@ -4,17 +4,26 @@ document.addEventListener("DOMContentLoaded", function() {
     // podesavanje prikazanih smestaja da prikazu svoju sliku na panelu za konkretni smestaj
     var smestaji = document.getElementsByClassName("smestaji");
     var user = JSON.parse(sessionStorage.getItem("user"));
-    var currClicked = null;
     var isLiked = JSON.parse(sessionStorage.getItem("isliked"));
     var smestajList =JSON.parse(sessionStorage.getItem("smestajList"));
 
+    // u slucaju da niz elemenata smestaji sadrzi i elemente sa stranice svih smestaja
     let dodatak = 0;
     if(prikazPredlozenih)
         dodatak = smestaji.length - smestajList.length;
 
+    // posebno formiran niz zbog dve kolone kod prikaza smestaja
+    let nizPrilagodjenZaPrikaz = [];
     for(let i = 0; i < smestajList.length; i++) {
-        currClicked = i + dodatak;
-        smestaji[currClicked].addEventListener("click", function(ev) {
+        if(i % 2 == 0)
+            nizPrilagodjenZaPrikaz.push(smestaji[i / 2 + dodatak]);
+        else
+            nizPrilagodjenZaPrikaz.push(smestaji[(i - 1) / 2 + dodatak + Math.ceil(smestajList.length / 2)]);
+    }
+    smestaji = nizPrilagodjenZaPrikaz;
+
+    for(let i = 0; i < smestajList.length; i++) {
+        smestaji[i].addEventListener("click", function(ev) {
             if(user != null) {
                 $.ajax({
                     url:"isliked/"+user.korisnickoime+"/"+smestajList[i].idsmestaj,
@@ -61,14 +70,42 @@ document.addEventListener("DOMContentLoaded", function() {
             var evTarget = ev.target;
             if(evTarget.getAttribute("class") != "smestaji")
                 evTarget = evTarget.parentElement;
-            document.getElementById("slikaKonkretnogSmestaja")
-            .setAttribute("src", smestajList[i].slika);
+
+            let slika = document.getElementById("slikaKonkretnogSmestaja");
+            // reset u slucaju da je pre bilo greske pa je promenjen stil
+            slika.style.width = "100%";
+            slika.style.height = "auto";
+            slika.style.marginLeft = "0";
+            slika.style.marginTop = "0";
+            slika.style.marginBottom = "0";
+            // greska pri prikazu konkretnog smestaja
+            slika.addEventListener("error", function(ev) {
+                slika.setAttribute("src", "images/logoBeli.svg");
+                slika.style.width = "60%";
+                slika.style.height = "60%";
+                slika.style.marginLeft = "20%";
+                slika.style.marginTop = "5%";
+                slika.style.marginBottom = "5%";
+            });
+            slika.setAttribute("src", smestajList[i].slika);
 
             if(isLiked)
-                document.getElementById("lajkNaSlici").children[0].innerHTML =fullHeart;
+                document.getElementById("lajkNaSlici").children[0].innerHTML = fullHeart;
             else
-                document.getElementById("lajkNaSlici").children[0].innerHTML =emptyHeart;
+                document.getElementById("lajkNaSlici").children[0].innerHTML = emptyHeart;
         });
+
+        // greska pri prikazu u listi
+        smestaji[i].children[0].addEventListener("error", function(ev) {
+            smestaji[i].children[0].setAttribute("src", "images/logo.svg");
+            smestaji[i].children[0].style.width = "60%";
+            smestaji[i].children[0].style.height = "60%";
+            smestaji[i].children[0].style.marginLeft = "20%";
+            smestaji[i].children[0].style.marginTop = "5%";
+            smestaji[i].children[0].style.marginBottom = "5%";
+        });
+        // forsiramo refresh da bi error imao vremena da se pripremi i okine
+        smestaji[i].children[0].setAttribute("src", smestaji[i].children[0].getAttribute("src"));
     }
     document.getElementById("dugmeSviSmestaji").addEventListener('click',function () {
 

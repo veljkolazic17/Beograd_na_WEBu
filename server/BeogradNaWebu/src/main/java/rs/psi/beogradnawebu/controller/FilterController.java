@@ -53,7 +53,7 @@ public class FilterController {
     @GetMapping
     public String listSmestaj(@AuthenticationPrincipal User korisnik,Model model){
         model.addAttribute("filterData", new FilterDTO());
-        if(korisnik!=null) {
+        if(korisnik != null) {
             Korisnik k = korisnikDAO.getUserByUsername(korisnik.getUsername()).get();
             model.addAttribute("user", k);
             if(k.getUloga() == 0)
@@ -62,6 +62,6 @@ public class FilterController {
                 return "glavnaStranicaAdmin";
         }
         else
-            return "glavnaStranicaGost";
+            return "login";
     }
 }

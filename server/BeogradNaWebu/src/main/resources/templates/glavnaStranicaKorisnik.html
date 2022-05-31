@@ -93,7 +93,7 @@
     <div id="pregledPredlozenogSmestaja" class="row pregled">
         <section class="col">
             <div id="levaKolonaSmestaja">
-                <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index < 5}">
+                <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 0}">
                     <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
                     <p class="opisSmestaja">
                         <th:block th:if="${smestaj.getLokacija() != ''}" th:utext="'<b>Lokacija:</b> ' + ${smestaj.getLokacija()} + '<br />'"></th:block>
@@ -104,7 +104,7 @@
                 </article>
             </div>
             <div id="desnaKolonaSmestaja">
-                <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index >= 5}">
+                <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 1}">
                     <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
                     <p class="opisSmestaja">
                         <th:block th:if="${smestaj.getLokacija() != ''}" th:utext="'<b>Lokacija:</b> ' + ${smestaj.getLokacija()} + '<br />'"></th:block>

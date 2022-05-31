@@ -129,7 +129,7 @@ public class SmestajDAO implements DAO<Smestaj>{
 
     public List<Smestaj> getByOffset(int offset,int limit){
         try {
-            return jdbcTemplate.query("SELECT * FROM smestaj LIMIT "+limit+((offset == 0)?"":"offset "+offset*10),rowMapper);
+            return jdbcTemplate.query("SELECT * FROM smestaj LIMIT "+limit+((offset == 0)?"":" offset "+offset*10),rowMapper);
         }catch (Exception e){
             e.printStackTrace();
         }

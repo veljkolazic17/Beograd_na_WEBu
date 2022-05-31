@@ -91,7 +91,7 @@ public class MMLVRecommenderImpl implements Recommender {
                         rating /= (recalgdata.getWeightBrojSoba()*brojSobaNotNull + recalgdata.getWeightCena()*cenaNotNull +
                                 recalgdata.getWeigthSpratonst()*spratnostNotNull + recalgdata.getWeightKvadratura()*kvadraturaNotNull);
 
-                        System.out.println(rating);
+                        // System.out.println(rating);
                         // Ukoliko je ocena veca ili jednaka od 7.5, smestaj se preporucuje korisniku
                         return rating >= 7.5;
                 }

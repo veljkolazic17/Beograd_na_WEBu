@@ -15,5 +15,9 @@ import rs.psi.beogradnawebu.dao.SmestajDAO;
 public abstract class Scraper {
     protected final ChromeDriver driver;
     protected SmestajDAO smestaj;
+    public Scraper(ChromeDriver driver, SmestajDAO smestaj) {
+        this.driver = driver;
+        this.smestaj = smestaj;
+    }
     public abstract void scrape();
 }

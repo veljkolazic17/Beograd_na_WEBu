@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var first = true;
 
     Object.entries(filterData).forEach(([key,value])=>{
-        if(value != null && value !== 0 && value !== false && value !== "nullLokacija" && value !== "nullSoba" && value !== "nullSmestaj"){
+        if(value != null && value !== 0 && value !== false && value !== "%nullLokacija%" && value !== "nullSoba" && value !== "nullSmestaj"){
             if(first){
                 textToBind+="&times;&nbsp;";
                 first=false;

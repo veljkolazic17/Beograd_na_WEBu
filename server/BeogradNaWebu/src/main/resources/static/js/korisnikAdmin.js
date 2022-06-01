@@ -27,7 +27,9 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // izlaz iz prozora za potvrdu
-    document.getElementById("prozorZaPotvrduPozadina").addEventListener("click", function(ev) {
+    document.getElementById("prozorZaPotvrduPozadina")
+    .addEventListener("click", function(ev)
+    {
         if(ev.target !== ev.currentTarget) return;
 
         let pozadina = document.getElementById("prozorZaPotvrduPozadina");
@@ -36,15 +38,31 @@ document.addEventListener("DOMContentLoaded", function() {
         pozadina.style.display = "none";
     });
 
+    // izlaz iz prozora za potvrdu brisanja komentara
+    document.getElementById("pozadinaProzoraZaPotvrduBrisanjaKom")
+    .addEventListener("click", function(ev)
+    {
+        if(ev.target !== ev.currentTarget) return;
+
+        aktivanKomentar = null;
+
+        let pozadina = document.getElementById("pozadinaProzoraZaPotvrduBrisanjaKom");
+        pozadina.style.display = "none";
+    });
+
     // izlaz iz prozora za nalog
-    document.getElementById("nalogPanelPozadina").addEventListener("click", function(ev) {
+    document.getElementById("nalogPanelPozadina")
+    .addEventListener("click", function(ev)
+    {
         if(ev.target !== ev.currentTarget) return;
         document.getElementById("nalogPanelPozadina").style.display = "none";
     });
 
     // promena sifre
     let postavljenEventHandlerSifra = false;
-    document.getElementById("promenaSifreDugme").addEventListener("click", function() {
+    document.getElementById("promenaSifreDugme")
+    .addEventListener("click", function()
+    {
         let pozadina = document.getElementById("prozorZaPotvrduPozadina");
         pozadina.style.display = "block";
 

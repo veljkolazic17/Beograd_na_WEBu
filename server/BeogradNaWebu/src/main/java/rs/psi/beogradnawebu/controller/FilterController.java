@@ -16,6 +16,8 @@ import rs.psi.beogradnawebu.dto.PromenaSifreDTO;
 import rs.psi.beogradnawebu.model.Korisnik;
 import rs.psi.beogradnawebu.model.Smestaj;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -34,31 +36,43 @@ public class FilterController {
         this.korisnikDAO = korisnikDAO;
     }
 
-    @PostMapping("/filter/{nstranica}")
-    public String filterSmestaj(@AuthenticationPrincipal User user,@PathVariable("nstranica") int nstranica,@Valid @ModelAttribute("filterData") FilterDTO filterData, RedirectAttributes redirectAttributes){
+    @PostMapping("/filter")
+    public String filterSmestaj(HttpServletRequest request,@AuthenticationPrincipal User user,@Valid @ModelAttribute("filterData") FilterDTO filterData, RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("filterf",filterData);
         List<Smestaj> smestajList;
         if(filterData!= null) {
-            smestajList = smestajDAO.searchByFilters(filterData, nstranica);
+            smestajList = smestajDAO.searchByFilters(filterData);
+            HttpSession mySession = request.getSession();
+            mySession.setAttribute("sviSmestaji",smestajList);
+            redirectAttributes.addFlashAttribute("smestajList",smestajList);
         }
-        else {
-            smestajList = smestajDAO.getByOffset(nstranica,10);
-        }
-        redirectAttributes.addFlashAttribute("smestajList",smestajList);
-        return "redirect:/pregledsmestaja";
+        return "redirect:/pregledsmestaja/0";
     }
 
-    @GetMapping
-    public String listSmestaj(@AuthenticationPrincipal User korisnik,Model model){
+    @GetMapping("/{nstranica}")
+    public String listSmestaj(HttpServletRequest request , @AuthenticationPrincipal User korisnik,@PathVariable("nstranica")Integer nstranica, Model model){
         model.addAttribute("filterData",new FilterDTO());
+        HttpSession mySession = request.getSession();
         if(korisnik!=null) {
-            if(!model.containsAttribute("smestajList")) {
-                List<Smestaj> smestajList = smestajDAO.getByOffset(0, 10);
-                model.addAttribute("smestajList", smestajList);
+            if(mySession.getAttribute("sviSmestaji")==null) {
+                List<Smestaj> smestajList = smestajDAO.list();
+                mySession.setAttribute("sviSmestaji",smestajList);
+                model.addAttribute("smestajList", smestajList.subList(0,10));
+            }
+            else{
+                List<Smestaj> smestajList = (List<Smestaj>) mySession.getAttribute("sviSmestaji");
+                if(smestajList.size()>=10){
+                    if(nstranica*10 < smestajList.size()) {
+                        model.addAttribute("smestajList", smestajList.subList(nstranica * 10, (nstranica + 1) * 10));
+                    }
+                }
+                else {
+                    model.addAttribute("smestajList", smestajList);
+
+                }
             }
             Korisnik k = korisnikDAO.getUserByUsername(korisnik.getUsername()).get();
             model.addAttribute("user", k);
-
             PromenaMailaDTO promMailaDTO = new PromenaMailaDTO();
             model.addAttribute("promenaEmaila", promMailaDTO);
             PromenaSifreDTO promSifDTO = new PromenaSifreDTO();
@@ -70,8 +84,24 @@ public class FilterController {
                 return "glavnaStranicaAdmin";
         }
         else {
-            List<Smestaj> smestajList = smestajDAO.getByOffset(0, 10);
-            model.addAttribute("smestajList", smestajList);
+
+            if(mySession.getAttribute("sviSmestaji")==null) {
+                List<Smestaj> smestajList = smestajDAO.list();
+                mySession.setAttribute("sviSmestaji",smestajList);
+                model.addAttribute("smestajList", smestajList.subList(0,10));
+            }
+            else {
+                List<Smestaj> smestajList = (List<Smestaj>) mySession.getAttribute("sviSmestaji");
+                if(smestajList.size()>=10) {
+                    if(nstranica*10 < smestajList.size()) {
+                        model.addAttribute("smestajList", smestajList.subList(nstranica * 10, (nstranica + 1) * 10));
+                    }
+                }
+                else {
+                    model.addAttribute("smestajList", smestajList);
+
+                }
+            }
             return "glavnaStranicaGost";
         }
     }

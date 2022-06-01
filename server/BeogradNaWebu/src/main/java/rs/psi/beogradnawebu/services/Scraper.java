@@ -10,13 +10,10 @@ import rs.psi.beogradnawebu.dao.SmestajDAO;
 // 2 - 4zida - Kuca
 // 3 - drugo (neki drugi sajt)
 
-@Service
+@AllArgsConstructor
 public abstract class Scraper {
     protected final ChromeDriver driver;
     protected SmestajDAO smestaj;
-    public Scraper(ChromeDriver driver, SmestajDAO smestaj) {
-        this.driver = driver;
-        this.smestaj = smestaj;
-    }
+
     public abstract void scrape();
 }

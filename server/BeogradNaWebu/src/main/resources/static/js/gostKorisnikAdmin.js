@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 slika.style.marginBottom = "0";
                 // greska pri prikazu konkretnog smestaja
                 slika.addEventListener("error", function(ev) {
-                    slika.setAttribute("src", "images/logoBeli.svg");
+                    slika.setAttribute("src", "../images/logoBeli.svg");
                     slika.style.width = "60%";
                     slika.style.height = "60%";
                     slika.style.marginLeft = "20%";
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // greska pri prikazu u listi
             smestaji[i].children[0].addEventListener("error", function(ev) {
-                smestaji[i].children[0].setAttribute("src", "images/logo.svg");
+                smestaji[i].children[0].setAttribute("src", "../images/logo.svg");
                 smestaji[i].children[0].style.width = "60%";
                 smestaji[i].children[0].style.height = "60%";
                 smestaji[i].children[0].style.marginLeft = "20%";
@@ -111,6 +111,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("dugmeFilteri").addEventListener('click', function() {
         document.getElementById("filteriPanelPozadina").style.display = "block";
     });
+    document.getElementsByClassName("stranicaLevo")
 
     // izlaz iz panela za prikaz konkretnog stana
     var emptyHeart = "<svg version=\"1.1\" class=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\"" +

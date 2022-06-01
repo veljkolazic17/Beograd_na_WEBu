@@ -45,12 +45,12 @@ public class RecommendedController {
         Korisnik korisnik = korisnikDAO.getUserByUsername(user.getUsername()).orElse(null);
         if(korisnik == null) {
             redirectAttributes.addFlashAttribute("prikazPredlozenih", false);
-            return "redirect:/pregledsmestaja";
+            return "redirect:/pregledsmestaja/0";
         } else {
             List<Smestaj> smestajList = recommendAcc(korisnik);
             redirectAttributes.addFlashAttribute("smestajList", smestajList);
             redirectAttributes.addFlashAttribute("prikazPredlozenih", true);
-            return "redirect:/pregledsmestaja";
+            return "redirect:/pregledsmestaja/0";
         }
     }
 

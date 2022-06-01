@@ -1,6 +1,7 @@
 package rs.psi.beogradnawebu.annotations;
 
-import rs.psi.beogradnawebu.validators.SifraValidator;
+
+import rs.psi.beogradnawebu.validators.SifraPripadaValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,12 +12,12 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target({TYPE,ANNOTATION_TYPE})
+@Target({TYPE, FIELD, ANNOTATION_TYPE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = SifraValidator.class)
+@Constraint(validatedBy = SifraPripadaValidator.class)
 @Documented
-public @interface ValidnaSifra {
-    String message() default "Šifre se ne poklapaju!";
+public @interface PripadaSifra {
+    String message() default "Priložena šifra nije validna!";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

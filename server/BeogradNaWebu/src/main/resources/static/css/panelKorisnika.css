@@ -1,0 +1,212 @@
+/* Marko Mirković 197/19 */
+
+#nalogPanelPozadina {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    z-index: 10;
+}
+
+#nalogPanel {
+    position: relative;
+    margin: auto;
+    top: calc(50vh - 92px / 2);
+    width: 600px;
+    height: 92px;
+    background-color: #2d3142;
+    border-color: #ef8354;
+    border-width: 3px;
+    border-style: outset;
+    border-radius: 25px;
+}
+
+#nalogPanelDugmadWrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    border-top: outset #ef8354 3px;
+}
+
+#nalogPanel>p {
+    margin: 0;
+    width: 50%;
+    float: left;
+    display: block;
+    color: #f5f0f6;
+    font-size: 14.5px;
+    padding-left: 15px;
+    padding-top: 7px;
+}
+
+#nalogPanelDugmadWrapper>input {
+    width: 25%;
+    height: 100%;
+    float: left;
+    background-color: #4f5d75;
+    color: #f5f0f6;
+    font-size: 13px;
+}
+
+#nalogPanelDugmadWrapper>input:first-of-type {
+    border-bottom-left-radius: 22px;
+}
+
+#nalogPanelDugmadWrapper>input:last-of-type {
+    border-bottom-right-radius: 22px;
+}
+
+
+#prozorZaPotvrduPozadina {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    z-index: 11;
+}
+
+#prozorZaPotvrdu {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: fit-content;
+    height: fit-content;
+    background-color: #2d3142;
+    border-color: #ef8354;
+    border-width: 3px;
+    border-style: outset;
+    border-radius: 25px;
+    color: #f5f0f6;
+    font-size: 14px;
+}
+
+
+#panelPromenaSifre {
+    display: none;
+    width: 450px;
+}
+
+#panelPromenaSifre>form {
+    width: 100%;
+    padding: 0;
+}
+
+.sifreWrappers {
+    width: 100%;
+    padding: 10px;
+}
+
+.sifreWrappers>p{
+    float: left;
+    width: 180px;
+    padding: 3px;
+    margin: 0;
+}
+
+.sifreWrappers>input {
+    width: 250px;
+    background-color: #f5f0f6;
+    border-radius: 15px;
+    padding: 1px 6px 1px 6px;
+}
+
+
+#panelPromenaEmaila {
+    display: none;
+    width: 450px;
+}
+
+#panelPromenaSifre>form {
+    width: 100%;
+    padding: 0;
+}
+
+.mailoviWrappers {
+    width: 100%;
+    padding: 10px;
+}
+
+.mailoviWrappers>p{
+    float: left;
+    width: 120px;
+    padding: 3px;
+    margin: 0;
+}
+
+.mailoviWrappers>input {
+    width: 310px;
+    background-color: #f5f0f6;
+    border-radius: 15px;
+    padding: 1px 6px 1px 6px;
+}
+
+
+#panelPotvrda {
+    display: none;
+    width: 560px;
+}
+
+#panelPotvrda>p{
+    padding: 10px;
+    margin: 0;
+}
+
+
+#panelBrisanje {
+    display: none;
+    width: 404px;
+}
+
+#panelBrisanje>p{
+    padding: 10px;
+    margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+    #panelPromenaSifre,
+    #panelPromenaEmaila
+    #panelPotvrda,
+    #panelBrisanje {
+        width: 100vw;
+    }
+}
+
+.prozorZaPotvrduDugmadWrapper {
+    width: 100%;
+    height: 50px;
+    border-top: outset #ef8354 3px;
+}
+
+.prozorZaPotvrduDugmadWrapper>input {
+    width: 50%;
+    height: 100%;
+    float: left;
+    background-color: #4f5d75;
+    color: #f5f0f6;
+    font-size: 13px;
+    border-radius: 0;
+    padding: 0;
+}
+
+.prozorZaPotvrduDugmadWrapper>input:first-of-type {
+    border-bottom-left-radius: 22px;
+}
+
+.prozorZaPotvrduDugmadWrapper>input:last-of-type {
+    border-bottom-right-radius: 22px;
+}
+
+
+
+
+
+

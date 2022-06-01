@@ -2,7 +2,6 @@ package rs.psi.beogradnawebu.annotations;
 
 
 import rs.psi.beogradnawebu.validators.EmailPripadaValidator;
-import rs.psi.beogradnawebu.validators.EmailValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

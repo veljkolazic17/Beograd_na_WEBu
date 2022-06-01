@@ -23,27 +23,15 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("nalogPanelPozadina").style.display = "block";
     });
 
-    // izlaz iz prozora za potvrdu 
+    // izlaz iz prozora za potvrdu
+    let aktivniProzor = null;
     document.getElementById("prozorZaPotvrduPozadina").addEventListener("click", function(ev) {
         if(ev.target !== ev.currentTarget) return;
-        let prozor = document.getElementById("prozorZaPotvrdu");
-        if(prozor.children[0].tagName.toLowerCase() == "form") {
-            let forma = prozor.children[0];
-            while(forma.children[0].getAttribute("id") != "prozorZaPotvrduDugmadWrapper")
-                forma.children[0].remove();
-            let wrapper = forma.children[0];
-            prozor.children[0].remove();
-            forma.remove();
-            prozor.append(wrapper);
-        } else {
-            while(prozor.children[0].getAttribute("id") != "prozorZaPotvrduDugmadWrapper")
-                prozor.children[0].remove();
-        }
 
-        while(document.getElementById("prozorZaPotvrduDugmadWrapper").children.length > 0)
-            document.getElementById("prozorZaPotvrduDugmadWrapper").children[0].remove();
-
-        document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
+        let pozadina = document.getElementById("prozorZaPotvrduPozadina");
+        aktivniProzor.style.display = "none";
+        aktivniProzor = null;
+        pozadina.style.display = "none"
     });
 
     // izlaz iz prozora za nalog
@@ -53,253 +41,116 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // promena sifre
+    let postavljenEventHandlerSifra = false;
     document.getElementById("promenaSifreDugme").addEventListener("click", function() {
-        var prozor = document.getElementById("prozorZaPotvrdu");
+        let pozadina = document.getElementById("prozorZaPotvrduPozadina");
+        pozadina.style.display = "block"
 
-        while(prozor.children[0].getAttribute("id") != "prozorZaPotvrduDugmadWrapper")
-            prozor.children[0].remove();
+        let panelPromenaSifre = document.getElementById("panelPromenaSifre");
+        panelPromenaSifre.style.display = "block";
+        aktivniProzor = panelPromenaSifre;
 
-        prozor.style.height = "250px";
-        prozor.style.top = "calc(50vh - 250px / 2)";
-        prozor.style.width = "440px";
+        if(!postavljenEventHandlerSifra) {
+            postavljenEventHandlerSifra = true;
 
-        var div1 = document.createElement("div");
-        div1.style.width = "100%";
-        div1.style.height = "calc(33.333333% - 50px / 3)";
-        div1.style.padding = "10px";
-        var p1 = document.createElement("p");
-        p1.innerHTML = "Stara šifra: ";
-        div1.append(p1);
-        var input1 = document.createElement("input");
-        input1.setAttribute("type", "password");
-        div1.append(input1);
-        prozor.insertBefore(div1, prozor.children[prozor.children.length - 1]);
-
-        var div2 = document.createElement("div");
-        div2.style.width = "100%";
-        div2.style.height = "calc(33.333333% - 50px / 3)";
-        div2.style.padding = "10px";
-        var p2 = document.createElement("p");
-        p2.innerHTML = "Nova šifra: ";
-        div2.append(p2);
-        var input2 = document.createElement("input");
-        input2.setAttribute("type", "password");
-        div2.append(input2);
-        prozor.insertBefore(div2, prozor.children[prozor.children.length - 1]);
-
-        var div3 = document.createElement("div");
-        div3.style.width = "100%";
-        div3.style.height = "calc(33.333333% - 50px / 3)";
-        div3.style.padding = "10px";
-        var p3 = document.createElement("p");
-        p3.innerHTML = "Ponovite novu šifru: ";
-        div3.append(p3);
-        var input3 = document.createElement("input");
-        input3.setAttribute("type", "password");
-        div3.append(input3);
-        prozor.insertBefore(div3, prozor.children[prozor.children.length - 1]);
-
-        var dugmeZaObustavljanje = document.createElement("input");
-        var dugmeZaPotvrdu = document.createElement("input");
-        dugmeZaObustavljanje.setAttribute("type", "button");
-        dugmeZaPotvrdu.setAttribute("type", "button");
-        document.getElementById("prozorZaPotvrduDugmadWrapper").append(dugmeZaObustavljanje);
-        document.getElementById("prozorZaPotvrduDugmadWrapper").append(dugmeZaPotvrdu);
-
-        dugmeZaObustavljanje.value = "Otkaži";
-        dugmeZaPotvrdu.value = "Potvrdi";
-
-        dugmeZaObustavljanje.addEventListener("click", function() {
-            dugmeZaObustavljanje.remove();
-            dugmeZaPotvrdu.remove();
-            document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
-        });
-
-        dugmeZaPotvrdu.addEventListener("click", function() {
-            dugmeZaObustavljanje.remove();
-            dugmeZaPotvrdu.remove();
-            document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
-        });
-
-        document.getElementById("prozorZaPotvrduPozadina").style.display = "block";
+            let dugmeOtkazi = panelPromenaSifre.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[0];
+            dugmeOtkazi.addEventListener("click", function() {
+                panelPromenaSifre.style.display = "none";
+                pozadina.style.display = "none"
+            });
+        }
     });
 
     // promena email-a
+    let postavljenEventHandlerEmail = false;
     document.getElementById("promenaEmailaDugme").addEventListener("click", function() {
-        var prozor = document.getElementById("prozorZaPotvrdu");
+        let pozadina = document.getElementById("prozorZaPotvrduPozadina");
+        pozadina.style.display = "block"
 
-        while(prozor.children[0].getAttribute("id") != "prozorZaPotvrduDugmadWrapper")
-            prozor.children[0].remove();
+        let panelPromenaEmaila = document.getElementById("panelPromenaEmaila");
+        panelPromenaEmaila.style.display = "block";
+        aktivniProzor = panelPromenaEmaila;
 
-        prozor.style.height = "180px";
-        prozor.style.top = "calc(50vh - 180px / 2)";
-        prozor.style.width = "550px";
+        if(!postavljenEventHandlerEmail) {
+            postavljenEventHandlerEmail = true;
 
-        var forma = document.createElement("form");
-        forma.style.width = "100%";
-        forma.style.height = "100%";
-        forma.style.padding = "0";
-        forma.method = "POST";
-        forma.action = putanjaZaPromenuEmaila;
-
-        var div1 = document.createElement("div");
-        div1.style.width = "100%";
-        div1.style.height = "calc(50% - 50px / 2)";
-        div1.style.padding = "10px";
-        var p1 = document.createElement("p");
-        p1.innerHTML = "Stari email: ";
-        div1.append(p1);
-        var input1 = document.createElement("input");
-        input1.setAttribute("type", "email");
-        input1.style.width = "75%";
-        div1.append(input1);
-        forma.append(div1);
-
-        var div2 = document.createElement("div");
-        div2.style.width = "100%";
-        div2.style.height = "calc(50% - 50px / 2)";
-        div2.style.padding = "10px";
-        var p2 = document.createElement("p");
-        p2.innerHTML = "Novi email: ";
-        div2.append(p2);
-        var input2 = document.createElement("input");
-        input2.setAttribute("type", "email");
-        input2.style.width = "75%";
-        div2.append(input2);
-        forma.append(div2);
-
-        var dugmeZaObustavljanje = document.createElement("input");
-        var dugmeZaPotvrdu = document.createElement("input");
-        dugmeZaObustavljanje.setAttribute("type", "button");
-        dugmeZaPotvrdu.setAttribute("type", "submit");
-        dugmeZaObustavljanje.value = "Otkaži";
-        dugmeZaPotvrdu.value = "Potvrdi";
-
-        var prozorZaPotvrduDugmadWrapper = document.getElementById("prozorZaPotvrduDugmadWrapper");
-        document.getElementById("prozorZaPotvrduDugmadWrapper").append(dugmeZaObustavljanje);
-        document.getElementById("prozorZaPotvrduDugmadWrapper").append(dugmeZaPotvrdu);
-        // wrapper je vec u HTML-u pa ga privremeno sklanjamo
-        prozorZaPotvrduDugmadWrapper.remove();
-        forma.append(prozorZaPotvrduDugmadWrapper);
-
-        dugmeZaObustavljanje.addEventListener("click", function() {
-            dugmeZaObustavljanje.remove();
-            dugmeZaPotvrdu.remove();
-            document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
-        });
-
-        prozor.append(forma);
-        document.getElementById("prozorZaPotvrduPozadina").style.display = "block";
-    });
-
-    // potvrda pretplate
-    document.getElementById("potvrdaPretplateDugme").addEventListener("click", function() {
-        var prozor = document.getElementById("prozorZaPotvrdu");
-
-        while(prozor.children[0].getAttribute("id") != "prozorZaPotvrduDugmadWrapper")
-            prozor.children[0].remove();
-
-        prozor.style.height = "130px";
-        prozor.style.top = "calc(50vh - 130px / 2)";
-        prozor.style.width = "550px";
-
-        var div1 = document.createElement("div");
-        div1.style.width = "100%";
-        div1.style.height = "calc(100% - 50px)";
-        div1.style.padding = "10px";
-        var p1 = document.createElement("p");
-        p1.style.textAlign = "center";
-        p1.style.width = "100%";
-        if(document.getElementById("potvrdaPretplateDugme").value == "Pretplati se") {
-            p1.innerHTML = "Potvrđivanjem ove opcije prihvatate da Vas aplikacija \"Beograd na WEB-u\" obaveštava o novom smeštaju putem Vašeg mail-a.";
-        } else {
-            p1.innerHTML = "Potvrđivanjem ove opcije aplikacija \"Beograd na WEB-u\" će prestati da Vas obaveštava o novom smeštaju putem Vašeg mail-a.";
+            let dugmeOtkazi = panelPromenaEmaila.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[0];
+            dugmeOtkazi.addEventListener("click", function() {
+                panelPromenaEmaila.style.display = "none";
+                pozadina.style.display = "none"
+            });
         }
-
-        div1.append(p1);
-        prozor.insertBefore(div1, prozor.children[prozor.children.length - 1]);
-
-        var dugmeZaObustavljanje = document.createElement("input");
-        var dugmeZaPotvrdu = document.createElement("input");
-        dugmeZaObustavljanje.setAttribute("type", "button");
-        dugmeZaPotvrdu.setAttribute("type", "button");
-        document.getElementById("prozorZaPotvrduDugmadWrapper").append(dugmeZaObustavljanje);
-        document.getElementById("prozorZaPotvrduDugmadWrapper").append(dugmeZaPotvrdu);
-
-        dugmeZaObustavljanje.value = "Otkaži";
-        dugmeZaPotvrdu.value = "Potvrdi";
-
-        dugmeZaObustavljanje.addEventListener("click", function() {
-            dugmeZaObustavljanje.remove();
-            dugmeZaPotvrdu.remove();
-            document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
-        });
-
-        dugmeZaPotvrdu.addEventListener("click", function() {
-            if(document.getElementById("potvrdaPretplateDugme").value == "Pretplati se") {
-                document.getElementById("potvrdaPretplateDugme").value = "Prekini pretplatu";
-            } else {
-                document.getElementById("potvrdaPretplateDugme").value = "Pretplati se";
-            }
-            dugmeZaObustavljanje.remove();
-            dugmeZaPotvrdu.remove();
-            document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
-        });
-
-        document.getElementById("prozorZaPotvrduPozadina").style.display = "block";
     });
 
     // potvrda pretplate
+    let postavljenEventHandlerPotvrda = false;
+    document.getElementById("potvrdaPretplateDugme").addEventListener("click", function() {
+        let pozadina = document.getElementById("prozorZaPotvrduPozadina");
+        pozadina.style.display = "block"
+
+        let panelPotvrde = document.getElementById("panelPotvrda");
+        panelPotvrde.style.display = "block";
+        aktivniProzor = panelPotvrde;
+
+        if(!postavljenEventHandlerPotvrda) {
+            postavljenEventHandlerPotvrda = true;
+
+            let dugmeOtkazi = panelPotvrde.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[0];
+            dugmeOtkazi.addEventListener("click", function() {
+                panelPotvrde.style.display = "none";
+                pozadina.style.display = "none"
+            });
+
+            let dugmePotvrdi = panelPotvrde.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[1];
+            dugmePotvrdi.addEventListener("click", function() {
+                // izmeniti za AJAX
+                if(dugmePotvrdi.value == "Pretplati se") {
+                    document.getElementById("porukaPotvrde").innerHTML =
+                        "Potvrđivanjem ove opcije aplikacija \"Beograd na WEB-u\"<br />"
+                        + "će prestati da Vas obaveštava o novom smeštaju putem Vašeg mail-a.";
+                    dugmePotvrdi.value = "Prekini pretplatu";
+                } else {
+                    document.getElementById("porukaPotvrde").innerHTML =
+                        "Potvrđivanjem ove opcije prihvatate da Vas aplikacija \"Beograd na WEB-u\"<br />" +
+                        "obaveštava o novom smeštaju putem Vašeg mail-a.";
+                    dugmePotvrdi.value = "Pretplati se";
+                }
+
+                panelPotvrde.style.display = "none";
+                pozadina.style.display = "none"
+            });
+        }
+    });
+
+    // brisanje istorije
+    let postavljenEventHandlerBrisanje = false;
     document.getElementById("obrisiIstorijuDugme").addEventListener("click", function() {
-        var prozor = document.getElementById("prozorZaPotvrdu");
+        let pozadina = document.getElementById("prozorZaPotvrduPozadina");
+        pozadina.style.display = "block"
 
-        while(prozor.children[0].getAttribute("id") != "prozorZaPotvrduDugmadWrapper")
-            prozor.children[0].remove();
+        let panelBrisanje = document.getElementById("panelBrisanje");
+        panelBrisanje.style.display = "block";
+        aktivniProzor = panelBrisanje;
 
-        prozor.style.height = "130px";
-        prozor.style.top = "calc(50vh - 130px / 2)";
-        prozor.style.width = "450px";
+        if(!postavljenEventHandlerBrisanje) {
+            postavljenEventHandlerBrisanje = true;
 
-        var div1 = document.createElement("div");
-        div1.style.width = "100%";
-        div1.style.height = "calc(100% - 50px)";
-        div1.style.padding = "10px";
-        var p1 = document.createElement("p");
-        p1.style.textAlign = "center";
-        p1.style.width = "100%";
-        p1.innerHTML = "Da li ste sigurni da želite da obrišete istoriju sviđanja?<br/ ><b>Ovime ćete uticati na algoritam preporuke.</b>";
+            let dugmeOtkazi = panelBrisanje.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[0];
+            dugmeOtkazi.addEventListener("click", function() {
+                panelBrisanje.style.display = "none";
+                pozadina.style.display = "none"
+            });
 
-        div1.append(p1);
-        prozor.insertBefore(div1, prozor.children[prozor.children.length - 1]);
+            let dugmePotvrdi = panelBrisanje.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[1];
+            dugmePotvrdi.addEventListener("click", function() {
+                panelBrisanje.style.display = "none";
+                pozadina.style.display = "none"
 
-        var dugmeZaObustavljanje = document.createElement("input");
-        var dugmeZaPotvrdu = document.createElement("input");
-        dugmeZaObustavljanje.setAttribute("type", "button");
-        dugmeZaPotvrdu.setAttribute("type", "button");
-        document.getElementById("prozorZaPotvrduDugmadWrapper").append(dugmeZaObustavljanje);
-        document.getElementById("prozorZaPotvrduDugmadWrapper").append(dugmeZaPotvrdu);
-
-        dugmeZaObustavljanje.value = "Otkaži";
-        dugmeZaPotvrdu.value = "Potvrdi";
-
-        dugmeZaObustavljanje.addEventListener("click", function() {
-            dugmeZaObustavljanje.remove();
-            dugmeZaPotvrdu.remove();
-            document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
-        });
-
-        dugmeZaPotvrdu.addEventListener("click", function() {
-            dugmeZaObustavljanje.remove();
-            dugmeZaPotvrdu.remove();
-            document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
-            $.ajax({url:"userdata/",type:"POST"});
-            window.location.reload(true);
-            return false;
-
-
-        });
-
-        document.getElementById("prozorZaPotvrduPozadina").style.display = "block";
+                $.ajax({url:"userdata/",type:"POST"});
+                window.location.reload(true);
+                return false;
+            });
+        }
     });
 
     // ubacivanje novog komentara.

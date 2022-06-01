@@ -1,0 +1,146 @@
+/* Marko Mirković 197/19 */
+
+#dugmeFilteri {
+    display: block;
+    background-color: #4f5d75;
+    color: #f5f0f6;
+    font-size: 14px;
+    border-color: #ef8354;
+    border-radius: 25px;
+    width: 80%;
+    margin: auto;
+}
+
+#filteriPanelPozadina {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+}
+
+#filteriPanel {
+    position: relative;
+    margin: auto;
+    top: calc(50vh - 360px / 2);
+    width: 800px;
+    height: 360px;
+    background-color: #2d3142;
+    border-color: #ef8354;
+    border-width: 3px;
+    border-style: outset;
+    border-radius: 25px;
+}
+
+#filteriTabela {
+    border-spacing: 0;
+    width: 100%;
+}
+
+#filteriTabela tr td {
+    padding: 25px;
+}
+
+.filteriDropDown {
+    background-color: #f5f0f6;
+    color: #2d3142;
+    width: 240px;
+    height: 26px;
+    padding: 2px 4px 2px 4px;
+    float: right;
+    font-size: 14px;
+    border-radius: 15px;
+}
+
+.lokacijaDropDownOpcija {
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.filteriPanelTekst {
+    display: inline-block;
+    width: fit-content;
+    font-size: 14px;
+    height: 22px;
+    margin: 0;
+    color: #f5f0f6;
+}
+
+.dupliInputWrapper {
+    width: 240px;
+    float: right;
+}
+
+.dupliInput {
+    background-color: #f5f0f6;
+    color: #2d3142;
+    width: 110px;
+    float: left;
+    font-size: 13px;
+    height: 26px;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+.dupliInput:last-of-type {
+    float: right;
+}
+
+.dupliInput::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(120, 120, 120);
+    opacity: 1; /* Firefox */
+    font-style: italic;
+}
+
+.dupliInput:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgb(120, 120, 120);
+    font-style: italic;
+}
+
+.dupliInput::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgb(120, 120, 120);
+    font-style: italic;
+}
+
+#spratnostWrapper {
+    width: 240px;
+    float: right;
+}
+
+#spratnostWrapper label {
+    font-size: 14px;
+    color: #f5f0f6;
+}
+
+.filteriPanelDugmad {
+    background-color: #4f5d75;
+    border-color: #ef8354;
+    border-width: 2px;
+    border-radius: 25px;
+    font-size: 13.5px;
+    color:#f5f0f6;
+}
+
+.filteriPanelDugmad[value="Potvrdi"] {
+    float: right;
+}
+
+#izabraniFilteriWrapper {
+    width: 100%;
+    cursor: pointer;
+}
+
+#izabraniFilteriNaslov {
+    color:#f5f0f6;
+    font-size: 13.5px;
+    text-align: center;
+    padding-top: 15px;
+}
+
+#izabraniFilteri {
+    font-size: 14px;
+    color: #f5f0f6;
+    width: 100%;
+}

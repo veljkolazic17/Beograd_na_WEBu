@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var user = JSON.parse(sessionStorage.getItem("user"));
     var isLiked = JSON.parse(sessionStorage.getItem("isliked"));
     var smestajList = JSON.parse(sessionStorage.getItem("smestajList"));
+    let currClicked = null;
 
     if(smestajList != null) {
         // posebno formiran niz zbog dve kolone kod prikaza smestaja
@@ -14,12 +15,13 @@ document.addEventListener("DOMContentLoaded", function() {
             if(i % 2 == 0)
                 nizPrilagodjenZaPrikaz.push(smestaji[i >> 1]);
             else
-                nizPrilagodjenZaPrikaz.push(smestaji[(i >> 1) + Math.ceil(smestajList.length >> 1)]);
+                nizPrilagodjenZaPrikaz.push(smestaji[(i >> 1) + Math.ceil(smestajList.length / 2)]);
         }
         smestaji = nizPrilagodjenZaPrikaz;
 
         for(let i = 0; i < smestajList.length; i++) {
             smestaji[i].addEventListener("click", function(ev) {
+                currClicked = i;
                 if(user != null) {
                     $.ajax({
                         url:"isliked/"+user.korisnickoime+"/"+smestajList[i].idsmestaj,

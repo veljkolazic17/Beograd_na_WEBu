@@ -23,7 +23,18 @@ document.addEventListener("DOMContentLoaded", function() {
             let korisniciZaBrisanje = panelAdmina.getElementsByClassName("korisniciBrisanje");
             for(let korisnik of korisniciZaBrisanje) {
                 korisnik.addEventListener("dblclick", function(ev) {
-                    // kod za AJAX
+                    $.ajax({
+                        url: "userdata/obrisiKorisnika/" + korisnik.value,
+                        type: "POST",
+                        statusCode: {
+                            403: function () {
+                                alert("Nemas dozvolu prijatelju ;)");
+                                return;
+                            }
+                        },
+                        async: false
+                    });
+                    //window.location.reload(false);
                     korisnik.remove();
                     ev.stopPropagation();
                 });

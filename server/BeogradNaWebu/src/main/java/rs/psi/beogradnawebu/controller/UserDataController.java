@@ -2,6 +2,7 @@ package rs.psi.beogradnawebu.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,8 @@ import rs.psi.beogradnawebu.dao.SmestajDAO;
 import rs.psi.beogradnawebu.services.MailService;
 import rs.psi.beogradnawebu.model.Korisnik;
 import rs.psi.beogradnawebu.services.SimplePasswordGenerator;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/userdata")
@@ -71,5 +74,21 @@ public class UserDataController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @PostMapping("obrisiKorisnika/{korime}")
+    public ResponseEntity<String> obrisiKorisnika(@AuthenticationPrincipal User user, @PathVariable("korime") String korime){
+        Korisnik korisnik = korisnikDAO.getUserByUsername(korime).orElse(null);
+        if(korisnik == null)
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
 
+        Collection<GrantedAuthority> roles = user.getAuthorities();
+        for(GrantedAuthority role: roles) {
+            System.out.println(role.getAuthority());
+            if(role.getAuthority().equals("ROLE_ADMIN")) {
+                korisnikDAO.delete((int)korisnik.getIdkorisnik());
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
 }

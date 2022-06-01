@@ -38,21 +38,26 @@ public class FilterController {
 
     @PostMapping("/filter")
     public String filterSmestaj(HttpServletRequest request,@AuthenticationPrincipal User user,@Valid @ModelAttribute("filterData") FilterDTO filterData, RedirectAttributes redirectAttributes){
-        redirectAttributes.addFlashAttribute("filterf",filterData);
-        List<Smestaj> smestajList;
-        if(filterData!= null) {
-            smestajList = smestajDAO.searchByFilters(filterData);
-            HttpSession mySession = request.getSession();
-            mySession.setAttribute("sviSmestaji",smestajList);
-            redirectAttributes.addFlashAttribute("smestajList",smestajList);
+        HttpSession mySession = request.getSession();
+        if(!filterData.isNull()){
+            mySession.setAttribute("myfilter",filterData);
+            redirectAttributes.addFlashAttribute("filterf",filterData);
+            mySession.setAttribute("displayflag",1);
+        }else if(mySession.getAttribute("myfilter") == null){
+            mySession.setAttribute("displayflag",null);
+        }
+        else{
+            redirectAttributes.addFlashAttribute("filterf",(FilterDTO)mySession.getAttribute("myfilter"));
+            mySession.setAttribute("displayflag",1);
         }
         return "redirect:/pregledsmestaja/0";
     }
 
     @GetMapping("/{nstranica}")
-    public String listSmestaj(HttpServletRequest request , @AuthenticationPrincipal User korisnik,@PathVariable("nstranica")Integer nstranica, Model model){
+    public String listSmestaj(HttpServletRequest request , @AuthenticationPrincipal User korisnik,@PathVariable() int nstranica, Model model){
         model.addAttribute("filterData",new FilterDTO());
         HttpSession mySession = request.getSession();
+        model.addAttribute("pagen",nstranica);
         if(korisnik!=null) {
             if(mySession.getAttribute("sviSmestaji")==null) {
                 List<Smestaj> smestajList = smestajDAO.list();
@@ -60,15 +65,19 @@ public class FilterController {
                 model.addAttribute("smestajList", smestajList.subList(0,10));
             }
             else{
-                List<Smestaj> smestajList = (List<Smestaj>) mySession.getAttribute("sviSmestaji");
-                if(smestajList.size()>=10){
-                    if(nstranica*10 < smestajList.size()) {
-                        model.addAttribute("smestajList", smestajList.subList(nstranica * 10, (nstranica + 1) * 10));
-                    }
-                }
-                else {
+                if((int)mySession.getAttribute("displayflag") == 1){
+                    FilterDTO myfilter = (FilterDTO) mySession.getAttribute("myfilter");
+                    model.addAttribute("filterf",myfilter);
+                    List<Smestaj> smestajList = smestajDAO.searchByFilters(myfilter,nstranica);
                     model.addAttribute("smestajList", smestajList);
-
+                }else {
+                    List<Smestaj> smestajList = (List<Smestaj>) mySession.getAttribute("myrec");
+                    if(smestajList.size() >= 10*(nstranica+1)){
+                        smestajList = smestajList.subList(nstranica*10, (nstranica+1)*10);
+                    }else if(smestajList.size() >= 10*nstranica){
+                        smestajList = smestajList.subList(nstranica*10,smestajList.size());
+                    }
+                    model.addAttribute("smestajList", smestajList);
                 }
             }
             Korisnik k = korisnikDAO.getUserByUsername(korisnik.getUsername()).get();
@@ -85,22 +94,13 @@ public class FilterController {
         }
         else {
 
-            if(mySession.getAttribute("sviSmestaji")==null) {
-                List<Smestaj> smestajList = smestajDAO.list();
-                mySession.setAttribute("sviSmestaji",smestajList);
+            if(mySession.getAttribute("myfilter")==null) {
+                List<Smestaj> smestajList = smestajDAO.getByOffset(nstranica,10);
                 model.addAttribute("smestajList", smestajList.subList(0,10));
             }
-            else {
-                List<Smestaj> smestajList = (List<Smestaj>) mySession.getAttribute("sviSmestaji");
-                if(smestajList.size()>=10) {
-                    if(nstranica*10 < smestajList.size()) {
-                        model.addAttribute("smestajList", smestajList.subList(nstranica * 10, (nstranica + 1) * 10));
-                    }
-                }
-                else {
-                    model.addAttribute("smestajList", smestajList);
-
-                }
+            else{
+                List<Smestaj> smestajList = smestajDAO.searchByFilters((FilterDTO) mySession.getAttribute("myfilter"),nstranica);
+                model.addAttribute("smestajList", smestajList);
             }
             return "glavnaStranicaGost";
         }

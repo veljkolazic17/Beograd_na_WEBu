@@ -15,5 +15,7 @@ public abstract class Scraper {
     protected final ChromeDriver driver;
     protected SmestajDAO smestaj;
 
+
+
     public abstract void scrape();
 }

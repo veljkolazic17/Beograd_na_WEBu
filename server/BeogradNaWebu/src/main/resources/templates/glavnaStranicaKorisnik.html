@@ -34,7 +34,7 @@
     console.log(smestajList);
 
     let putanjaZaPromenuEmaila = /*[[@{promena/email}]]*/ "/";
-    let prikazPredlozenih = /*[[${prikazPredlozenih}]]*/ false;
+    let prikazPredlozenih = /*[[${prikazPredlozenih}]]*/ true;
     /*]]>*/
 </script>
 
@@ -51,7 +51,7 @@
         <form th:action="@{/pregledpredlozenihsmestaja}" method="get" style="width: 50%; padding: 0;">
             <input id="dugmePredlozeniSmestaji" type="submit" value="Predloženi smeštaji" />
         </form>
-        <form th:action="@{/pregledsmestaja/0}" method="get" style="width: 50%; padding: 0;">
+        <form th:action="@{/pregledsmestaja/filter}" method="post" style="width: 50%; padding: 0;">
             <input id="dugmeSviSmestaji" type="submit" value="Svi smeštaji" />
         </form>
     </nav>
@@ -74,7 +74,7 @@
         <div id="prozorZaPotvrdu">
 
             <div id="panelPromenaSifre">
-                <form method="post" th:action="@{promena/sifra}" th:object="${promenaSifre}">
+                <form method="post" th:action="@{../promena/sifra}" th:object="${promenaSifre}">
                     <div class="sifreWrappers">
                         <p id="staraSifraNatpis">Stara šifra: </p>
                         <input type="password" th:field="*{StaraSifra}" />
@@ -96,7 +96,7 @@
             </div>
 
             <div id="panelPromenaEmaila">
-                <form method="post" th:action="@{promena/email}" th:object="${promenaEmaila}">
+                <form method="post" th:action="@{../promena/email}" th:object="${promenaEmaila}">
                     <div class="mailoviWrappers">
                         <p id="stariEmailNatpis">Stari email: </p>
                         <input type="email" th:field="*{StariEmail}" />
@@ -189,9 +189,13 @@
     <div id="pregledPredlozenogSmestaja" class="row pregled">
         <div class="stranice col-12" style="padding: 0;" >
             <!-- ovo nije greska, namerno je da ne bi bilo prostora izmedju elemenata -->
-            <input type="button" value="<" class="stranicaLevo"
-            /><div class="brojStranice"> 1 </div
-        ><input type="button" value=">" class="stranicaDesno" />
+            <form class="stranicaLevo" th:if="${pagen >= 1}" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}-1)}" method="get">
+                <input id="left" class="stranicaLevo" value="<" type="submit"   />
+            </form>
+            <div id="brStr" class="brojStranice" th:text="${pagen+1}">  </div>
+            <form class="stranicaDesno" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}+1)}" method="get" >
+                <input id="right" class="stranicaDesno" value=">" type="submit"  />
+            </form>
         </div>
 
         <section class="col-12">

@@ -24,7 +24,6 @@
         sessionStorage.setItem("smestajList",JSON.stringify(smestajList));
         var filterData = [[${filterf}]];
         sessionStorage.setItem("filterf",JSON.stringify(filterData));
-
         console.log(smestajList);
         /*]]>*/
     </script>
@@ -38,6 +37,7 @@
         </header>
     
         <nav class="row">
+            <form th:action="@{/pregledsmestaja/0}" method="get" style="padding: 0;">
             <form th:action="@{/pregledsmestaja/0}" method="get" style="padding: 0;">
                 <input id="dugmeSviSmestaji" type="submit" value="Svi smeštaji" style="border-bottom-left-radius: 35px;" />
             </form>

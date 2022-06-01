@@ -1,6 +1,7 @@
 package rs.psi.beogradnawebu.controller;
 
 
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -19,6 +21,8 @@ import rs.psi.beogradnawebu.model.Recalgdata;
 import rs.psi.beogradnawebu.model.Smestaj;
 import rs.psi.beogradnawebu.recalg.MMLVRecommenderImpl;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +45,21 @@ public class RecommendedController {
 
 
     @GetMapping
-    public String listSmestaj(@AuthenticationPrincipal User user, RedirectAttributes redirectAttributes){
+    public String listSmestaj(HttpServletRequest request, @AuthenticationPrincipal User user, RedirectAttributes redirectAttributes){
         Korisnik korisnik = korisnikDAO.getUserByUsername(user.getUsername()).orElse(null);
         if(korisnik == null) {
             redirectAttributes.addFlashAttribute("prikazPredlozenih", false);
             return "redirect:/pregledsmestaja/0";
         } else {
-            List<Smestaj> smestajList = recommendAcc(korisnik);
-            redirectAttributes.addFlashAttribute("smestajList", smestajList);
+
+            List<Smestaj> smestajList;
+            HttpSession mySession = request.getSession();
+            if(mySession.getAttribute("myrec") == null){
+                mySession.setAttribute("myrec",recommendAcc(korisnik));
+            }
+            smestajList = (List<Smestaj>) mySession.getAttribute("myrec");
+            mySession.setAttribute("displayflag",2);
+
             redirectAttributes.addFlashAttribute("prikazPredlozenih", true);
             return "redirect:/pregledsmestaja/0";
         }
@@ -69,9 +80,9 @@ public class RecommendedController {
                 for(Smestaj s : smestajList){
                    if(mmlvRecommender.recommend(recalgdata,avgAcc,s) || recalgdata == null) result.add(s);
 
-                    if(result.size() == 10) break;
+                    if(result.size() == 50) break;
                 }
-                if(result.size() == 10) break;
+                if(result.size() == 50) break;
                 i++;
             }
         }catch (Exception e){

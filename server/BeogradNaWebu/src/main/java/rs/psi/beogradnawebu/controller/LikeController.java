@@ -6,6 +6,7 @@ import net.minidev.json.JSONObject;
 import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -22,6 +23,8 @@ import rs.psi.beogradnawebu.model.LajkSmestaja;
 import rs.psi.beogradnawebu.model.Smestaj;
 import rs.psi.beogradnawebu.recalg.MMLVRecommenderImpl;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 import java.security.Principal;
 import java.util.HashMap;
@@ -54,12 +57,17 @@ public class LikeController {
         LajkSmestaja lajkSmestaja = lajkSmestajaCDAO.get(new int[]{idkorisnik,idsmestaj}).orElse(null);
 //        HashMap<String,Boolean> hashMap = new HashMap<>();
 //        hashMap.put("isliked",lajkSmestaja!=null);
+
         return new ResponseEntity<Boolean>(lajkSmestaja!=null, HttpStatus.OK);//new JSONObject(hashMap);
     }
 
 
     @PostMapping("/like/{idSmestaj}")
-    public ResponseEntity<String> likeSmestaj(@AuthenticationPrincipal User korisnik, @PathVariable Integer idSmestaj){
+    public ResponseEntity<String> likeSmestaj(HttpServletRequest request, @AuthenticationPrincipal User korisnik, @PathVariable Integer idSmestaj){
+
+        HttpSession mySession = request.getSession();
+        mySession.setAttribute("myrec",null);
+
         System.out.println("USO U METODU!");
         if(korisnik == null) return null;
         Korisnik k =korisnikDAO.getUserByUsername(korisnik.getUsername()).orElse(null);
@@ -82,7 +90,11 @@ public class LikeController {
 
     }
     @PostMapping("/unlike/{idSmestaj}")
-    public ResponseEntity<String> unlikeSmestaj(@AuthenticationPrincipal User korisnik,@PathVariable Integer idSmestaj){
+    public ResponseEntity<String> unlikeSmestaj(HttpServletRequest request, @AuthenticationPrincipal User korisnik,@PathVariable Integer idSmestaj){
+
+        HttpSession mySession = request.getSession();
+        mySession.setAttribute("myrec",null);
+
         Korisnik k =korisnikDAO.getUserByUsername(korisnik.getUsername()).orElse(null);
         Smestaj s =smestajDAO.get(idSmestaj).orElse(null);
         if(s!=null && k!=null) {

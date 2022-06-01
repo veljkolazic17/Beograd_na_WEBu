@@ -26,7 +26,7 @@ public class InfoChangeController {
         Korisnik korisnik = korisnikDAO.getUserByUsername(user.getUsername()).get();
         korisnik.setEmail(mailovi.getNoviEmail());
         korisnikDAO.update(korisnik, (int) korisnik.getIdkorisnik());
-        return "redirect:/pregledsmestaja";
+        return "redirect:/pregledsmestaja/0";
     }
 
     @PostMapping("/promena/sifra")

@@ -24,6 +24,9 @@ public class FilterDTO {
     private boolean ImaLift;
 
     public String getLokacija() {
+        if(Lokacija == null){
+            return "nullLokacija";
+        }
         return Lokacija;
     }
 
@@ -32,6 +35,9 @@ public class FilterDTO {
     }
 
     public String getBrojSoba() {
+        if(BrojSoba == null){
+            return "nullSoba";
+        }
         return BrojSoba;
     }
 
@@ -40,6 +46,9 @@ public class FilterDTO {
     }
 
     public String getTipSmestaja() {
+        if(TipSmestaja == null){
+            return "nullSmestaj";
+        }
         return TipSmestaja;
     }
 
@@ -94,6 +103,11 @@ public class FilterDTO {
     public void setImaLift(boolean imaLift) {
         ImaLift = imaLift;
     }
+
+    public boolean isNull(){
+        return Lokacija==null;
+    }
+
 
     @Override
     public String toString() {

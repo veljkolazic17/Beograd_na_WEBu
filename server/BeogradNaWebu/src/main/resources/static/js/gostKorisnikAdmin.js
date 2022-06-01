@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 currClicked = i;
                 if(user != null) {
                     $.ajax({
-                        url:"isliked/"+user.korisnickoime+"/"+smestajList[i].idsmestaj,
+                        url:"../isliked/"+user.korisnickoime+"/"+smestajList[i].idsmestaj,
                         type:"GET",
                         success: function(data) {
                             isLiked = data;
@@ -225,7 +225,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 element.children[1].innerHTML = parseInt(element.children[1].innerHTML) - 1;
                 element.children[0].innerHTML = emptyHeart;
                 smestajList[currClicked].brojLajkova -= 1;
-                $.ajax({url: "unlike/" + smestajList[currClicked].idsmestaj, type: "POST"})
+                $.ajax({url: "../unlike/" + smestajList[currClicked].idsmestaj, type: "POST"})
             }
         }
     });
@@ -243,17 +243,12 @@ document.addEventListener("DOMContentLoaded", function() {
     var first = true;
 
     Object.entries(filterData).forEach(([key,value])=>{
-        if(value != null && value !== 0 && value !== false && value !== "%nullLokacija%" && value !== "nullSoba" && value !== "nullSmestaj"){
+        if(value != null && value !== 0 && value !== false && value !== "nullLokacija" && value !== "nullSoba" && value !== "nullSmestaj"){
             if(first){
                 textToBind+="&times;&nbsp;";
                 first=false;
             }
-            if(key == "lokacija"){
-                textToBind += key + ": " + value.substring(1,value.length-1) + "</br>"
-            }else{
-                textToBind += key + ": " + value + "</br>"
-            }
-
+            textToBind += key + ": " + value + "</br>"
         }
     });
     document.getElementById("izabraniFilteri").innerHTML = textToBind;

@@ -294,6 +294,17 @@
     </div>
 </div>
 
+<div id="pozadinaProzoraZaPotvrduBrisanjaKom">
+    <div id="prozorZaPotvrduBrisanjaKomentara">
+        <!-- dinamicko ucitavanje -->
+        <p id="tekstProzoraZaPotvrduBrisanjaKomentara">Da li ste sigurni da želite da obrišete komentar?</p>
+        <div class="prozorZaPotvrduDugmadWrapper">
+            <input type="button" value="Otkaži" />
+            <input type="button" value="Potvrdi" />
+        </div>
+    </div>
+</div>
+
 <form th:object="${filterData}" th:action="@{/pregledsmestaja/filter/0}" method="post">
     <div id="filteriPanelPozadina">
         <div id="filteriPanel">

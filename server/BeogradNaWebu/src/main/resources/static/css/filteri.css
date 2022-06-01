@@ -69,10 +69,10 @@
 
 #filteriPanel {
     position: relative;
-    margin: auto;
-    top: calc(50vh - 360px / 2);
-    width: 800px;
-    height: 360px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: fit-content;
     background-color: #2d3142;
     border-color: #ef8354;
     border-width: 3px;
@@ -80,13 +80,14 @@
     border-radius: 25px;
 }
 
-#filteriTabela {
-    border-spacing: 0;
-    width: 100%;
+.redFiltera {
+    padding: 10px;
 }
 
-#filteriTabela tr td {
-    padding: 25px;
+@media screen and (max-width: 380px) {
+    #filteriPanel {
+        width: 265px;
+    }
 }
 
 .filteriDropDown {
@@ -95,7 +96,6 @@
     width: 240px;
     height: 26px;
     padding: 2px 4px 2px 4px;
-    float: right;
     font-size: 14px;
     border-radius: 15px;
 }
@@ -110,13 +110,18 @@
     width: fit-content;
     font-size: 14px;
     height: 22px;
+    padding: 2px 0 2px 0;
+    width: 100px;
     margin: 0;
     color: #f5f0f6;
+    vertical-align: middle;
 }
 
 .dupliInputWrapper {
     width: 240px;
-    float: right;
+    height: 26px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .dupliInput {
@@ -151,8 +156,7 @@
 }
 
 #spratnostWrapper {
-    width: 240px;
-    float: right;
+    display: inline-block;
 }
 
 #spratnostWrapper label {

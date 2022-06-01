@@ -292,130 +292,120 @@
 <form th:object="${filterData}" th:action="@{/pregledsmestaja/filter/0}" method="post">
     <div id="filteriPanelPozadina">
         <div id="filteriPanel">
-            <table id="filteriTabela">
-                <tr>
-                    <td>
-                        <p class="filteriPanelTekst">Lokacija: </p>
 
-                        <select name="lokacija" class="filteriDropDown" th:field="*{Lokacija}">
-                            <option value="nullLokacija" class="lokacijaDropDownOpcija">
-                                Sve
-                            </option>
+            <div class="redFiltera">
+                <p class="filteriPanelTekst">Lokacija: </p>
 
-                            <option value="Zvezdara" class="lokacijaDropDownOpcija">
-                                Zvezdara
-                            </option>
+                <select name="lokacija" class="filteriDropDown" th:field="*{Lokacija}">
+                    <option value="nullLokacija" class="lokacijaDropDownOpcija">
+                        Sve
+                    </option>
 
-                            <option value="Novi Beograd" class="lokacijaDropDownOpcija">
-                                Novi Beograd
-                            </option>
+                    <option value="Zvezdara" class="lokacijaDropDownOpcija">
+                        Zvezdara
+                    </option>
 
-                            <option value="Zvezdara opština" class="lokacijaDropDownOpcija">
-                                Zvezdara opština
-                            </option>
+                    <option value="Novi Beograd" class="lokacijaDropDownOpcija">
+                        Novi Beograd
+                    </option>
 
-                            <option value="Zemun" class="lokacijaDropDownOpcija">
-                                Zemun
-                            </option>
-                        </select>
-                    </td>
+                    <option value="Zvezdara opština" class="lokacijaDropDownOpcija">
+                        Zvezdara opština
+                    </option>
 
-                    <td>
-                        <p class="filteriPanelTekst">Tip smeštaja: </p>
+                    <option value="Zemun" class="lokacijaDropDownOpcija">
+                        Zemun
+                    </option>
+                </select>
+            </div>
 
-                        <select name="smestaj" class="filteriDropDown" th:field="*{TipSmestaja}">
-                            <option value="nullSmestaj" class="lokacijaDropDownOpcija">
-                                Sve
-                            </option>
+            <div class="redFiltera">
+                <p class="filteriPanelTekst">Tip smeštaja: </p>
 
-                            <option value="Stan" class="lokacijaDropDownOpcija">
-                                Stan
-                            </option>
+                <select name="smestaj" class="filteriDropDown" th:field="*{TipSmestaja}">
+                    <option value="nullSmestaj" class="lokacijaDropDownOpcija">
+                        Sve
+                    </option>
 
-                            <option value="Kuca" class="lokacijaDropDownOpcija">
-                                Kuca
-                            </option>
-                        </select>
-                    </td>
-                </tr>
+                    <option value="Stan" class="lokacijaDropDownOpcija">
+                        Stan
+                    </option>
 
-                <tr>
-                    <td>
-                        <p class="filteriPanelTekst">Broj soba: </p>
-                        <select name="brojSoba" class="filteriDropDown" th:field="*{BrojSoba}">
-                            <option value="nullSoba" class="lokacijaDropDownOpcija">
-                                Sve
-                            </option>
+                    <option value="Kuca" class="lokacijaDropDownOpcija">
+                        Kuca
+                    </option>
+                </select>
+            </div>
 
-                            <option value="Garsonjera" class="lokacijaDropDownOpcija">
-                                Garsonjera
-                            </option>
+            <div class="redFiltera">
+                <p class="filteriPanelTekst">Broj soba: </p>
 
-                            <option value="Jednosoban" class="lokacijaDropDownOpcija">
-                                Jednosoban
-                            </option>
+                <select name="brojSoba" class="filteriDropDown" th:field="*{BrojSoba}">
+                    <option value="nullSoba" class="lokacijaDropDownOpcija">
+                        Sve
+                    </option>
 
-                            <option value="Jednoiposoban" class="lokacijaDropDownOpcija">
-                                Jednoiposoban
-                            </option>
+                    <option value="Garsonjera" class="lokacijaDropDownOpcija">
+                        Garsonjera
+                    </option>
 
-                            <option value="Dvosoban" class="lokacijaDropDownOpcija">
-                                Dvosoban
-                            </option>
+                    <option value="Jednosoban" class="lokacijaDropDownOpcija">
+                        Jednosoban
+                    </option>
 
-                            <option value="Dvoiposoban" class="lokacijaDropDownOpcija">
-                                Dvoiposoban
-                            </option>
+                    <option value="Jednoiposoban" class="lokacijaDropDownOpcija">
+                        Jednoiposoban
+                    </option>
 
-                            <option value="TrosobanIPreko" class="lokacijaDropDownOpcija">
-                                Trosoban i preko
-                            </option>
-                        </select>
-                    </td>
+                    <option value="Dvosoban" class="lokacijaDropDownOpcija">
+                        Dvosoban
+                    </option>
 
-                    <td>
-                        <p class="filteriPanelTekst">Kvadratura: </p>
+                    <option value="Dvoiposoban" class="lokacijaDropDownOpcija">
+                        Dvoiposoban
+                    </option>
 
-                        <div class="dupliInputWrapper">
-                            <input type="text" class="dupliInput" placeholder="od" th:field="*{KvadraturaOd}"/>
-                            <input type="text" class="dupliInput" placeholder="do" th:field="*{KvadraturaDo}"/>
-                        </div>
-                    </td>
-                </tr>
+                    <option value="TrosobanIPreko" class="lokacijaDropDownOpcija">
+                        Trosoban i preko
+                    </option>
+                </select>
+            </div>
 
-                <tr>
-                    <td>
-                        <p class="filteriPanelTekst">Spratnost: </p>
+            <div class="redFiltera">
+                <p class="filteriPanelTekst">Kvadratura: </p>
 
-                        <div id="spratnostWrapper">
-                            <input type="checkbox" name="nijePrvi" id="nijePrvi" th:field="*{NijePrvi}"/>
-                            <label for="nijePrvi">Nije prvi</label>
-                            <br />
-                            <input type="checkbox" name="imaLift" id="imaLift" th:field="*{ImaLift}"/>
-                            <label for="imaLift">Ima lift</label>
-                        </div>
-                    </td>
+                <div class="dupliInputWrapper">
+                    <input type="text" class="dupliInput" placeholder="od" th:field="*{KvadraturaOd}"/>
+                    <input type="text" class="dupliInput" placeholder="do" th:field="*{KvadraturaDo}"/>
+                </div>
+            </div>
 
-                    <td>
-                        <p class="filteriPanelTekst">Cena: </p>
+            <div class="redFiltera">
+                <p class="filteriPanelTekst">Spratnost: </p>
 
-                        <div class="dupliInputWrapper">
-                            <input type="text" class="dupliInput" placeholder="od" th:field="*{CenaOd}"/>
-                            <input type="text" class="dupliInput" placeholder="do" th:field="*{CenaDo}"/>
-                        </div>
-                    </td>
-                </tr>
+                <div id="spratnostWrapper">
+                    <input type="checkbox" name="nijePrvi" id="nijePrvi" th:field="*{NijePrvi}"/>
+                    <label for="nijePrvi">Nije prvi</label>
 
-                <tr>
-                    <td>
-                        <input id="ocistiFiltereDugme" type="button" class="filteriPanelDugmad" value="Očisti sve filtere" />
-                    </td>
+                    <input type="checkbox" name="imaLift" id="imaLift" th:field="*{ImaLift}"/>
+                    <label for="imaLift">Ima lift</label>
+                </div>
+            </div>
 
-                    <td>
-                        <input id="potvrdiFiltereDugme" type="submit" class="filteriPanelDugmad" value="Potvrdi" />
-                    </td>
-                </tr>
-            </table>
+            <div class="redFiltera">
+                <p class="filteriPanelTekst">Cena: </p>
+
+                <div class="dupliInputWrapper">
+                    <input type="text" class="dupliInput" placeholder="od" th:field="*{CenaOd}"/>
+                    <input type="text" class="dupliInput" placeholder="do" th:field="*{CenaDo}"/>
+                </div>
+            </div>
+
+            <div class="redFiltera">
+                <input id="ocistiFiltereDugme" type="button" class="filteriPanelDugmad" value="Očisti sve filtere" />
+                <input id="potvrdiFiltereDugme" type="submit" class="filteriPanelDugmad" value="Potvrdi" />
+            </div>
+
         </div>
     </div>
 </form>

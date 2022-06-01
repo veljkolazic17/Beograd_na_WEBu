@@ -62,6 +62,32 @@
 }
 
 
+.prozorZaPotvrduDugmadWrapper {
+    width: 100%;
+    height: 50px;
+    border-top: outset #ef8354 3px;
+}
+
+.prozorZaPotvrduDugmadWrapper>input {
+    width: 50%;
+    height: 100%;
+    float: left;
+    background-color: #4f5d75;
+    color: #f5f0f6;
+    font-size: 13px;
+    border-radius: 0;
+    padding: 0;
+}
+
+.prozorZaPotvrduDugmadWrapper>input:first-of-type {
+    border-bottom-left-radius: 22px;
+}
+
+.prozorZaPotvrduDugmadWrapper>input:last-of-type {
+    border-bottom-right-radius: 22px;
+}
+
+
 #prozorZaPotvrduPozadina {
     position: fixed;
     left: 0;
@@ -180,30 +206,6 @@
     }
 }
 
-.prozorZaPotvrduDugmadWrapper {
-    width: 100%;
-    height: 50px;
-    border-top: outset #ef8354 3px;
-}
-
-.prozorZaPotvrduDugmadWrapper>input {
-    width: 50%;
-    height: 100%;
-    float: left;
-    background-color: #4f5d75;
-    color: #f5f0f6;
-    font-size: 13px;
-    border-radius: 0;
-    padding: 0;
-}
-
-.prozorZaPotvrduDugmadWrapper>input:first-of-type {
-    border-bottom-left-radius: 22px;
-}
-
-.prozorZaPotvrduDugmadWrapper>input:last-of-type {
-    border-bottom-right-radius: 22px;
-}
 
 
 

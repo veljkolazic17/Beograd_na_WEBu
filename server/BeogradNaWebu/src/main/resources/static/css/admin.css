@@ -1,10 +1,15 @@
 /* Marko Mirković 197/19 */
 
+#nalogPanel {
+    height: 122px;
+}
+
 #nalogPanelAdminDugmeWrapper {
     position: absolute;
     bottom: 50px;
-    left: 0px;
+    left: 0;
     width: 100%;
+    height: 30px;
     border-top: outset #ef8354 3px;
 }
 
@@ -14,6 +19,27 @@
     background-color: #4f5d75;
     color: #f5f0f6;
     font-size: 13px;
+}
+
+#panelAdmin {
+    height: 500px;
+    width: 300px;
+}
+
+#korisniciWrapper {
+    width: 100%;
+    height: 450px;
+    max-height: 450px;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    overflow-y: auto;
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+}
+
+#korisniciWrapper::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
 }
 
 .korisniciBrisanje {

@@ -14,6 +14,8 @@ function prikaziSvePredlozeneSmestaje() {
     document.getElementById("dugmeSviSmestaji").style.backgroundColor = "#bf6943";
 }
 
+// trenutno aktivni prozor u panelu korisnika
+let aktivniProzor = null;
 
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -24,14 +26,13 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // izlaz iz prozora za potvrdu
-    let aktivniProzor = null;
     document.getElementById("prozorZaPotvrduPozadina").addEventListener("click", function(ev) {
         if(ev.target !== ev.currentTarget) return;
 
         let pozadina = document.getElementById("prozorZaPotvrduPozadina");
         aktivniProzor.style.display = "none";
         aktivniProzor = null;
-        pozadina.style.display = "none"
+        pozadina.style.display = "none";
     });
 
     // izlaz iz prozora za nalog
@@ -44,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let postavljenEventHandlerSifra = false;
     document.getElementById("promenaSifreDugme").addEventListener("click", function() {
         let pozadina = document.getElementById("prozorZaPotvrduPozadina");
-        pozadina.style.display = "block"
+        pozadina.style.display = "block";
 
         let panelPromenaSifre = document.getElementById("panelPromenaSifre");
         panelPromenaSifre.style.display = "block";
@@ -56,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
             let dugmeOtkazi = panelPromenaSifre.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[0];
             dugmeOtkazi.addEventListener("click", function() {
                 panelPromenaSifre.style.display = "none";
-                pozadina.style.display = "none"
+                pozadina.style.display = "none";
             });
         }
     });
@@ -65,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let postavljenEventHandlerEmail = false;
     document.getElementById("promenaEmailaDugme").addEventListener("click", function() {
         let pozadina = document.getElementById("prozorZaPotvrduPozadina");
-        pozadina.style.display = "block"
+        pozadina.style.display = "block";
 
         let panelPromenaEmaila = document.getElementById("panelPromenaEmaila");
         panelPromenaEmaila.style.display = "block";
@@ -77,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
             let dugmeOtkazi = panelPromenaEmaila.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[0];
             dugmeOtkazi.addEventListener("click", function() {
                 panelPromenaEmaila.style.display = "none";
-                pozadina.style.display = "none"
+                pozadina.style.display = "none";
             });
         }
     });
@@ -86,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let postavljenEventHandlerPotvrda = false;
     document.getElementById("potvrdaPretplateDugme").addEventListener("click", function() {
         let pozadina = document.getElementById("prozorZaPotvrduPozadina");
-        pozadina.style.display = "block"
+        pozadina.style.display = "block";
 
         let panelPotvrde = document.getElementById("panelPotvrda");
         panelPotvrde.style.display = "block";
@@ -98,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function() {
             let dugmeOtkazi = panelPotvrde.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[0];
             dugmeOtkazi.addEventListener("click", function() {
                 panelPotvrde.style.display = "none";
-                pozadina.style.display = "none"
+                pozadina.style.display = "none";
             });
 
             let dugmePotvrdi = panelPotvrde.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[1];
@@ -117,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
 
                 panelPotvrde.style.display = "none";
-                pozadina.style.display = "none"
+                pozadina.style.display = "none";
             });
         }
     });
@@ -126,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let postavljenEventHandlerBrisanje = false;
     document.getElementById("obrisiIstorijuDugme").addEventListener("click", function() {
         let pozadina = document.getElementById("prozorZaPotvrduPozadina");
-        pozadina.style.display = "block"
+        pozadina.style.display = "block";
 
         let panelBrisanje = document.getElementById("panelBrisanje");
         panelBrisanje.style.display = "block";
@@ -138,13 +139,13 @@ document.addEventListener("DOMContentLoaded", function() {
             let dugmeOtkazi = panelBrisanje.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[0];
             dugmeOtkazi.addEventListener("click", function() {
                 panelBrisanje.style.display = "none";
-                pozadina.style.display = "none"
+                pozadina.style.display = "none";
             });
 
             let dugmePotvrdi = panelBrisanje.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[1];
             dugmePotvrdi.addEventListener("click", function() {
                 panelBrisanje.style.display = "none";
-                pozadina.style.display = "none"
+                pozadina.style.display = "none";
 
                 $.ajax({url:"userdata/",type:"POST"});
                 window.location.reload(true);

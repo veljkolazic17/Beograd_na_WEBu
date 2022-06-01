@@ -52,7 +52,7 @@
         <form th:action="@{/pregledpredlozenihsmestaja}" method="get" style="width: 50%; padding: 0;">
             <input id="dugmePredlozeniSmestaji" type="submit" value="Predloženi smeštaji" />
         </form>
-        <form th:action="@{/pregledsmestaja}" method="get" style="width: 50%; padding: 0;">
+        <form th:action="@{/pregledsmestaja?nstranica=0}" method="get" style="width: 50%; padding: 0;">
             <input id="dugmeSviSmestaji" type="submit" value="Svi smeštaji" />
         </form>
     </nav>
@@ -184,9 +184,13 @@
         <aside class="col-lg-2 order-1 order-lg-2" id="filteri">
             <div class="stranice">
                 <!-- ovo nije greska, namerno je da ne bi bilo prostora izmedju elemenata -->
-                <input type="button" value="<" class="stranicaLevo"
-                /><div class="brojStranice"> 1 </div
-            ><input type="button" value=">" class="stranicaDesno" />
+                <form class="stranicaLevo" th:if="${pagen >= 1}" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}-1)}" method="get">
+                    <input id="left" class="stranicaLevo" value="<" type="submit"   />
+                </form>
+                <div id="brStr" class="brojStranice" th:text="${pagen+1}">  </div>
+                <form class="stranicaDesno" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}+1)}" method="get" >
+                    <input id="right" class="stranicaDesno" value=">" type="submit"  />
+                </form>
             </div>
 
             <input id="dugmeFilteri" type="button" value="Filteri">
@@ -297,7 +301,7 @@
     </div>
 </div>
 
-<form th:object="${filterData}" th:action="@{/pregledsmestaja/filter/0}" method="post">
+<form th:object="${filterData}" th:action="@{/pregledsmestaja/filter}" method="post">
     <div id="filteriPanelPozadina">
         <div id="filteriPanel">
             <table id="filteriTabela">

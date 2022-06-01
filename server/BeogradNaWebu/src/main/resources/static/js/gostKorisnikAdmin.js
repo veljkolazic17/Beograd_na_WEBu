@@ -107,6 +107,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+
     // prikaz panela za filtere
     document.getElementById("dugmeFilteri").addEventListener('click', function() {
         document.getElementById("filteriPanelPozadina").style.display = "block";
@@ -219,7 +220,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 element.children[1].innerHTML = parseInt(element.children[1].innerHTML) + 1;
                 element.children[0].innerHTML = fullHeart;
                 smestajList[currClicked].brojLajkova += 1;
-                $.ajax({url: "like/" + smestajList[currClicked].idsmestaj, type: "POST"})
+                $.ajax({url: "../like/" + smestajList[currClicked].idsmestaj, type: "POST"})
 
             } else {
                 element.children[1].innerHTML = parseInt(element.children[1].innerHTML) - 1;

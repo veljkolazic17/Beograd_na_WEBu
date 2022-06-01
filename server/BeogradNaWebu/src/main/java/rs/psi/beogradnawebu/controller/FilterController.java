@@ -59,10 +59,10 @@ public class FilterController {
         HttpSession mySession = request.getSession();
         model.addAttribute("pagen",nstranica);
         if(korisnik!=null) {
-            if(mySession.getAttribute("sviSmestaji")==null) {
-                List<Smestaj> smestajList = smestajDAO.list();
-                mySession.setAttribute("sviSmestaji",smestajList);
-                model.addAttribute("smestajList", smestajList.subList(0,10));
+            if(mySession.getAttribute("displayflag")==null) {
+                List<Smestaj> smestajList = smestajDAO.getByOffset(nstranica,10);
+
+                model.addAttribute("smestajList", smestajList);
             }
             else{
                 if((int)mySession.getAttribute("displayflag") == 1){

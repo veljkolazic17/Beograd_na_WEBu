@@ -70,11 +70,15 @@
             </section>
 
             <aside class="col-lg-2 order-1 order-lg-2" id="filteri">
-                <div th:object="${nstranica}" class="stranice">
+                <div  class="stranice">
                     <!-- ovo nije greska, namerno je da ne bi bilo prostora izmedju elemenata -->
-                    <input type="button" value="<" class="stranicaLevo"
-                    /><div class="brojStranice"> 1 </div
-                ><input type="button" value=">" class="stranicaDesno" />
+                    <form class="stranicaLevo" th:if="${pagen >= 1}" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}-1)}" method="get">
+                        <input id="left" class="stranicaLevo" value="<" type="submit"   />
+                    </form>
+                    <div id="brStr" class="brojStranice" th:text="${pagen+1}">  </div>
+                    <form class="stranicaDesno" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}+1)}" method="get" >
+                        <input id="right" class="stranicaDesno" value=">" type="submit"  />
+                    </form>
                 </div>
 
                 <input id="dugmeFilteri" type="button" value="Filteri">

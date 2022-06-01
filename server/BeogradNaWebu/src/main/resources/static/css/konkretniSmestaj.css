@@ -23,6 +23,7 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.6);
     display: none;
+    z-index: 12;
 }
 
 #stanPanel {
@@ -295,4 +296,37 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     color: #f5f0f6;
+}
+
+#pozadinaProzoraZaPotvrduBrisanjaKom {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    z-index: 13;
+}
+
+#prozorZaPotvrduBrisanjaKomentara {
+    position: relative;
+    width: 550px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #2d3142;
+    border-color: #ef8354;
+    border-width: 3px;
+    border-style: outset;
+    border-radius: 25px;
+    color: #f5f0f6;
+    font-size: 14px;
+}
+
+#tekstProzoraZaPotvrduBrisanjaKomentara {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 10px;
 }

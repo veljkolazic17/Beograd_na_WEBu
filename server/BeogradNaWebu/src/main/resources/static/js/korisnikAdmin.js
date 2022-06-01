@@ -16,6 +16,7 @@ function prikaziSvePredlozeneSmestaje() {
 
 // trenutno aktivni prozor u panelu korisnika
 let aktivniProzor = null;
+let aktivanKomentar = null;
 
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -155,6 +156,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // ubacivanje novog komentara.
+    let postavljenEventHandlerPotvrdaBrisanjaKomentara = false;
     document.getElementById("noviKomentar").addEventListener("click", function(ev) {
         var noviKomentar = document.createElement("div");
         noviKomentar.classList.add("komentari");
@@ -208,52 +210,33 @@ document.addEventListener("DOMContentLoaded", function() {
             var noviKomentarObrisiDugme = document.createElement("input");
             noviKomentarObrisiDugme.setAttribute("value", "Obriši");
             noviKomentarObrisiDugme.setAttribute("type", "button");
+
             noviKomentarObrisiDugme.addEventListener("click", function() {
                 // potvrda brisanja komentara
-                var prozor = document.getElementById("prozorZaPotvrdu");
+                aktivanKomentar = noviKomentarBox;
 
-                while(prozor.children[0].getAttribute("id") != "prozorZaPotvrduDugmadWrapper")
-                    prozor.children[0].remove();
+                let prozor = document.getElementById("prozorZaPotvrduBrisanjaKomentara");
 
-                prozor.style.height = "110px";
-                prozor.style.top = "calc(50vh - 110px / 2)";
-                prozor.style.width = "550px";
+                if(!postavljenEventHandlerPotvrdaBrisanjaKomentara) {
+                    postavljenEventHandlerPotvrdaBrisanjaKomentara = true;
 
-                var div1 = document.createElement("div");
-                div1.style.width = "100%";
-                div1.style.height = "calc(50% - 50px / 2)";
-                div1.style.padding = "10px";
-                var p1 = document.createElement("p");
-                p1.innerHTML = "Da li ste sigurni da želite da obrišete komentar?";
-                p1.style.width = "100%";
-                p1.style.textAlign = "center";
-                div1.append(p1);
-                prozor.insertBefore(div1, prozor.children[prozor.children.length - 1]);
+                    let dugmeZaObustavljanje =
+                        prozor.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[0];
+                    let dugmeZaPotvrdu =
+                        prozor.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[1];
 
-                var dugmeZaObustavljanje = document.createElement("input");
-                var dugmeZaPotvrdu = document.createElement("input");
-                dugmeZaObustavljanje.setAttribute("type", "button");
-                dugmeZaPotvrdu.setAttribute("type", "button");
-                document.getElementById("prozorZaPotvrduDugmadWrapper").append(dugmeZaObustavljanje);
-                document.getElementById("prozorZaPotvrduDugmadWrapper").append(dugmeZaPotvrdu);
+                    dugmeZaObustavljanje.addEventListener("click", function() {
+                        aktivanKomentar = null;
+                        document.getElementById("pozadinaProzoraZaPotvrduBrisanjaKom").style.display = "none";
+                    });
 
-                dugmeZaObustavljanje.value = "Otkaži";
-                dugmeZaPotvrdu.value = "Potvrdi";
-
-                dugmeZaObustavljanje.addEventListener("click", function() {
-                    dugmeZaObustavljanje.remove();
-                    dugmeZaPotvrdu.remove();
-                    document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
-                });
-
-                dugmeZaPotvrdu.addEventListener("click", function() {
-                    dugmeZaObustavljanje.remove();
-                    dugmeZaPotvrdu.remove();
-                    noviKomentarBox.remove();
-                    document.getElementById("prozorZaPotvrduPozadina").style.display = "none";
-                });
-
-                document.getElementById("prozorZaPotvrduPozadina").style.display = "block";
+                    dugmeZaPotvrdu.addEventListener("click", function() {
+                        aktivanKomentar.remove();
+                        aktivanKomentar = null;
+                        document.getElementById("pozadinaProzoraZaPotvrduBrisanjaKom").style.display = "none";
+                    });
+                }
+                document.getElementById("pozadinaProzoraZaPotvrduBrisanjaKom").style.display = "block";
             });
 
             noviWrapper.append(noviKomentarObrisiDugme);

@@ -45,7 +45,7 @@
         </nav>
     
         <div id="pregledSmestaja" class="row pregled">
-            <section class="col-10">
+            <section class="col-lg-10 order-2 order-lg-1">
                 <div class="levaKolonaSmestaja">
                     <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 0}">
                         <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
@@ -70,7 +70,14 @@
                 </div>
             </section>
 
-            <aside class="col-2" id="filteri">
+            <aside class="col-lg-2 order-1 order-lg-2" id="filteri">
+                <div class="stranice">
+                    <!-- ovo nije greska, namerno je da ne bi bilo prostora izmedju elemenata -->
+                    <input type="button" value="<" class="stranicaLevo"
+                    /><div class="brojStranice"> 1 </div
+                ><input type="button" value=">" class="stranicaDesno" />
+                </div>
+
                 <input id="dugmeFilteri" type="button" value="Filteri">
 
                 <div id="izabraniFilteriWrapper">

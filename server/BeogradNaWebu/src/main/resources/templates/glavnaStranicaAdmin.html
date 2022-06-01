@@ -84,8 +84,7 @@
                 </div>
 
                 <div class="prozorZaPotvrduDugmadWrapper">
-                    <input type="button" value="Otkaži" />
-                    <input type="button" value="Pretplati se" />
+                    <input type="button" value="Otkaži" style="width: 100%; border-bottom-right-radius: 22px;" />
                 </div>
             </div>
 
@@ -157,7 +156,7 @@
     </div>
 
     <div id="pregledSmestaja" class="row pregled">
-        <section class="col-10">
+        <section class="col-lg-10 order-2 order-lg-1">
             <div class="levaKolonaSmestaja">
                 <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 0 && (prikazPredlozenih == null || prikazPredlozenih == false)}">
                     <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
@@ -182,7 +181,14 @@
             </div>
         </section>
 
-        <aside class="col-2" id="filteri">
+        <aside class="col-lg-2 order-1 order-lg-2" id="filteri">
+            <div class="stranice">
+                <!-- ovo nije greska, namerno je da ne bi bilo prostora izmedju elemenata -->
+                <input type="button" value="<" class="stranicaLevo"
+                /><div class="brojStranice"> 1 </div
+            ><input type="button" value=">" class="stranicaDesno" />
+            </div>
+
             <input id="dugmeFilteri" type="button" value="Filteri">
 
             <div id="izabraniFilteriWrapper">
@@ -196,7 +202,14 @@
     </div>
 
     <div id="pregledPredlozenogSmestaja" class="row pregled">
-        <section class="col">
+        <div class="stranice col-12" style="padding: 0;" >
+            <!-- ovo nije greska, namerno je da ne bi bilo prostora izmedju elemenata -->
+            <input type="button" value="<" class="stranicaLevo"
+            /><div class="brojStranice"> 1 </div
+        ><input type="button" value=">" class="stranicaDesno" />
+        </div>
+
+        <section class="col-12">
             <div class="levaKolonaSmestaja">
                 <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 0 && prikazPredlozenih == true}">
                     <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
@@ -230,14 +243,16 @@
 
             <div id="lajkNaSlici">
                 <div>
-                    <svg version="1.1" class="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    <svg version="1.1" class="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                          viewBox="0 0 500 472.44" enable-background="new 0 0 500 472.44" xml:space="preserve">
-                                    <path fill="#F5F0F6" stroke="#F5F0F6" stroke-width="2" stroke-miterlimit="10" d="M53.4,260.54
-                                    C-88.12,122.11,105.22-75.54,246.74,62.89c136.1-139.14,340.48,60.77,204.37,199.91l-97.58,99.76l-95.76,97.89L53.4,260.54z"/>
+                        <path fill="#F5F0F6" stroke="#F5F0F6" stroke-width="2" stroke-miterlimit="10"
+                              d="M53.4,260.54
+                              C-88.12,122.11,105.22-75.54,246.74,62.89c136.1-139.14,340.48,60.77,204.37,
+                              199.91l-97.58,99.76l-95.76,97.89L53.4,260.54z"/>
                         <path fill="#FFFFFF" stroke="#010202" stroke-miterlimit="10" d="M148.51,184.31"/>
                         <path fill="#FFFFFF" stroke="#010202" stroke-miterlimit="10" d="M282.97,115.94"/>
-                                </svg>
-
+                    </svg>
                 </div>
 
                 <p id = "likeCounter">0</p>

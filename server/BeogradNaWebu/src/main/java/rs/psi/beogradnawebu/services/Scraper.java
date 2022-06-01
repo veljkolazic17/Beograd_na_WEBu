@@ -11,7 +11,6 @@ import rs.psi.beogradnawebu.dao.SmestajDAO;
 // 3 - drugo (neki drugi sajt)
 
 @Service
-@AllArgsConstructor
 public abstract class Scraper {
     protected final ChromeDriver driver;
     protected SmestajDAO smestaj;

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import rs.psi.beogradnawebu.dao.KorisnikDAO;
 import rs.psi.beogradnawebu.dto.LoginDTO;
+import rs.psi.beogradnawebu.dto.PromenaMailaDTO;
+import rs.psi.beogradnawebu.dto.PromenaSifreDTO;
 import rs.psi.beogradnawebu.dto.RegistracijaDTO;
 import rs.psi.beogradnawebu.model.Korisnik;
 import rs.psi.beogradnawebu.services.KorisnikServis;
@@ -46,11 +48,17 @@ public class IndexController {
             String email = korisnikDAO.getUserByUsername(korisnik.getUsername()).get().getEmail();
             model.addAttribute("email", email);
 
+            PromenaMailaDTO promMailaDTO = new PromenaMailaDTO();
+            model.addAttribute("promenaEmaila", promMailaDTO);
+            PromenaSifreDTO promSifDTO = new PromenaSifreDTO();
+            model.addAttribute("promenaSifre", promSifDTO);
+
             return "redirect:/pregledsmestaja";
         }
         else {
             RegistracijaDTO regDTO = new RegistracijaDTO();
             model.addAttribute("registracija", regDTO);
+
             model.addAttribute("animacijaLosaRegistracija", false);
 
             if(greska != null) {
@@ -75,6 +83,7 @@ public class IndexController {
             request.login(regDTO.getKorime(), regDTO.getSifra());
         } catch (ServletException e) {
             log.info("Nije moguce ulogovati korisnika!");
+            return "login";
         }
         return "redirect:/pregledsmestaja";
     }

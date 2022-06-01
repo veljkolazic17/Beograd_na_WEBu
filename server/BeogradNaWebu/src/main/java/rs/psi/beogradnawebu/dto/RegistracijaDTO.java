@@ -2,13 +2,13 @@ package rs.psi.beogradnawebu.dto;
 
 import rs.psi.beogradnawebu.annotations.JedinstvenEmail;
 import rs.psi.beogradnawebu.annotations.ValidanEmail;
-import rs.psi.beogradnawebu.annotations.ValidnaSifra;
+import rs.psi.beogradnawebu.annotations.RegistracijaIsteSifre;
 import rs.psi.beogradnawebu.annotations.ValidnoKorime;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-@ValidnaSifra // rucno napravljen validator, sifre moraju biti jednake
+@RegistracijaIsteSifre // rucno napravljen validator, sifre moraju biti jednake
 public class RegistracijaDTO {
     @NotNull
     @NotEmpty

@@ -11,6 +11,8 @@ import rs.psi.beogradnawebu.dao.KorisnikDAO;
 import rs.psi.beogradnawebu.dao.LajkSmestajaCDAO;
 import rs.psi.beogradnawebu.dao.SmestajDAO;
 import rs.psi.beogradnawebu.dto.FilterDTO;
+import rs.psi.beogradnawebu.dto.PromenaMailaDTO;
+import rs.psi.beogradnawebu.dto.PromenaSifreDTO;
 import rs.psi.beogradnawebu.model.Korisnik;
 import rs.psi.beogradnawebu.model.Smestaj;
 
@@ -55,7 +57,13 @@ public class FilterController {
                 model.addAttribute("smestajList", smestajList);
             }
             Korisnik k = korisnikDAO.getUserByUsername(korisnik.getUsername()).get();
-            model.addAttribute("user",k);
+            model.addAttribute("user", k);
+
+            PromenaMailaDTO promMailaDTO = new PromenaMailaDTO();
+            model.addAttribute("promenaEmaila", promMailaDTO);
+            PromenaSifreDTO promSifDTO = new PromenaSifreDTO();
+            model.addAttribute("promenaSifre", promSifDTO);
+
             if(k.getUloga() == 0)
                 return "glavnaStranicaKorisnik";
             else

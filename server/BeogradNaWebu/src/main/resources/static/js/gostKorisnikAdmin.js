@@ -1,79 +1,112 @@
 // Marko Mirković 197/19
 
 document.addEventListener("DOMContentLoaded", function() {
-
-
-
     // podesavanje prikazanih smestaja da prikazu svoju sliku na panelu za konkretni smestaj
     var smestaji = document.getElementsByClassName("smestaji");
     var user = JSON.parse(sessionStorage.getItem("user"));
-
-    var currClicked = null;
     var isLiked = JSON.parse(sessionStorage.getItem("isliked"));
-    var smestajList =JSON.parse(sessionStorage.getItem("smestajList"));
-    for(let i = 0; i < smestaji.length; i++) {
+    var smestajList = JSON.parse(sessionStorage.getItem("smestajList"));
+    let currClicked = null;
+
+    if(smestajList != null) {
+        // posebno formiran niz zbog dve kolone kod prikaza smestaja
+        let nizPrilagodjenZaPrikaz = [];
+        for(let i = 0; i < smestajList.length; i++) {
+            if(i % 2 == 0)
+                nizPrilagodjenZaPrikaz.push(smestaji[i >> 1]);
+            else
+                nizPrilagodjenZaPrikaz.push(smestaji[(i >> 1) + Math.ceil(smestajList.length / 2)]);
+        }
+        smestaji = nizPrilagodjenZaPrikaz;
+
+        for(let i = 0; i < smestajList.length; i++) {
             smestaji[i].addEventListener("click", function(ev) {
                 currClicked = i;
-                if(user != null){
-                    $.ajax({url:"isliked/"+user.korisnickoime+"/"+smestajList[currClicked].idsmestaj,type:"GET"
-                        ,success:function (data){
+                if(user != null) {
+                    $.ajax({
+                        url:"isliked/"+user.korisnickoime+"/"+smestajList[i].idsmestaj,
+                        type:"GET",
+                        success: function(data) {
                             isLiked = data;
-                        },async:false});
+                        },
+                        async: false
+                    });
+                }
+                document.getElementById("prikazStana").style.display = "block";
+
+                var opis = "";
+                if (smestajList[i].cena > 0) {
+                    opis+= "Cena: " + smestajList[i].cena + '<br>';
+                }
+                if(smestajList[i].kvadratura > 0) {
+                    opis+= "Kvadratura: " + smestajList[i].kvadratura + '<br>';
+                }
+                if(smestajList[i].lokacija != "") {
+                    opis+= "Lokacija: " + smestajList[i].lokacija + '<br>';
+                }
+                if(smestajList[i].brojSoba > 0) {
+                    opis+= "Broj soba: " + smestajList[i].brojSoba + '<br>';
+                }
+                if(smestajList[i].spratonost > 0 ) {
+                    opis+= "Spratnost: " + smestajList[i].spratonost + '<br>';
+                }
+                if(smestajList[i].imaLift) {
+                    opis+= "Ima lift" + '<br>';
+                }
+                if(smestajList[i].idtipSmestaja > 0) {
+                    opis+= "Tip smestaja: " + smestajList[i].idtipSmestaja + '<br>';
                 }
 
+                document.getElementById("opisKonkretnogSmestaja").innerHTML = opis
+                document.getElementById("likeCounter").innerHTML = smestajList[i].brojLajkova
+                // otvaranje originalnog sajta za konkretni smeštaj
+                // document.getElementById("linkNaSlici").addEventListener('click', function(link) {
+                //     window.open(smestajList[i].orgPutanja, "_blank");
+                // });
+                document.getElementById("link").setAttribute("href", smestajList[i].orgPutanja)
 
-            document.getElementById("prikazStana").style.display = "block";
+                var evTarget = ev.target;
+                if(evTarget.getAttribute("class") != "smestaji")
+                    evTarget = evTarget.parentElement;
 
+                let slika = document.getElementById("slikaKonkretnogSmestaja");
+                // reset u slucaju da je pre bilo greske pa je promenjen stil
+                slika.style.width = "100%";
+                slika.style.height = "auto";
+                slika.style.marginLeft = "0";
+                slika.style.marginTop = "0";
+                slika.style.marginBottom = "0";
+                // greska pri prikazu konkretnog smestaja
+                slika.addEventListener("error", function(ev) {
+                    slika.setAttribute("src", "images/logoBeli.svg");
+                    slika.style.width = "60%";
+                    slika.style.height = "60%";
+                    slika.style.marginLeft = "20%";
+                    slika.style.marginTop = "5%";
+                    slika.style.marginBottom = "5%";
+                });
+                slika.setAttribute("src", smestajList[i].slika);
 
-            var opis = "";
+                if(isLiked)
+                    document.getElementById("lajkNaSlici").children[0].innerHTML = fullHeart;
+                else
+                    document.getElementById("lajkNaSlici").children[0].innerHTML = emptyHeart;
+            });
 
-                    if (smestajList[i].cena > 0) {
-                        opis+= "Cena: " + smestajList[i].cena + '<br>';
-                    }
-                    if(smestajList[i].kvadratura > 0){
-                        opis+= "Kvadratura: " + smestajList[i].kvadratura + '<br>';
-                    }
-                    if(smestajList[i].lokacija != ""){
-                        opis+= "Lokacija: " + smestajList[i].lokacija + '<br>';
-                    }
-                    if(smestajList[i].brojSoba > 0){
-                        opis+= "Broj soba: " + smestajList[i].brojSoba + '<br>';
-                    }
-                    if(smestajList[i].spratonost > 0 ){
-                        opis+= "Spratnost: " + smestajList[i].spratonost + '<br>';
-                    }
-                    if(smestajList[i].imaLift){
-                        opis+= "Ima lift" + '<br>';
-                    }
-                    if(smestajList[i].idtipSmestaja > 0){
-                        opis+= "Tip smestaja: " + smestajList[i].idtipSmestaja + '<br>';
-                    }
-
-
-            document.getElementById("opisKonkretnogSmestaja").innerHTML = opis
-            document.getElementById("likeCounter").innerHTML = smestajList[currClicked].brojLajkova
-            // otvaranje originalnog sajta za konkretni smeštaj
-            // document.getElementById("linkNaSlici").addEventListener('click', function(link) {
-            //     window.open(smestajList[i].orgPutanja, "_blank");
-            // });
-            document.getElementById("link").setAttribute("href", smestajList[i].orgPutanja)
-
-            var evTarget = ev.target;
-            if(evTarget.getAttribute("class") != "smestaji")
-                evTarget = evTarget.parentElement;
-            document.getElementById("slikaKonkretnogSmestaja")
-            .setAttribute("src", smestajList[i].slika);
-
-            if(isLiked)
-                document.getElementById("lajkNaSlici").children[0].innerHTML =fullHeart;
-            else
-                document.getElementById("lajkNaSlici").children[0].innerHTML =emptyHeart;
-
-        });
+            // greska pri prikazu u listi
+            smestaji[i].children[0].addEventListener("error", function(ev) {
+                smestaji[i].children[0].setAttribute("src", "images/logo.svg");
+                smestaji[i].children[0].style.width = "60%";
+                smestaji[i].children[0].style.height = "60%";
+                smestaji[i].children[0].style.marginLeft = "20%";
+                smestaji[i].children[0].style.marginTop = "5%";
+                smestaji[i].children[0].style.marginBottom = "5%";
+            });
+            // forsiramo refresh da bi error imao vremena da se pripremi i okine
+            smestaji[i].children[0].setAttribute("src", smestaji[i].children[0].getAttribute("src"));
+        }
     }
-    document.getElementById("dugmeSviSmestaji").addEventListener('click',function () {
 
-    })
     // prikaz panela za filtere
     document.getElementById("dugmeFilteri").addEventListener('click', function() {
         document.getElementById("filteriPanelPozadina").style.display = "block";

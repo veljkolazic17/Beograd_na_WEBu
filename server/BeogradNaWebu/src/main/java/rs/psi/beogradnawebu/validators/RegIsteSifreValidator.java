@@ -1,15 +1,15 @@
 package rs.psi.beogradnawebu.validators;
 
-import rs.psi.beogradnawebu.annotations.ValidnaSifra;
+import rs.psi.beogradnawebu.annotations.RegistracijaIsteSifre;
 import rs.psi.beogradnawebu.dto.RegistracijaDTO;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class SifraValidator implements ConstraintValidator<ValidnaSifra, Object> {
+public class RegIsteSifreValidator implements ConstraintValidator<RegistracijaIsteSifre, Object> {
 
     @Override
-    public void initialize(ValidnaSifra constraintAnnotation) {
+    public void initialize(RegistracijaIsteSifre constraintAnnotation) {
     }
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context){

@@ -1,0 +1,298 @@
+/* Marko Mirković 197/19 */
+
+.slikaSmestaja {
+    position: relative;
+    height: auto;
+    width: 100%;
+    padding: 5px;
+    border-radius: 25px;
+}
+
+.opisSmestaja {
+    text-align: center;
+    padding: 5px;
+    padding-bottom: 10px;
+    margin: 0;
+}
+
+#prikazStana {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+}
+
+#stanPanel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: fit-content;
+    max-height: 98%;
+    background-color: #2d3142;
+    border-color: #ef8354;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 25px;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    overflow-y: auto;
+    font-size: 15px;
+}
+
+#stanPanel::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
+}
+
+#slikaWrapper {
+    position: relative;
+}
+
+#slikaKonkretnogSmestaja {
+    width: 100%;
+    height: auto;
+    padding: 5px 5px 0 5px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+#linkNaSlici {
+    position: absolute;
+    bottom: 0;
+    left: 5px;
+    background-color: #ef8354;
+    color:#f5f0f6;
+    width: fit-content;
+    height: 30px;
+    border-top-right-radius: 15px;
+    padding: 3px 12px 3px 8px;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#lajkNaSlici {
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+    background-color: #ef8354;
+    width: fit-content;
+    height: 30px;
+    border-top-left-radius: 15px;
+    padding: 3px 8px 3px 5px;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#lajkNaSlici div {
+    height: 100%;
+    width: fit-content;
+    display: inline-block;
+}
+
+#lajkNaSlici div svg {
+    height: 100%;
+    width: auto;
+}
+
+#lajkNaSlici p {
+    height: 100%;
+    display: inline-block;
+    color: #2d3142;
+    padding-left: 2px;
+}
+
+#opisKonkretnogSmestaja {
+    width: calc(100% - 10px);
+    margin: 5px;
+    height: fit-content;
+    padding: 5px;
+    background-color: #f5f0f6;
+    text-align: center;
+}
+
+#dugmeZaKomentare {
+    display: block;
+    width: calc(100% - 10px);
+    height: 35px;
+    margin: 5px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: #4f5d75;
+    color: #f5f0f6;
+    text-align: center;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#dugmeZaKomentare p {
+    position: relative;
+    top: 6.25px;
+}
+
+#komentariPanel {
+    display: none;
+    width: calc(100% - 10px);
+    margin: 5px;
+    height: fit-content;
+}
+
+.komentari {
+    display: block;
+    width: 100%;
+    background-color: #f5f0f6;
+    border-bottom: solid gray 1px;
+}
+
+.komentari:last-of-type {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom: 0;
+    overflow: hidden;
+}
+
+.komentari>p {
+    margin: 0;
+    padding: 2px;
+    padding-left: 5px;
+    min-height: 60px;
+    width: fit-content;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.dugmadNaKomentarimaWrapper {
+    width: fit-content;
+    height: 30px;
+    float: right;
+}
+
+.dugmadNaKomentarimaWrapper input {
+    float: left;
+    width: 110px;
+    height: 100%;
+    margin: 0;
+    padding: 5px;
+    background-color: #ef8354;
+    border: 0;
+    color:#f5f0f6;
+    font-size: 13px;
+}
+
+.lajkNaKomentarima {
+    float: left;
+    background-color: #ef8354;
+    width: fit-content;
+    height: 30px;
+    border-bottom-left-radius: 15px;
+    padding: 3px 8px 3px 5px;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.lajkNaKomentarima div {
+    height: 100%;
+    width: fit-content;
+    display: block;
+    float: left;
+}
+
+.lajkNaKomentarima div svg {
+    height: 100%;
+    width: auto;
+}
+
+.lajkNaKomentarima p {
+    height: 100%;
+    float: left;
+    color: #2d3142;
+    padding-left: 8px;
+}
+
+/* za novi komentar */
+.komentari:last-of-type>div {
+    display: block;
+    float: right;
+    height: 100%;
+    width: 180px;
+    border: 0;
+}
+
+.komentari:last-of-type textarea {
+    width: calc(100% - 180px);
+    height: 100%;
+    border: 0;
+    resize: none;
+    overflow-y: hidden;
+    border-bottom-left-radius: 20px;
+    padding-left: 12px;
+}
+
+.komentari:last-of-type textarea:focus {
+    outline: none;
+}
+
+.komentari:last-of-type div input {
+    display: block;
+    background-color: #4f5d75;
+    color:#f5f0f6;
+    padding: 5px;
+    height: 50%;
+    width: 100%;
+    border: 0;
+    border-bottom: solid gray 1px;
+}
+
+.komentari:last-of-type div input:last-of-type {
+    display: block;
+    float: right;
+    background-color: #4f5d75;
+    color:#f5f0f6;
+    padding: 5px;
+    height: 50%;
+    width: 100%;
+    border: 0;
+}
+
+#noviKomentar {
+    display: block;
+    width: 100%;
+    height: 40px;
+    background-color: #f5f0f6;
+    padding: 5px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #4f5d75;
+}
+
+#noviKomentar p {
+    display: block;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    color: #f5f0f6;
+}

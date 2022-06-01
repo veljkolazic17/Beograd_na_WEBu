@@ -81,6 +81,7 @@
 
             <div id="panelAdmin">
                 <div id="korisniciWrapper">
+                    <input class="korisniciBrisanje" type="button" th:each="korisnik: ${listaKorisnika}" th:value="${korisnik.getKorisnickoime()}" />
                 </div>
 
                 <div class="prozorZaPotvrduDugmadWrapper">

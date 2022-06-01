@@ -17,7 +17,9 @@ import rs.psi.beogradnawebu.model.Korisnik;
 import rs.psi.beogradnawebu.model.Smestaj;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -66,8 +68,10 @@ public class FilterController {
 
             if(k.getUloga() == 0)
                 return "glavnaStranicaKorisnik";
-            else
+            else {
+                model.addAttribute("listaKorisnika", korisnikDAO.list());
                 return "glavnaStranicaAdmin";
+            }
         }
         else {
             List<Smestaj> smestajList = smestajDAO.getByOffset(0, 10);

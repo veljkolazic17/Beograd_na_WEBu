@@ -19,6 +19,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 panelAdmina.style.display = "none";
                 pozadina.style.display = "none";
             });
+
+            let korisniciZaBrisanje = panelAdmina.getElementsByClassName("korisniciBrisanje");
+            for(let korisnik of korisniciZaBrisanje) {
+                korisnik.addEventListener("dblclick", function(ev) {
+                    // kod za AJAX
+                    korisnik.remove();
+                    ev.stopPropagation();
+                });
+            }
         }
     });
 });

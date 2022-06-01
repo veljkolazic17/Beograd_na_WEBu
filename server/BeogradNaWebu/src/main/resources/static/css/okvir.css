@@ -1,12 +1,9 @@
 /* Marko Mirković 197/19 */
 
 body {
-    margin: 0;
     min-height: 100vh;
-    width: 100vw;
     background-color: #f5f0f6;
     font-family: Verdana, sans-serif;
-    overflow-x: hidden;
 }
 
 input:focus {

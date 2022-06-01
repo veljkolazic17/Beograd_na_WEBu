@@ -19,7 +19,7 @@
     position: fixed;
     left: 0;
     top: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.6);
     display: none;
@@ -49,6 +49,12 @@
 #stanPanel::-webkit-scrollbar { /* WebKit */
     width: 0;
     height: 0;
+}
+
+@media screen and (max-width: 900px) {
+    #stanPanel {
+        width: 100%;
+    }
 }
 
 #slikaWrapper {
@@ -302,7 +308,7 @@
     position: fixed;
     left: 0;
     top: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.6);
     display: none;
@@ -329,4 +335,10 @@
     text-align: center;
     margin: 0;
     padding: 10px;
+}
+
+@media screen and (max-width: 550px) {
+    #prozorZaPotvrduBrisanjaKomentara {
+        width: 100%;
+    }
 }

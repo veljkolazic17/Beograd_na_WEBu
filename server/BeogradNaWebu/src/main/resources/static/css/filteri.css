@@ -1,5 +1,50 @@
 /* Marko Mirković 197/19 */
 
+.stranice {
+    width: 80%;
+    max-width: 500px;
+    height: 35px;
+    margin: auto;
+    margin-bottom: 15px;
+    background-color: #4f5d75;
+    border-color: #ef8354;
+    border-width: 2px;
+    border-radius: 25px;
+    border-style: outset;
+}
+
+.stranicaLevo {
+    height: 100%;
+    width: 30px;
+    display: inline-block;
+    border: none;
+    border-bottom-left-radius: 22px;
+    border-top-left-radius: 22px;
+    background-color: #ef8354;
+    color: #f5f0f6;
+    font-weight: 600;
+}
+
+.stranicaDesno {
+    height: 100%;
+    width: 30px;
+    display: inline-block;
+    border: none;
+    border-bottom-right-radius: 22px;
+    border-top-right-radius: 22px;
+    background-color: #ef8354;
+    color: #f5f0f6;
+    font-weight: 600;
+}
+
+.brojStranice {
+    width: calc(100% - 60px);
+    display: inline-block;
+    text-align: center;
+    color: #f5f0f6;
+}
+
+
 #dugmeFilteri {
     display: block;
     background-color: #4f5d75;
@@ -8,6 +53,7 @@
     border-color: #ef8354;
     border-radius: 25px;
     width: 80%;
+    max-width: 500px;
     margin: auto;
 }
 

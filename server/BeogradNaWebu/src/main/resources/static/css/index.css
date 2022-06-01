@@ -98,7 +98,7 @@ input[type="button"] {
     transform: translateY(-50%);
 }
 
-svg {
+#logo {
     display: block;
     height: calc(800px * 0.3);
     width: auto;

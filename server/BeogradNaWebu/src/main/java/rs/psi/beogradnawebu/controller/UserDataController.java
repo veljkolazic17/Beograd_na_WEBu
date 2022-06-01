@@ -80,6 +80,9 @@ public class UserDataController {
         if(korisnik == null)
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
 
+        if(korisnik.getKorisnickoime().equals(user.getUsername()))
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+
         Collection<GrantedAuthority> roles = user.getAuthorities();
         for(GrantedAuthority role: roles) {
             System.out.println(role.getAuthority());

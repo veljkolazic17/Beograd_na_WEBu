@@ -30,13 +30,20 @@ document.addEventListener("DOMContentLoaded", function() {
                             403: function () {
                                 alert("Nemas dozvolu prijatelju ;)");
                                 return;
-                            }
+                            },
+                            501: function () {
+                                alert("Pokušavate da obrišete svoj nalog.");
+                                return;
+                            },
+                            200: function () {
+                                alert("Korisnik " + korisnik.value + " je uspešno obrisan.");
+                                korisnik.remove();
+                                ev.stopPropagation();
+                                return;
+                            },
                         },
                         async: false
                     });
-                    //window.location.reload(false);
-                    korisnik.remove();
-                    ev.stopPropagation();
                 });
             }
         }

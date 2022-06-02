@@ -1,3 +1,9 @@
+/**
+* Matija Milosevic 2019/0156
+* Veljko Lazic 2019/0241
+ * Jelena Lucic 2019/0268
+* */
+
 package rs.psi.beogradnawebu.dao;
 
 import org.slf4j.Logger;
@@ -19,11 +25,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+* Klasa zaduzena za pristup bazi tabele Smestaj
+ * @version 1.0
+* */
 @Component
 public class SmestajDAO implements DAO<Smestaj>{
 
     private static final Logger log = LoggerFactory.getLogger(SmestajDAO.class);
     private final JdbcTemplate jdbcTemplate;
+    /**
+     * Mapiranje redova tabele u objekat
+     * */
     public static RowMapper<Smestaj> rowMapper = (rs, rowNum) -> {
         Smestaj smestaj = new Smestaj();
         smestaj.setIdsmestaj(rs.getLong("idsmestaj"));
@@ -41,16 +54,26 @@ public class SmestajDAO implements DAO<Smestaj>{
         smestaj.setSlika(rs.getString("slika"));
         return smestaj;
     };
-
+    /**
+     * Kreiranje instance
+     * */
     public SmestajDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Vracanje svih smestaja iz baze
+     */
     @Override
     public List<Smestaj> list() {
         return jdbcTemplate.query("SELECT * FROM smestaj",rowMapper);
     }
 
+
+    /**
+     * Ubacivanje objekta smestaj u bazu
+     * @param smestaj
+     */
     @Override
     public void create(Smestaj smestaj) {
         try {
@@ -76,6 +99,10 @@ public class SmestajDAO implements DAO<Smestaj>{
         }
     }
 
+    /**
+     * Dohvatanje smestaja sa datim ID
+     * @param id
+     */
     @Override
     public Optional<Smestaj> get(int id) {
         Optional<Smestaj> smestaj = Optional.empty();
@@ -89,6 +116,11 @@ public class SmestajDAO implements DAO<Smestaj>{
         return smestaj;
     }
 
+    /**
+     * Update-ovanje smestaja sa datim ID objektom smestaj
+     * @param smestaj
+     * @param id
+     */
     @Override
     public void update(Smestaj smestaj, int id) {
         try{
@@ -113,10 +145,19 @@ public class SmestajDAO implements DAO<Smestaj>{
         }
     }
 
+    /**
+     * Dekrementiranje broja lajkova za smestaje koje je lajkovao korisnik sa datim id-em pri brisanju istorije lajkova korisnika
+     * @param idUser
+     */
     public void decLikes(int idUser){
         jdbcTemplate.update("update smestaj set broj_lajkova = broj_lajkova - 1 where idsmestaj in " +
                 " (select idsmestaj from lajk_smestaja where idkorisnik = ?)",idUser);
     }
+
+    /**
+     * Brisanje smestaja sa datim id
+     * @param id
+     */
     @Override
     public void delete(int id) {
         try {
@@ -126,6 +167,13 @@ public class SmestajDAO implements DAO<Smestaj>{
             log.info("Nije pronadjen smestaj sa ID: " + id);
         }
     }
+
+    /**
+     * Dohvatanje smestaja iz baze sa zadatim limitom i offsetom
+     * @param offset
+     * @param limit
+     *
+     */
 
     public List<Smestaj> getByOffset(int offset,int limit){
         try {
@@ -137,7 +185,12 @@ public class SmestajDAO implements DAO<Smestaj>{
     }
 
 
-
+    /**
+     * Dohvatanje svih smestaja koji ispunjavaju uslove datih filtera
+     * @param filters
+     * @param offset
+     * @return
+     */
     public List<Smestaj> searchByFilters(FilterDTO filters,int offset){
         try {
             long id_tip;
@@ -201,6 +254,9 @@ public class SmestajDAO implements DAO<Smestaj>{
         }
     }
 
+    /**
+     * Klasa kojomje predstavljen prosecan lajkovan smestaj korisnika
+     */
     public static class AvgData{
         public double cena;
         public double kvadratura;
@@ -209,6 +265,11 @@ public class SmestajDAO implements DAO<Smestaj>{
     }
 
 
+    /**
+     * Funkcija koja vraca prosecan lajkovan smestaj korisnika
+     * @param id
+     *
+     */
     public AvgData getAvgAcc(long id){
 
         RowMapper<AvgData> localMapper = (rs, rowNum) -> {
@@ -230,7 +291,11 @@ public class SmestajDAO implements DAO<Smestaj>{
         return avg;
     }
 
-
+    /**
+     * Funkcija koja mapira broj soba smestaja iz stringa u double zbog upita
+     * @param str
+     * @return
+     */
     public double mapBrojSoba(String str){
         return switch (str) {
             case "nullSoba" -> -1;

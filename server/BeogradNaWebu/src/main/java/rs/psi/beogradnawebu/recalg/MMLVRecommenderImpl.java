@@ -1,3 +1,8 @@
+/**
+ * Veljko Lazic 2019/0241
+ * Matija Milosevic 2019/0156
+ */
+
 package rs.psi.beogradnawebu.recalg;
 
 import org.springframework.stereotype.Component;
@@ -10,17 +15,32 @@ import rs.psi.beogradnawebu.model.Smestaj;
 
 import java.util.Arrays;
 
-//Implementacija klase za preporucivanje smestaja
+/**
+ * Klasa koja sluzi za preporucivanje smestaja
+ */
 @Component
 public class MMLVRecommenderImpl implements Recommender {
         private final SmestajDAO smestajDAO;
         private final RecAlgDAO recAlgDAO;
         private final LajkSmestajaCDAO lajkSmestajaCDAO;
+
+        /**
+         * Kreiranje instance
+         * @param smestajDAO
+         * @param recAlgDAO
+         * @param lajkSmestajaCDAO
+         */
         public MMLVRecommenderImpl(SmestajDAO smestajDAO, RecAlgDAO recAlgDAO,LajkSmestajaCDAO lajkSmestajaCDAO){
                 this.smestajDAO = smestajDAO;
                 this.recAlgDAO = recAlgDAO;
                 this.lajkSmestajaCDAO = lajkSmestajaCDAO;
         }
+
+        /**
+         * Funckija koja updatuje tezine(odredjuju vaznost odredjenih atributa kao sto su cena, kvadratura itd.) korisnika user u odnosnu na novolajkovani smestaj liked
+         * @param user
+         * @param liked
+         */
         @Override
         public void update(Korisnik user, Smestaj liked) {
                 int res = updateRange(user, liked);
@@ -54,6 +74,16 @@ public class MMLVRecommenderImpl implements Recommender {
 
 
         }
+
+        /**
+         * Funkcija koja na osnovu prosecnog lajkovanog smestaja avgAcc i tezina odredjenih atributa
+         * smestaja koje se nalaze u recalgdata datog korisnika, odredjuje da li sistem treba ili ne treba
+         * da preporuci smestaj accomodation korisniku na osnovu izracunate ocene(ukoliko je veca ili jednaka od 7.5 smestaj se preporucuje).
+         * @param recalgdata
+         * @param avgAcc
+         * @param accommodation
+         * @return
+         */
         @Override
         public boolean recommend(Recalgdata recalgdata, SmestajDAO.AvgData avgAcc, Smestaj accommodation) {
                 // Skaliranje svakog atributa smestaja na vrednosti [0.0 - 10.0]
@@ -97,6 +127,15 @@ public class MMLVRecommenderImpl implements Recommender {
                 }
                 return false;
         }
+
+        /**
+         * Funkcija koja se poziva pri update-ovanju recalgdata datog korisnika.
+         * Menja opsege odredjenih atributa kao sto su cena,kvadratura itd.
+         * Ovi opsezi se koriste prilikom provere da li smestaj treba da se preporuci.
+         * @param user
+         * @param accommodation
+         * @return
+         */
         @Override
         public int updateRange(Korisnik user, Smestaj accommodation) {
                 Recalgdata recalgdata = recAlgDAO.get((int)user.getIdkorisnik()).orElse(null);
@@ -202,12 +241,23 @@ public class MMLVRecommenderImpl implements Recommender {
                 }
         }
 
-        // Klasa koju koristimo da odredimo na osnovu cega i koliko da promenimo granice
+
+
+        /**
+         * Klasa koja predstavlja parametar shiftovanja koji se koristi prilikom promene opsega atributa.
+         */
         private static class ShiftParam{
                 double shift;
                 String ref;
         }
 
+        /**
+         * Funkcija koja racuna koliko i u kom smeru treba shiftovati opsege atributa.
+         * @param min
+         * @param max
+         * @param val
+         * @return
+         */
         private ShiftParam shiftRange(double min,double max,double val){
                 double mid = (max + min)/2;
                 ShiftParam shiftParam = new ShiftParam();

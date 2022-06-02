@@ -1,3 +1,9 @@
+/**
+ * Matija Milosevic 2019/0156
+ * Veljko Lazic 2019/0241
+ */
+
+
 package rs.psi.beogradnawebu.dao;
 
 import org.slf4j.Logger;
@@ -10,17 +16,24 @@ import rs.psi.beogradnawebu.model.Recalgdata;
 
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * Klasa zaduzena za pristup bazi tabele recalgdata
+ * @version 1.0
+ * */
 @Component
 public class RecAlgDAO implements DAO<Recalgdata>{
 
     private static final Logger log = LoggerFactory.getLogger(RecAlgDAO.class);
     private JdbcTemplate jdbcTemplate;
-
+    /**
+     * Kreiranje instance
+     * */
     public RecAlgDAO(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
-
+    /**
+     * Mapiranje redova tabele u objekat
+     * */
     public static RowMapper<Recalgdata> rowMapper = (rs, rowNum) -> {
         Recalgdata recalgdata = new Recalgdata();
         recalgdata.setIdkorisnik(rs.getInt("idkorisnik"));
@@ -38,13 +51,19 @@ public class RecAlgDAO implements DAO<Recalgdata>{
         recalgdata.setWeightCena(rs.getDouble("weight_cena"));
         return recalgdata;
     };
-
+    /**
+     * Vracanje svih recalgdata iz baze
+     */
     @Override
     public List<Recalgdata> list() {
         List<Recalgdata> recalgdata = jdbcTemplate.query("select * from recalgdata",rowMapper);
         return recalgdata;
     }
 
+    /**
+     * Ubacivanje datog objekta Recalgdata u bazu
+     * @param recalgdata
+     */
     @Override
     public void create(Recalgdata recalgdata) {
         jdbcTemplate.update(
@@ -65,6 +84,11 @@ public class RecAlgDAO implements DAO<Recalgdata>{
                 );
     }
 
+    /**
+     * Dohvatanje recalgdata sa datim id
+     * @param id
+     * @return
+     */
     @Override
     public Optional<Recalgdata> get(int id) {
         Recalgdata recalgdata = null;
@@ -76,6 +100,11 @@ public class RecAlgDAO implements DAO<Recalgdata>{
         return Optional.ofNullable(recalgdata);
     }
 
+    /**
+     * Updatovanje recalgdata sa datim id
+     * @param recalgdata
+     * @param id
+     */
     @Override
     public void update(Recalgdata recalgdata, int id) {
         try{
@@ -100,6 +129,10 @@ public class RecAlgDAO implements DAO<Recalgdata>{
         }
     }
 
+    /**
+     * Brisanje recalgdata sa datim id
+     * @param id
+     */
     @Override
     public void delete(int id) {
         try {

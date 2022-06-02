@@ -16,8 +16,10 @@ public abstract class Scraper4Zida extends Scraper {
     protected String URL;
     private ArrayList<String> tabs;
 
+    protected List<Smestaj> allAcc;
     public Scraper4Zida(ChromeDriver driver, SmestajDAO smestaj) {
         super(driver, smestaj);
+        allAcc = new ArrayList<>();
     }
 
     private int getLastPage() { // dohvata broj poslednje stranice
@@ -64,6 +66,7 @@ public abstract class Scraper4Zida extends Scraper {
     }
 
     protected double getCena(String value) {
+        if(value == null) return -1;
         String[] splitValues = value.split(" ");
         String[] splitByDot = splitValues[0].split("\\.");
         if(splitByDot.length < 2) return Double.parseDouble(splitValues[0]); // proveriti
@@ -71,6 +74,7 @@ public abstract class Scraper4Zida extends Scraper {
     }
 
     protected int getKvadratura(String value) {
+        if(value == null) return -1;
         return Integer.parseInt(value.substring(0, value.length() - 2));
     }
 
@@ -78,7 +82,9 @@ public abstract class Scraper4Zida extends Scraper {
 
     private void updateDatabase(String href, String src) {
         if(!smestaj.checkIfExist(href)) {
-            smestaj.create(makeNew(href, src));
+            Smestaj novi = makeNew(href, src);
+            allAcc.add(novi);
+            smestaj.create(novi);
         }
     }
 
@@ -100,7 +106,12 @@ public abstract class Scraper4Zida extends Scraper {
             WebElement link = accList.get(i).findElement(By.tagName("a"));
             String href = link.getAttribute("href"); // dohvatanje linka svakog stana
 
-            String src = picList.get(i).getAttribute("src");
+            String src;
+            try {
+                src = picList.get(i).getAttribute("src");
+            } catch (Exception e) {
+                src = "";
+            }
 
             driver.switchTo().window(tabs.get(1));
 
@@ -114,7 +125,6 @@ public abstract class Scraper4Zida extends Scraper {
     public void scrape() {
         try {
             if(!check()) {
-                driver.quit();
                 return;
             }
 

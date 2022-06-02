@@ -7,15 +7,18 @@ import rs.psi.beogradnawebu.model.Smestaj;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class Kuca4Zida extends Scraper4Zida {
 
-
-    public void callScraper() {
+    public List<Smestaj> callScraper() {
         scrape(); // automatsko pozivanje metode scrape
         smestaj.deleteWithFalseTag(2); // brisanje kuca koji se ne nalaze vise na sajtu
         smestaj.setAllTags(2);// ponistavanje tagova
+        List<Smestaj> list = allAcc;
+        allAcc.clear();
+        return list;
     }
 
     public Kuca4Zida(ChromeDriver driver, SmestajDAO smestaj) {
@@ -26,12 +29,18 @@ public class Kuca4Zida extends Scraper4Zida {
     @Override
     protected Smestaj makeNew(String href, String src) {
         HashMap<String, String> attributes = getAttributes(); // atributi odredjene kuce
-        String location = driver.findElementByClassName("location").getText(); // lokacija kuce
+
+        String location;
+        try {
+            location = driver.findElementByClassName("location").getText(); // lokacija kuce
+        } catch (Exception e) {
+            location = "";
+        }
 
         Smestaj noviSmestaj = new Smestaj();
         noviSmestaj.setOrgPutanja(href);
         noviSmestaj.setLokacija(location);
-        if(getBrojSoba(attributes.get("Broj soba:")) != -1) noviSmestaj.setBrojSoba(getBrojSoba(attributes.get("Broj soba:")));
+        noviSmestaj.setBrojSoba(getBrojSoba(attributes.get("Broj soba:")));
         noviSmestaj.setSpratonost(-1);
         noviSmestaj.setImaLift(
                 attributes.get("Lift:") == null ? 0 : 1

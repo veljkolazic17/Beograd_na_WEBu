@@ -7,15 +7,18 @@ import rs.psi.beogradnawebu.model.Smestaj;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class Stan4Zida extends Scraper4Zida {
 
-
-    public void callScraper() {
+    public List<Smestaj> callScraper() {
         scrape(); // automatsko pozivanje metode scrape
         smestaj.deleteWithFalseTag(1); // brisanje stanova koji se ne nalaze vise na sajtu
         smestaj.setAllTags(1);// ponistavanje tagova
+        List<Smestaj> list = allAcc;
+        allAcc.clear();
+        return list;
     }
 
     public Stan4Zida(ChromeDriver driver, SmestajDAO smestaj) {
@@ -24,7 +27,7 @@ public class Stan4Zida extends Scraper4Zida {
     }
 
     protected int getSpratnost(String value) {
-        if(value == null) return 0;
+        if(value == null) return -1;
         String[] splitValues = value.split("/");
         if(splitValues.length < 2) return 0; // proveriti
         if(splitValues[0].equals("suteren")
@@ -37,7 +40,13 @@ public class Stan4Zida extends Scraper4Zida {
     @Override
     protected Smestaj makeNew(String href, String src) {
         HashMap<String, String> attributes = getAttributes(); // atributi odredjenog stana
-        String location = driver.findElementByClassName("location").getText(); // lokacija stana
+
+        String location;
+        try {
+            location = driver.findElementByClassName("location").getText(); // lokacija kuce
+        } catch (Exception e) {
+            location = "";
+        }
 
         Smestaj noviSmestaj = new Smestaj();
         noviSmestaj.setOrgPutanja(href);

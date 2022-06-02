@@ -19,6 +19,7 @@ import rs.psi.beogradnawebu.model.Smestaj;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -58,24 +59,36 @@ public class FilterController {
         model.addAttribute("filterData",new FilterDTO());
         HttpSession mySession = request.getSession();
         model.addAttribute("pagen",nstranica);
+        model.addAttribute("lastPage",false);
         if(korisnik!=null) {
             if(mySession.getAttribute("displayflag")==null) {
                 List<Smestaj> smestajList = smestajDAO.getByOffset(nstranica,10);
-
+                if(smestajList.size() == 0){
+                    model.addAttribute("lastPage",true);
+                }
                 model.addAttribute("smestajList", smestajList);
             }
             else{
+                boolean isRecommended = (int)mySession.getAttribute("displayflag") == 2;
+                model.addAttribute("prikazPredlozenih", isRecommended);
                 if((int)mySession.getAttribute("displayflag") == 1){
                     FilterDTO myfilter = (FilterDTO) mySession.getAttribute("myfilter");
                     model.addAttribute("filterf",myfilter);
                     List<Smestaj> smestajList = smestajDAO.searchByFilters(myfilter,nstranica);
+                    if(smestajList.size() == 0){
+                        model.addAttribute("lastPage",true);
+                    }
                     model.addAttribute("smestajList", smestajList);
                 }else {
                     List<Smestaj> smestajList = (List<Smestaj>) mySession.getAttribute("myrec");
                     if(smestajList.size() >= 10*(nstranica+1)){
                         smestajList = smestajList.subList(nstranica*10, (nstranica+1)*10);
-                    }else if(smestajList.size() >= 10*nstranica){
+                    }else if(smestajList.size() > 10*nstranica){
                         smestajList = smestajList.subList(nstranica*10,smestajList.size());
+                    }
+                    else{
+                        smestajList = new ArrayList<>();
+                        model.addAttribute("lastPage",true);
                     }
                     model.addAttribute("smestajList", smestajList);
                 }
@@ -99,7 +112,12 @@ public class FilterController {
                 model.addAttribute("smestajList", smestajList.subList(0,10));
             }
             else{
+                FilterDTO myfilter = (FilterDTO) mySession.getAttribute("myfilter");
+                model.addAttribute("filterf",myfilter);
                 List<Smestaj> smestajList = smestajDAO.searchByFilters((FilterDTO) mySession.getAttribute("myfilter"),nstranica);
+                if(smestajList.size()==0){
+                    model.addAttribute("lastPage",true);
+                }
                 model.addAttribute("smestajList", smestajList);
             }
             return "glavnaStranicaGost";

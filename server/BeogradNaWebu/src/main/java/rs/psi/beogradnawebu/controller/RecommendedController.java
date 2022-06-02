@@ -47,22 +47,15 @@ public class RecommendedController {
     @GetMapping
     public String listSmestaj(HttpServletRequest request, @AuthenticationPrincipal User user, RedirectAttributes redirectAttributes){
         Korisnik korisnik = korisnikDAO.getUserByUsername(user.getUsername()).orElse(null);
-        if(korisnik == null) {
-            redirectAttributes.addFlashAttribute("prikazPredlozenih", false);
-            return "redirect:/pregledsmestaja/0";
-        } else {
-
-            List<Smestaj> smestajList;
-            HttpSession mySession = request.getSession();
-            if(mySession.getAttribute("myrec") == null){
-                mySession.setAttribute("myrec",recommendAcc(korisnik));
-            }
-            smestajList = (List<Smestaj>) mySession.getAttribute("myrec");
-            mySession.setAttribute("displayflag",2);
-
-            redirectAttributes.addFlashAttribute("prikazPredlozenih", true);
-            return "redirect:/pregledsmestaja/0";
+        HttpSession mySession = request.getSession();
+        if(mySession.getAttribute("myrec") == null){
+            mySession.setAttribute("myrec",recommendAcc(korisnik));
         }
+        mySession.setAttribute("displayflag",2);
+
+        redirectAttributes.addFlashAttribute("prikazPredlozenih", true);
+        return "redirect:/pregledsmestaja/0";
+
     }
 
     public List<Smestaj> recommendAcc(Korisnik k){

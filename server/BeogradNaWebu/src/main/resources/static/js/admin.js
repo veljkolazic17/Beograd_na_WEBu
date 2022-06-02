@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
             for(let korisnik of korisniciZaBrisanje) {
                 korisnik.addEventListener("dblclick", function(ev) {
                     $.ajax({
-                        url: "userdata/obrisiKorisnika/" + korisnik.value,
+                        url: "../userdata/obrisiKorisnika/" + korisnik.value,
                         type: "POST",
                         statusCode: {
                             403: function () {

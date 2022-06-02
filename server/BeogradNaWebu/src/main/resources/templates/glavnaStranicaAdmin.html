@@ -90,7 +90,7 @@
             </div>
 
             <div id="panelPromenaSifre">
-                <form method="post" th:action="@{promena/sifra}" th:object="${promenaSifre}">
+                <form method="post" th:action="@{../promena/sifra}" th:object="${promenaSifre}">
                     <div class="sifreWrappers">
                         <p id="staraSifraNatpis">Stara šifra: </p>
                         <input type="password" th:field="*{StaraSifra}" />
@@ -112,7 +112,7 @@
             </div>
 
             <div id="panelPromenaEmaila">
-                <form method="post" th:action="@{promena/email}" th:object="${promenaEmaila}">
+                <form method="post" th:action="@{../promena/email}" th:object="${promenaEmaila}">
                     <div class="mailoviWrappers">
                         <p id="stariEmailNatpis">Stari email: </p>
                         <input type="email" th:field="*{StariEmail}" />

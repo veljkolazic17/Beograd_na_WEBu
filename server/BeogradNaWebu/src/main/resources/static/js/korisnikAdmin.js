@@ -112,6 +112,19 @@ document.addEventListener("DOMContentLoaded", function() {
         panelPotvrde.style.display = "block";
         aktivniProzor = panelPotvrde;
 
+        let dugmePotvrdi = panelPotvrde.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[1];
+        if(user.epredlog) {
+            document.getElementById("porukaPotvrde").innerHTML =
+                "Potvrđivanjem ove opcije aplikacija \"Beograd na WEB-u\"<br />"
+                + "će prestati da Vas obaveštava o novom smeštaju putem Vašeg mail-a.";
+            dugmePotvrdi.value = "Prekini pretplatu";
+        } else {
+            document.getElementById("porukaPotvrde").innerHTML =
+                "Potvrđivanjem ove opcije prihvatate da Vas aplikacija \"Beograd na WEB-u\"<br />" +
+                "obaveštava o novom smeštaju putem Vašeg mail-a.";
+            dugmePotvrdi.value = "Pretplati se";
+        }
+
         if(!postavljenEventHandlerPotvrda) {
             postavljenEventHandlerPotvrda = true;
 
@@ -121,27 +134,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 pozadina.style.display = "none";
             });
 
-            let dugmePotvrdi = panelPotvrde.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[1];
-            if(user.epredlog) {
-                document.getElementById("porukaPotvrde").innerHTML =
-                    "Potvrđivanjem ove opcije aplikacija \"Beograd na WEB-u\"<br />"
-                    + "će prestati da Vas obaveštava o novom smeštaju putem Vašeg mail-a.";
-                dugmePotvrdi.value = "Prekini pretplatu";
-            } else {
-                document.getElementById("porukaPotvrde").innerHTML =
-                    "Potvrđivanjem ove opcije prihvatate da Vas aplikacija \"Beograd na WEB-u\"<br />" +
-                    "obaveštava o novom smeštaju putem Vašeg mail-a.";
-                dugmePotvrdi.value = "Pretplati se";
-            }
             dugmePotvrdi.addEventListener("click", function() {
-                // izmeniti za AJAX
-
-
-                panelPotvrde.style.display = "none";
-                pozadina.style.display = "none";
-                $.ajax({url:"../promena/pretplata",type:"POST"});
+                $.ajax({
+                    url:"../promena/pretplata",
+                    type:"POST",
+                    async: false
+                });
                 window.location.reload(true);
-                //return false;
             });
         }
     });

@@ -17,6 +17,8 @@ import rs.psi.beogradnawebu.services.MailService;
 import rs.psi.beogradnawebu.model.Korisnik;
 import rs.psi.beogradnawebu.services.SimplePasswordGenerator;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Collection;
 
 @RestController
@@ -48,9 +50,11 @@ public class UserDataController {
 
     // TODO staviti da je putanja /resetdata
     @PostMapping
-    public ResponseEntity<String> resetData(@AuthenticationPrincipal User user) {
+    public ResponseEntity<String> resetData(HttpServletRequest request, @AuthenticationPrincipal User user) {
         Korisnik korisnik = korisnikDAO.getUserByUsername(user.getUsername()).orElse(null);
         if(korisnik != null){
+            HttpSession mySession = request.getSession();
+            mySession.setAttribute("myrec",null);
             int idkorisnik = (int)korisnik.getIdkorisnik();
             smestajDAO.decLikes((int) korisnik.getIdkorisnik());
             lajkSmestajaCDAO.deleteLikes((int) korisnik.getIdkorisnik());

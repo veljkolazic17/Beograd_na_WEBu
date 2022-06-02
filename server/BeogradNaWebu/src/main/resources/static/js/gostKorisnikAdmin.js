@@ -5,13 +5,17 @@
  * Veljko Lazic 2019/0241
  */
 
+var komentarList = null;
+let aktivanKomentar = null;
+let postavljenEventHandlerPotvrdaBrisanjaKomentara = false;
+
 document.addEventListener("DOMContentLoaded", function() {
     // podesavanje prikazanih smestaja da prikazu svoju sliku na panelu za konkretni smestaj
     var smestaji = document.getElementsByClassName("smestaji");
     var user = JSON.parse(sessionStorage.getItem("user"));
     var isLiked = JSON.parse(sessionStorage.getItem("isliked"));
     var smestajList = JSON.parse(sessionStorage.getItem("smestajList"));
-    var komentarList = null; //= JSON.parse(sessionStorage.getItem("komentarList"));
+
     let currClicked = null;
     var firstClick = true;
 
@@ -155,10 +159,8 @@ document.addEventListener("DOMContentLoaded", function() {
         if(ev.target !== ev.currentTarget) return;
         document.getElementById("prikazStana").style.display = "none";
 
-        // izbaciti/promeniti u konacnoj verziji. Brise komentare i lajkove u svrhu prototipa.
-        var rezimGosta = document.getElementById("komentariPanel").getAttribute("name");
+        // brisanje komentara pri izlazku iz prozora
         while(document.getElementsByClassName("komentari").length != 0) {
-            if (rezimGosta != undefined) break; // za rezim gosta, ne brisu se komentari.
 
             if (document.getElementsByClassName("komentari")[0].children[0].tagName.toLowerCase() == "textarea") {
                 document.getElementsByClassName("komentari")[0].children[1].children[1].click();
@@ -195,7 +197,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if(firstClick) {
                 var komentariPanel = document.getElementById("komentariPanel");
-
                 var noviKomDugme = komentariPanel.removeChild(document.getElementById("noviKomentar"));
 
                 //prikaz komentara
@@ -204,6 +205,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     let noviKomentarBox = document.createElement("div");
                     noviKomentarBox.classList.add("komentari");
+
+                    let idKomentaraInput = document.createElement("input");
+                    idKomentaraInput.setAttribute("type", "hidden");
+                    idKomentaraInput.setAttribute("class", "ideviKomentara");
+                    noviKomentarBox.append(idKomentaraInput);
+                    idKomentaraInput.value = komentarList[i].idkomentar;
 
                     let noviKomentarTekst = document.createElement("p");
                     noviKomentarTekst.textContent = komentar.tekstKomentara;
@@ -248,7 +255,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     divZaLajk.append(noviDivZaSVG);
                     let lajkBrojac = document.createElement("p");
-                    lajkBrojac.innerHTML = komentarList[i].broj_lajkova; // dodati broj lajkova!!!!!!!!!
+                    lajkBrojac.innerHTML = komentarList[i].broj_lajkova;
 
                     noviWrapper.append(divZaLajk);
                     divZaLajk.append(lajkBrojac);
@@ -256,9 +263,43 @@ document.addEventListener("DOMContentLoaded", function() {
                     let noviKomentarObrisiDugme = document.createElement("input");
                     noviKomentarObrisiDugme.setAttribute("value", "Obriši");
                     noviKomentarObrisiDugme.setAttribute("type", "button");
-                    // brisanje ...
 
-                    noviWrapper.append(noviKomentarObrisiDugme);
+                    //brisanje komentara
+                    //ako nije gost i (ako je admin ili ako je svoj komentar)
+                    if(user != null && (user.uloga == "1" || user.idkorisnik == komentarList[i].idkorisnik)) {
+                        noviKomentarObrisiDugme.addEventListener("click", function() {
+                            // potvrda brisanja komentara
+                            aktivanKomentar = noviKomentarBox;
+
+                            let prozor = document.getElementById("prozorZaPotvrduBrisanjaKomentara");
+
+                            if(!postavljenEventHandlerPotvrdaBrisanjaKomentara) {
+                                postavljenEventHandlerPotvrdaBrisanjaKomentara = true;
+
+                                let dugmeZaObustavljanje =
+                                    prozor.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[0];
+                                let dugmeZaPotvrdu =
+                                    prozor.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[1];
+
+                                dugmeZaObustavljanje.addEventListener("click", function() {
+                                    aktivanKomentar = null;
+                                    document.getElementById("pozadinaProzoraZaPotvrduBrisanjaKom").style.display = "none";
+                                });
+
+                                dugmeZaPotvrdu.addEventListener("click", function(ev) {
+                                    let noviID = aktivanKomentar.getElementsByClassName("ideviKomentara")[0].value;
+                                    $.ajax({url:"../obrisiKomentar/" + noviID, type: "POST", async : false});
+                                    aktivanKomentar.remove();
+                                    aktivanKomentar = null;
+                                    document.getElementById("pozadinaProzoraZaPotvrduBrisanjaKom").style.display = "none";
+                                });
+                            }
+                            document.getElementById("pozadinaProzoraZaPotvrduBrisanjaKom").style.display = "block";
+                        });
+
+                        noviWrapper.append(noviKomentarObrisiDugme);
+                    }
+
                     noviKomentarBox.append(noviWrapper);
 
                     noviKomentarBox.append(noviKomentarTekst);
@@ -270,10 +311,24 @@ document.addEventListener("DOMContentLoaded", function() {
             firstClick = false;
         }
     });
+
+    // izlaz iz prozora za potvrdu brisanja komentara
+    document.getElementById("pozadinaProzoraZaPotvrduBrisanjaKom")
+        .addEventListener("click", function(ev)
+        {
+            if(ev.target !== ev.currentTarget) return;
+
+            aktivanKomentar = null;
+
+            let pozadina = document.getElementById("pozadinaProzoraZaPotvrduBrisanjaKom");
+            pozadina.style.display = "none";
+        });
+
     document.getElementById("dugmeNalog").addEventListener("click", function(ev) {
         if(ev.target !== ev.currentTarget) return;
         document.getElementById("nalogPanelPozadina").style.display = "block";
     });
+
     // izlaz iz panela za filtere
     document.getElementById("filteriPanelPozadina").addEventListener("click", function(ev) {
         if(ev.target !== ev.currentTarget) return;

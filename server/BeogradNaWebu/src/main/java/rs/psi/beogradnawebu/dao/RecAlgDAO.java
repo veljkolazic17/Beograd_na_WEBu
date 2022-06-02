@@ -3,7 +3,6 @@
  * Veljko Lazic 2019/0241
  */
 
-
 package rs.psi.beogradnawebu.dao;
 
 import org.slf4j.Logger;

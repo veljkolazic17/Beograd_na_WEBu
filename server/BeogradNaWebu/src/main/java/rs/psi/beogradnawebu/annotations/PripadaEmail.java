@@ -1,3 +1,7 @@
+/**
+ * Marko Mirkovic 2019/0197
+ */
+
 package rs.psi.beogradnawebu.annotations;
 
 
@@ -12,6 +16,11 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * PripadaEmail - interfejs koji sluzi da naznaci da polje email adrese sadrzi email
+ *                koji pripada korisniku
+ * @version 1.0
+ */
 @Target({TYPE, FIELD, ANNOTATION_TYPE})
 @Retention(RUNTIME)
 @Constraint(validatedBy = EmailPripadaValidator.class)

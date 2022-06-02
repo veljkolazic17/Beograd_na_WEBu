@@ -126,6 +126,11 @@ public class KorisnikDAO implements DAO<Korisnik> {
         return Optional.ofNullable(korisnik);
     }
 
+    /**
+     * Metoda za dohvatanje korisnika po emailu
+     * @param email
+     * @return
+     */
     public Optional<Korisnik> getUserByEmail(String email){
         Korisnik korisnik = null;
         try{
@@ -135,6 +140,11 @@ public class KorisnikDAO implements DAO<Korisnik> {
         }
         return Optional.ofNullable(korisnik);
     }
+
+    /**
+     * Metoda za dohvatanje pretplacenih korisnika za slanje obavestenja
+     * @return
+     */
     public List<Korisnik> getByEpredlogFlag(){
         List<Korisnik> result = jdbcTemplate.query("select * from korisnik where epredlog = 1",rowMapper);
         return result;

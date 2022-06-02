@@ -5,15 +5,12 @@
  * */
 package rs.psi.beogradnawebu.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -32,9 +29,22 @@ import javax.validation.Valid;
 public class InfoChangeController {
     private KorisnikDAO korisnikDAO;
 
+    /**
+     * InfoChangeController - konstruktor, prosledjuju mu se zavisnosti
+     * @param korisnikDAO
+     */
     public InfoChangeController(KorisnikDAO korisnikDAO) {
         this.korisnikDAO = korisnikDAO;
     }
+
+    /**
+     * promenaEmaila - metoda koja sluzi za promenu emaila u panelu za korisnike i admine
+     * @param user
+     * @param mailovi
+     * @param bindingResult
+     * @param redirectAttributes
+     * @return
+     */
     @PostMapping("/promena/email")
     public String promenaEmaila(@AuthenticationPrincipal User user,
                                 @Valid @ModelAttribute("promenaMaila") PromenaMailaDTO mailovi,
@@ -53,6 +63,14 @@ public class InfoChangeController {
         return "redirect:/pregledsmestaja/0";
     }
 
+    /**
+     * promenaSifre - metoda koja sluzi za promenu sifre u panelu za korisnike i admine
+     * @param user
+     * @param sifre
+     * @param bindingResult
+     * @param redirectAttributes
+     * @return
+     */
     @PostMapping("/promena/sifra")
     public String promenaSifre(@AuthenticationPrincipal User user,
                                @Valid @ModelAttribute("promenaSifre") PromenaSifreDTO sifre,

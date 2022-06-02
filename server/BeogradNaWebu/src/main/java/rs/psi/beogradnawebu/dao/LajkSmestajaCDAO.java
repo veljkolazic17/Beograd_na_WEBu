@@ -146,12 +146,4 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
         List<LajkSmestaja> likes = jdbcTemplate.query("SELECT * FROM lajk_smestaja WHERE idkorisnik = ?", rowMapper, idkorisnik);
         return Optional.of(likes);
     }
-
-
-
-
-
-
-
-
 }

@@ -14,7 +14,7 @@ public class SeleniumConfiguration {
 
     @PostConstruct
     void postConstuct() {
-        System.setProperty("webdriver.chrome.driver", "drivers\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "server\\BeogradNaWebu\\drivers\\chromedriver.exe");
     }
 
     @Bean

@@ -71,6 +71,8 @@ public class ComController {
 
         System.out.println("lajk");
 
+        if(korisnik == null) return null;
+
         Korisnik k = korisnikDAO.getUserByUsername(korisnik.getUsername()).orElse(null);
         Komentar kom = komentarDAO.get(idkomentar).orElse(null);
 
@@ -94,7 +96,9 @@ public class ComController {
 
         System.out.println("dislajk");
 
-        Korisnik k =korisnikDAO.getUserByUsername(korisnik.getUsername()).orElse(null);
+        if(korisnik == null) return null;
+
+        Korisnik k = korisnikDAO.getUserByUsername(korisnik.getUsername()).orElse(null);
         Komentar kom = komentarDAO.get(idkomentar).orElse(null);
 
         if(kom != null && k != null) {
@@ -119,5 +123,25 @@ public class ComController {
         int idkorisnik = (int)k.getIdkorisnik();
         LajkKomentara lajkKomentara = lajkKomentaraCDAO.get(new int[]{idkomentar, (int)k.getIdkorisnik()}).orElse(null);
         return new ResponseEntity<Boolean>(lajkKomentara != null, HttpStatus.OK);
+    }
+
+    @PostMapping("obrisiKomentar/{idkomentar}")
+    public ResponseEntity<String> deleteKomentar(@AuthenticationPrincipal User korisnik, @PathVariable("idkomentar") Integer idkomentar) {
+
+        if(korisnik == null) return null;
+
+        Korisnik k = korisnikDAO.getUserByUsername(korisnik.getUsername()).orElse(null);
+        Komentar kom = komentarDAO.get(idkomentar).orElse(null);
+
+        if(k.getUloga() == 1 || kom.getIdkorisnik() == k.getIdkorisnik()) {
+            try {
+                komentarDAO.delete(idkomentar);
+            } catch (Exception e) {
+                log.info("Error");
+                return ResponseEntity.status(500).build();
+            }
+            return ResponseEntity.status(200).build();
+        }
+        return ResponseEntity.status(500).build();
     }
 }

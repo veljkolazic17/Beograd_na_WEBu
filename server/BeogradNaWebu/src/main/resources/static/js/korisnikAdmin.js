@@ -16,7 +16,6 @@ function prikaziSvePredlozeneSmestaje() {
 
 // trenutno aktivni prozor u panelu korisnika
 let aktivniProzor = null;
-let aktivanKomentar = null;
 
 document.addEventListener("DOMContentLoaded", function() {
     var user = JSON.parse(sessionStorage.getItem("user"));
@@ -177,7 +176,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // ubacivanje novog komentara.
-    let postavljenEventHandlerPotvrdaBrisanjaKomentara = false;
     document.getElementById("noviKomentar").addEventListener("click", function(ev) {
         var noviKomentar = document.createElement("div");
         noviKomentar.classList.add("komentari");
@@ -204,12 +202,19 @@ document.addEventListener("DOMContentLoaded", function() {
             var noviKomentarBox = document.createElement("div");
             noviKomentarBox.classList.add("komentari");
 
+            let idKomentaraInput = document.createElement("input");
+            idKomentaraInput.setAttribute("type", "hidden");
+            idKomentaraInput.setAttribute("class", "ideviKomentara");
+            noviKomentarBox.append(idKomentaraInput);
+
             var noviKomentarTekst = document.createElement("p");
             noviKomentarTekst.innerHTML = tekstKomentara.value.replaceAll("\n", "<br />");
 
             //ovde poslati u bazu
             var user = JSON.parse(sessionStorage.getItem("user"));
-            $.ajax({url: "../noviKomentar/" + sessionStorage.getItem("currentSmestaj") + "/" + tekstKomentara.value, type: "POST"});
+            $.ajax({url: "../noviKomentar/" + sessionStorage.getItem("currentSmestaj") + "/" + tekstKomentara.value,
+                type: "POST",
+                async: false});
 
             let idKom;
             $.ajax({
@@ -220,7 +225,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 },
                 async: false
             });
-            idKom++;
+
+            idKomentaraInput.value = idKom;
+
             var noviWrapper = document.createElement("div");
             noviWrapper.setAttribute("class", "dugmadNaKomentarimaWrapper");
 
@@ -272,6 +279,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     });
 
                     dugmeZaPotvrdu.addEventListener("click", function() {
+                        let noviID = aktivanKomentar.getElementsByClassName("ideviKomentara")[0].value;
+                        $.ajax({url:"../obrisiKomentar/" + noviID, type: "POST", async : false});
                         aktivanKomentar.remove();
                         aktivanKomentar = null;
                         document.getElementById("pozadinaProzoraZaPotvrduBrisanjaKom").style.display = "none";

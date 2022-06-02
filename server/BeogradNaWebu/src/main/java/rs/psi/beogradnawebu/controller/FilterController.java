@@ -100,9 +100,9 @@ public class FilterController {
                 model.addAttribute("smestajList", smestajList);
             }
             else{
-                boolean isRecommended = (int)mySession.getAttribute("displayflag") == 2;
+                boolean isRecommended = ((int)mySession.getAttribute("displayflag") == 2 && mySession.getAttribute("myrec")!=null);
                 model.addAttribute("prikazPredlozenih", isRecommended);
-                if((int)mySession.getAttribute("displayflag") == 1){
+                if(!isRecommended){
                     FilterDTO myfilter = (FilterDTO) mySession.getAttribute("myfilter");
                     model.addAttribute("filterf",myfilter);
                     List<Smestaj> smestajList = smestajDAO.searchByFilters(myfilter,nstranica);
@@ -110,7 +110,7 @@ public class FilterController {
                         model.addAttribute("lastPage",true);
                     }
                     model.addAttribute("smestajList", smestajList);
-                }else {
+                }else{
                     List<Smestaj> smestajList = (List<Smestaj>) mySession.getAttribute("myrec");
                     if(smestajList.size() >= 10*(nstranica+1)){
                         smestajList = smestajList.subList(nstranica*10, (nstranica+1)*10);

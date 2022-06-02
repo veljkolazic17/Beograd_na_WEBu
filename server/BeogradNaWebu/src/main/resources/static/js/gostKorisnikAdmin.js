@@ -390,7 +390,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if(filterData != null) {
         Object.entries(filterData).forEach(([key,value])=>{
-            if(value != null && value !== 0 && value !== false && value !== "nullLokacija" && value !== "nullSoba" && value !== "nullSmestaj"){
+            if(key != "null" && value != null && value !== 0 && value !== false && value !== "nullLokacija" && value !== "nullSoba" && value !== "nullSmestaj"){
                 textToBind += "<b>" + key + "</b>: " + value + "</br>"
             }
         });

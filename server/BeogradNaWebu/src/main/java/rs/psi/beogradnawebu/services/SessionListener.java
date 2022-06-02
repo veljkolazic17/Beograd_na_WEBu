@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import rs.psi.beogradnawebu.controller.FilterController;
+import rs.psi.beogradnawebu.dto.FilterDTO;
 
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSession;
@@ -31,6 +32,7 @@ public class SessionListener implements HttpSessionListener {
     public SessionListener() {
         super();
 
+
     }
 
     /**
@@ -41,6 +43,7 @@ public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent sessionEvent) {
         log.info("-------NAPRAVLJENA SESIJA--------");
+        sessionEvent.getSession().setAttribute("myfilter",new FilterDTO());
     }
 
     /**

@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 currClicked = i;
                 if(user != null) {
                     $.ajax({
-                        url:"isliked/"+user.korisnickoime+"/"+smestajList[i].idsmestaj,
+                        url:"../isliked/"+user.korisnickoime+"/"+smestajList[i].idsmestaj,
                         type:"GET",
                         success: function(data) {
                             isLiked = data;
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 slika.style.marginBottom = "0";
                 // greska pri prikazu konkretnog smestaja
                 slika.addEventListener("error", function(ev) {
-                    slika.setAttribute("src", "images/logoBeli.svg");
+                    slika.setAttribute("src", "../images/logoBeli.svg");
                     slika.style.width = "60%";
                     slika.style.height = "60%";
                     slika.style.marginLeft = "20%";
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // greska pri prikazu u listi
             smestaji[i].children[0].addEventListener("error", function(ev) {
-                smestaji[i].children[0].setAttribute("src", "images/logo.svg");
+                smestaji[i].children[0].setAttribute("src", "../images/logo.svg");
                 smestaji[i].children[0].style.width = "60%";
                 smestaji[i].children[0].style.height = "60%";
                 smestaji[i].children[0].style.marginLeft = "20%";
@@ -107,10 +107,12 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+
     // prikaz panela za filtere
     document.getElementById("dugmeFilteri").addEventListener('click', function() {
         document.getElementById("filteriPanelPozadina").style.display = "block";
     });
+    document.getElementsByClassName("stranicaLevo")
 
     // izlaz iz panela za prikaz konkretnog stana
     var emptyHeart = "<svg version=\"1.1\" class=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\"" +
@@ -218,13 +220,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 element.children[1].innerHTML = parseInt(element.children[1].innerHTML) + 1;
                 element.children[0].innerHTML = fullHeart;
                 smestajList[currClicked].brojLajkova += 1;
-                $.ajax({url: "like/" + smestajList[currClicked].idsmestaj, type: "POST"})
+                $.ajax({url: "../like/" + smestajList[currClicked].idsmestaj, type: "POST"})
 
             } else {
                 element.children[1].innerHTML = parseInt(element.children[1].innerHTML) - 1;
                 element.children[0].innerHTML = emptyHeart;
                 smestajList[currClicked].brojLajkova -= 1;
-                $.ajax({url: "unlike/" + smestajList[currClicked].idsmestaj, type: "POST"})
+                $.ajax({url: "../unlike/" + smestajList[currClicked].idsmestaj, type: "POST"})
             }
         }
     });
@@ -242,17 +244,12 @@ document.addEventListener("DOMContentLoaded", function() {
     var first = true;
 
     Object.entries(filterData).forEach(([key,value])=>{
-        if(value != null && value !== 0 && value !== false && value !== "%nullLokacija%" && value !== "nullSoba" && value !== "nullSmestaj"){
+        if(value != null && value !== 0 && value !== false && value !== "nullLokacija" && value !== "nullSoba" && value !== "nullSmestaj"){
             if(first){
                 textToBind+="&times;&nbsp;";
                 first=false;
             }
-            if(key == "lokacija"){
-                textToBind += key + ": " + value.substring(1,value.length-1) + "</br>"
-            }else{
-                textToBind += key + ": " + value + "</br>"
-            }
-
+            textToBind += key + ": " + value + "</br>"
         }
     });
     document.getElementById("izabraniFilteri").innerHTML = textToBind;

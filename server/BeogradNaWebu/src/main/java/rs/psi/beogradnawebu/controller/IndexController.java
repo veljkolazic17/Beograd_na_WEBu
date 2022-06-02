@@ -53,7 +53,7 @@ public class IndexController {
             PromenaSifreDTO promSifDTO = new PromenaSifreDTO();
             model.addAttribute("promenaSifre", promSifDTO);
 
-            return "redirect:/pregledsmestaja";
+            return "redirect:/pregledsmestaja/0";
         }
         else {
             RegistracijaDTO regDTO = new RegistracijaDTO();
@@ -85,7 +85,7 @@ public class IndexController {
             log.info("Nije moguce ulogovati korisnika!");
             return "login";
         }
-        return "redirect:/pregledsmestaja";
+        return "redirect:/pregledsmestaja/0";
     }
 
 }

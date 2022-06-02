@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 panelBrisanje.style.display = "none";
                 pozadina.style.display = "none";
 
-                $.ajax({url:"userdata/",type:"POST"});
+                $.ajax({url:"../userdata/",type:"POST"});
                 window.location.reload(true);
                 return false;
             });

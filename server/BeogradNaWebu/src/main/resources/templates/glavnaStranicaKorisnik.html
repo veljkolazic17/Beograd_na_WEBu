@@ -51,7 +51,7 @@
         <form th:action="@{/pregledpredlozenihsmestaja}" method="get" style="width: 50%; padding: 0;">
             <input id="dugmePredlozeniSmestaji" type="submit" value="Predloženi smeštaji" />
         </form>
-        <form th:action="@{/pregledsmestaja}" method="get" style="width: 50%; padding: 0;">
+        <form th:action="@{/pregledsmestaja/filter}" method="post" style="width: 50%; padding: 0;">
             <input id="dugmeSviSmestaji" type="submit" value="Svi smeštaji" />
         </form>
     </nav>
@@ -74,7 +74,7 @@
         <div id="prozorZaPotvrdu">
 
             <div id="panelPromenaSifre">
-                <form method="post" th:action="@{promena/sifra}" th:object="${promenaSifre}">
+                <form method="post" th:action="@{../promena/sifra}" th:object="${promenaSifre}">
                     <div class="sifreWrappers">
                         <p id="staraSifraNatpis">Stara šifra: </p>
                         <input type="password" th:field="*{StaraSifra}" />
@@ -96,7 +96,7 @@
             </div>
 
             <div id="panelPromenaEmaila">
-                <form method="post" th:action="@{promena/email}" th:object="${promenaEmaila}">
+                <form method="post" th:action="@{../promena/email}" th:object="${promenaEmaila}">
                     <div class="mailoviWrappers">
                         <p id="stariEmailNatpis">Stari email: </p>
                         <input type="email" th:field="*{StariEmail}" />
@@ -169,9 +169,13 @@
         <aside class="col-lg-2 order-1 order-lg-2" id="filteri">
             <div class="stranice">
                 <!-- ovo nije greska, namerno je da ne bi bilo prostora izmedju elemenata -->
-                <input type="button" value="<" class="stranicaLevo"
-                /><div class="brojStranice"> 1 </div
-            ><input type="button" value=">" class="stranicaDesno" />
+                <form class="stranicaLevo" th:if="${pagen >= 1}" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}-1)}" method="get">
+                    <input  class="stranicaLevo" value="<" type="submit"   />
+                </form>
+                <div  class="brojStranice" th:text="${pagen+1}">  </div>
+                <form th:if="${!lastPage}"  class="stranicaDesno" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}+1)}" method="get" >
+                    <input class="stranicaDesno" value=">" type="submit"  />
+                </form>
             </div>
 
             <input id="dugmeFilteri" type="button" value="Filteri">
@@ -189,9 +193,13 @@
     <div id="pregledPredlozenogSmestaja" class="row pregled">
         <div class="stranice col-12" style="padding: 0;" >
             <!-- ovo nije greska, namerno je da ne bi bilo prostora izmedju elemenata -->
-            <input type="button" value="<" class="stranicaLevo"
-            /><div class="brojStranice"> 1 </div
-        ><input type="button" value=">" class="stranicaDesno" />
+            <form class="stranicaLevo" th:if="${pagen >= 1}" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}-1)}" method="get">
+                <input  class="stranicaLevo" value="<" type="submit"   />
+            </form>
+            <div  class="brojStranice" th:text="${pagen+1}">  </div>
+            <form th:if="${!lastPage}" class="stranicaDesno" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}+1)}" method="get" >
+                <input  class="stranicaDesno" value=">" type="submit"  />
+            </form>
         </div>
 
         <section class="col-12">
@@ -289,7 +297,7 @@
     </div>
 </div>
 
-<form th:object="${filterData}" th:action="@{/pregledsmestaja/filter/0}" method="post">
+<form th:object="${filterData}" th:action="@{/pregledsmestaja/filter}" method="post">
     <div id="filteriPanelPozadina">
         <div id="filteriPanel">
 
@@ -307,10 +315,6 @@
 
                     <option value="Novi Beograd" class="lokacijaDropDownOpcija">
                         Novi Beograd
-                    </option>
-
-                    <option value="Zvezdara opština" class="lokacijaDropDownOpcija">
-                        Zvezdara opština
                     </option>
 
                     <option value="Zemun" class="lokacijaDropDownOpcija">

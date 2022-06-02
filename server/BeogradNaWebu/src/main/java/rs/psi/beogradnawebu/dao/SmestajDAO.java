@@ -129,7 +129,7 @@ public class SmestajDAO implements DAO<Smestaj>{
 
     public List<Smestaj> getByOffset(int offset,int limit){
         try {
-            return jdbcTemplate.query("SELECT * FROM smestaj LIMIT "+limit+((offset == 0)?"":" offset "+offset*10),rowMapper);
+            return jdbcTemplate.query("SELECT * FROM smestaj LIMIT "+limit+((offset == 0)?"":" offset "+offset*limit),rowMapper);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -150,17 +150,17 @@ public class SmestajDAO implements DAO<Smestaj>{
                 assert id_tipS != null;
                 id_tip = id_tipS.getIdtipSmestaja();
             }
-            filters.setLokacija('%' + filters.getLokacija() + '%');
+
             return jdbcTemplate.query("SELECT * FROM smestaj WHERE CASE WHEN ? > 0 THEN cena >= ? ELSE TRUE END " +
                             "AND CASE WHEN ? > 0 THEN cena <= ? ELSE TRUE  END " +
                             "AND CASE WHEN  ? > 0 THEN kvadratura >= ? ELSE TRUE END " +
                             "AND CASE WHEN ? > 0 THEN kvadratura <= ? ELSE TRUE END AND CASE WHEN ? != '%nullLokacija%' THEN lokacija LIKE ? ELSE TRUE"  +
                             " END AND CASE WHEN ? < 3 AND ? > 0 THEN broj_soba = ? WHEN ? >= 3 THEN broj_soba >= ? ELSE TRUE END" +
                             " AND CASE WHEN ? != 0 THEN idtip_smestaja = ?  ELSE TRUE END AND CASE WHEN ? THEN spratonost > 0 ELSE TRUE END " +
-                            " AND CASE WHEN ? THEN ima_lift = 1 ELSE TRUE END LIMIT 10 " + ((offset == 0)?"":"offset "+offset*10), rowMapper,
+                            " AND CASE WHEN ? THEN ima_lift = 1 ELSE TRUE END LIMIT 10 " + ((offset>0)?"offset "+offset*10:""), rowMapper,
                     filters.getCenaOd(), filters.getCenaOd(), filters.getCenaDo(), filters.getCenaDo(),
                     filters.getKvadraturaOd(), filters.getKvadraturaOd(), filters.getKvadraturaDo(), filters.getKvadraturaDo(),
-                    filters.getLokacija(),filters.getLokacija(), mapBrojSoba(filters.getBrojSoba()), mapBrojSoba(filters.getBrojSoba()),
+                    "%" + filters.getLokacija() +"%","%" + filters.getLokacija() +"%", mapBrojSoba(filters.getBrojSoba()), mapBrojSoba(filters.getBrojSoba()),
                     mapBrojSoba(filters.getBrojSoba()), mapBrojSoba(filters.getBrojSoba()),
                     mapBrojSoba(filters.getBrojSoba()), id_tip,id_tip, filters.isNijePrvi(), filters.isImaLift());
         }

@@ -86,26 +86,27 @@ public class SchedulerScraper {
         final List<List<Smestaj>> kucaList = new ArrayList<>();
         final List<List<Smestaj>> stanList = new ArrayList<>();
 
-       Thread threadkuca =  new Thread(new Runnable() {
-            @Override
-            public void run() {
-                log.info("Pokrenut thread threadkuca!");
-                kucaList.add(kuca4Zida.callScraper());
-            }
-        });
+//       Thread threadkuca =  new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                log.info("Pokrenut thread threadkuca!");
+//                kucaList.add(kuca4Zida.callScraper());
+//            }
+//        });
 
         Thread threadstan = new Thread(new Runnable() {
             @Override
             public void run() {
-                log.info("Pokrenut thread threadstan!");
+                log.info("Pokrenut thread scraper!");
                 stanList.add(stan4Zida.callScraper());
+                kucaList.add(kuca4Zida.callScraper());
             }
         });
-        threadkuca.start();
+//        threadkuca.start();
         threadstan.start();
 
         try{
-            threadkuca.join();
+//            threadkuca.join();
             threadstan.join();
         } catch (InterruptedException interruptedException){
             interruptedException.printStackTrace();

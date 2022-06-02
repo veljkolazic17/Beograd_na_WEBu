@@ -1,3 +1,7 @@
+/**
+ * Marko Mirkovic 2019/0197
+ */
+
 package rs.psi.beogradnawebu.annotations;
 
 import rs.psi.beogradnawebu.validators.PromSifIsteSifreValidator;
@@ -12,6 +16,11 @@ import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * PromSifIsteSifre - interfejs koji sluzi da naznaci da polja za novu sifru
+ *                    sadrze istu sifru
+ * @version 1.0
+ */
 @Target({TYPE,ANNOTATION_TYPE})
 @Retention(RUNTIME)
 @Constraint(validatedBy = PromSifIsteSifreValidator.class)
@@ -21,3 +30,4 @@ public @interface PromSifIsteSifre {
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
+

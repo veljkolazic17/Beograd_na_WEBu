@@ -26,6 +26,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
 
+/**
+ * UserDataController - klasa koja sluzi za upravljanje korisnickim informacijama
+ * @version 1.0
+ */
 @RestController
 @RequestMapping("/userdata")
 public class UserDataController {
@@ -102,6 +106,12 @@ public class UserDataController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    /**
+     * obrisiKorisnika - metoda koja sluzi da obrise korisnika kojeg je admin dva puta kliknuo u panelu za brisanje korisnika
+     * @param user
+     * @param korime
+     * @return
+     */
     @PostMapping("obrisiKorisnika/{korime}")
     public ResponseEntity<String> obrisiKorisnika(@AuthenticationPrincipal User user, @PathVariable("korime") String korime){
         Korisnik korisnik = korisnikDAO.getUserByUsername(korime).orElse(null);

@@ -1,3 +1,7 @@
+/**
+ * Marko Mirkovic 2019/0197
+ */
+
 package rs.psi.beogradnawebu.annotations;
 
 import rs.psi.beogradnawebu.validators.KorimeValidator;
@@ -11,7 +15,11 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-
+/**
+ * ValidnoKorime - interfejs koji sluzi da naznaci da polje za korisnicko
+ *                 ime sadrzi korisnicko ime koje nije u upotrebi
+ * @version 1.0
+ */
 @Target({TYPE, FIELD, ANNOTATION_TYPE})
 @Retention(RUNTIME)
 @Constraint(validatedBy = KorimeValidator.class)

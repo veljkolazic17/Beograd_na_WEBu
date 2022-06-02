@@ -1,3 +1,7 @@
+/**
+ * Marko Mirkovic 2019/0197
+ */
+
 package rs.psi.beogradnawebu.services;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * PodaciKorisnikaServis - novi servis za detalje korisnika, prepradjen default-ni
+ * @version 1.0
+ */
 @Service
 @Transactional
 public class PodaciKorisnikaServis implements UserDetailsService {
@@ -24,6 +32,12 @@ public class PodaciKorisnikaServis implements UserDetailsService {
         this.korisnikDAO = korisnikDAO;
     }
 
+    /**
+     * loadUserByUsername - ucitavanje korisnika po imenu i dodeljivanje dozvola
+     * @param korime the username identifying the user whose data is required.
+     * @return
+     * @throws UsernameNotFoundException
+     */
     public UserDetails loadUserByUsername(String korime) throws UsernameNotFoundException {
         Optional<Korisnik> opt = korisnikDAO.getUserByUsername(korime);
         Korisnik korisnik = null;
@@ -46,7 +60,6 @@ public class PodaciKorisnikaServis implements UserDetailsService {
             case 1: dozvola = "ROLE_ADMIN"; break;
         }
         authorities.add(new SimpleGrantedAuthority(dozvola));
-        // OBAVEZNO PROMENITI!!!
 
         return new org.springframework.security.core.userdetails.User(
                 korisnik.getKorisnickoime(), korisnik.getSifra(), enabled, accountNonExpired,

@@ -1,3 +1,6 @@
+/**
+ * Marko Mirkovic 2019/0197
+ */
 package rs.psi.beogradnawebu;
 
 import org.springframework.context.annotation.Bean;
@@ -13,6 +16,9 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import rs.psi.beogradnawebu.services.PodaciKorisnikaServis;
 
+/**
+ * SecurityConfig - klasa za konfiguraciju bezbednosti
+ */
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -26,6 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.pks = pks;
     }
 
+    /**
+     * authenticationProvider - podesavanje userDetails servisa i enkodera sifre
+     * @return
+     */
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -35,6 +45,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return authProvider;
     }
 
+    /**
+     * configure - podesavanje userDetails servisa i enkodera sifre
+     * @param amb the {@link AuthenticationManagerBuilder} to use
+     * @throws Exception
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder amb) throws Exception {
         amb.authenticationProvider(authenticationProvider());
@@ -42,6 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.dataSource(jdbcTemplate.getDataSource());
     }
 
+    /**
+     * configure - podesavanje dozvola poziva i stranice logina i logauta
+     * @param httpSec the {@link HttpSecurity} to modify
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity httpSec) throws Exception {
                 httpSec
@@ -60,6 +80,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .and().csrf().disable().cors();
     }
 
+    /**
+     * getPasswordEncoder - podesavanje enkodera sifre
+     * @return
+     */
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return NoOpPasswordEncoder.getInstance();

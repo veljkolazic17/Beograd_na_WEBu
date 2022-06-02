@@ -3,6 +3,10 @@ package rs.psi.beogradnawebu.dto;
 import rs.psi.beogradnawebu.annotations.PripadaSifra;
 import rs.psi.beogradnawebu.annotations.PromSifIsteSifre;
 
+/**
+ * RegistracijaDTO - klasa za prenosenje informacija tokom promene sifre
+ * @version 1.0
+ */
 @PromSifIsteSifre
 public class PromenaSifreDTO {
     @PripadaSifra

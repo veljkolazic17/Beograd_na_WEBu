@@ -140,4 +140,11 @@ public class Smestaj {
     this.slika = slika;
   }
 
+  @Override
+  public String toString() {
+    return "Smestaj:\n" +
+            "\torgPutanja= " + orgPutanja + '\n' +
+            "\tlokacija= " + lokacija + '\n' +
+            "\tcena= " + cena;
+  }
 }

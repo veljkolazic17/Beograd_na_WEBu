@@ -223,6 +223,11 @@ public class SmestajDAO implements DAO<Smestaj>{
         }
     }
 
+    /**
+     * Metoda za proveru da li odredjeni smestaj postoji u bazi
+     * @param href
+     * @return
+     */
     public boolean checkIfExist(String href) {
         try {
             Smestaj smestaj = jdbcTemplate.queryForObject("SELECT * FROM smestaj WHERE org_putanja LIKE ?", SmestajDAO.rowMapper, href);
@@ -238,6 +243,10 @@ public class SmestajDAO implements DAO<Smestaj>{
         }
     }
 
+    /**
+     * Metoda za brisanje smestaja koji ne postoji vise
+     * @param brojSajta
+     */
     public void deleteWithFalseTag(int brojSajta) {
         try {
             jdbcTemplate.update("DELETE FROM smestaj WHERE postoji = ? AND broj_sajta = ?", 0, brojSajta);
@@ -246,6 +255,10 @@ public class SmestajDAO implements DAO<Smestaj>{
         }
     }
 
+    /**
+     * Metoda koja postavlja tag postoji na 0
+     * @param brojSajta
+     */
     public void setAllTags(int brojSajta) {
         try {
             jdbcTemplate.update("UPDATE smestaj SET postoji = ? AND broj_sajta = ?", 0, brojSajta); // azuriranje tagova na false

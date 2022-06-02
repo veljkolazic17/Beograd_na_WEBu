@@ -124,6 +124,10 @@ public class KomentarDAO implements DAO<Komentar> {
         }
     }
 
+    /**
+     * Metoda za dohvatanje maksimalnog ID-a komentara
+     * @return
+     */
     public Integer maxID() {
         try {
             Integer maxIDKom = jdbcTemplate.queryForObject("SELECT MAX(idkomentar) FROM komentar", Integer.class);
@@ -135,6 +139,12 @@ public class KomentarDAO implements DAO<Komentar> {
             return -1;
         }
     }
+
+    /**
+     * Metoda za dohvatanje svih komentara za odredjeni smestaj
+     * @param idSmestaj
+     * @return
+     */
     public List<Komentar> allKomentar(int idSmestaj) {
         List<Komentar> listKomentar = null;
         try {

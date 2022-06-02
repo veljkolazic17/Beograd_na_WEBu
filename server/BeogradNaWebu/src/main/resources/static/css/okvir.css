@@ -40,13 +40,30 @@ header p {
     color: #f5f0f6;
 }
 
+@media screen and (max-width: 767px) {
+    header {
+        height: 46px;
+    }
+
+    header p {
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 499px) {
+    header {
+        height: 90px;
+    }
+}
+
 header span {
     position: relative;
     color: #f5f0f6;
     text-align: center;
     height: fit-content;
     font-size: 14px;
-    top: 18px;
+    top: 50%;
+    transform: translateY(-50%);
     cursor: pointer;
 }
 
@@ -54,9 +71,9 @@ header>form>input {
     background-color: transparent;
     font-size: 14px;
     position: relative;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    top: 16px;
+    transform: translate(-50%, -50%);
     color: white;
     border: none;
 }

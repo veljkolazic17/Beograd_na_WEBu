@@ -1,0 +1,105 @@
+/**
+    Marko Mirkovic 2019/0197
+ */
+
+body {
+    min-height: 100vh;
+    background-color: #f5f0f6;
+    font-family: Verdana, sans-serif;
+}
+
+input:focus {
+    outline: none;
+}
+
+a {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    color:#f5f0f6;
+}
+
+a:hover {
+    color:#f5f0f6;
+}
+
+a:visited {
+    color:#f5f0f6;
+}
+
+header {
+    background-color: #ef8354;
+    height: 60px;
+}
+
+header p {
+    font-family: 'Bilbo Swash Caps';
+    font-size: 40px;
+    font-weight: 500;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    color: #f5f0f6;
+}
+
+@media screen and (max-width: 767px) {
+    header {
+        height: 46px;
+    }
+
+    header p {
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 499px) {
+    header {
+        height: 90px;
+    }
+}
+
+header span {
+    position: relative;
+    color: #f5f0f6;
+    text-align: center;
+    height: fit-content;
+    font-size: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+header>form>input {
+    background-color: transparent;
+    font-size: 14px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    border: none;
+}
+
+nav>form {
+    display: inline-block;
+    width: 50%;
+    padding: 0;
+}
+
+nav>form>input {
+    background-color: #ef8354;
+    color: #f5f0f6;
+    font-size: 12px;
+    border: 0;
+    height: 36px;
+    width: 100%;
+}
+
+#dugmeSviSmestaji {
+    border-bottom-right-radius: 35px;
+}
+
+#dugmePredlozeniSmestaji {
+    border-bottom-left-radius: 35px;
+    background-color: #bf6943;
+}

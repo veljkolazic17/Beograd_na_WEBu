@@ -1,0 +1,69 @@
+/**
+    Marko Mirkovic 2019/0197
+ */
+
+#nalogPanel {
+    height: 127px;
+}
+
+#nalogPanelAdminDugmeWrapper {
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    width: 100%;
+    height: 35px;
+    border-top: outset #ef8354 3px;
+}
+
+#nalogPanelAdminDugmeWrapper>input {
+    width: 100%;
+    height: 100%;
+    background-color: #4f5d75;
+    color: #f5f0f6;
+    font-size: 13px;
+}
+
+#panelAdmin {
+    display: none;
+    height: 500px;
+    width: 300px;
+}
+
+#korisniciWrapper {
+    width: 100%;
+    height: 450px;
+    max-height: 450px;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    overflow-y: auto;
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+}
+
+#korisniciWrapper::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
+}
+
+.korisniciBrisanje {
+    display: block;
+    width: 100%;
+    height: 36px;
+    background-color: #4f5d75;
+    color: #f5f0f6;
+    border: #2d3142 outset 2px;
+    margin: 0;
+    text-align: center;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.korisniciBrisanje:first-of-type {
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+}

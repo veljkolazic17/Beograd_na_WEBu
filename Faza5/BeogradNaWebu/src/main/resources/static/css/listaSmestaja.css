@@ -1,0 +1,56 @@
+/**
+    Marko Mirkovic 2019/0197
+ */
+
+.pregled {
+    background-color: #2d3142;
+    margin-top: 2.5vh;
+    margin-bottom: 2.5vh;
+    border-radius: 25px;
+    padding: 12px 0 12px 0;
+}
+
+#pregledPredlozenogSmestaja {
+    display: none;
+}
+
+.smestaji {
+    /*
+    Ovom formulom dobijamo da se uvek 2 smestaja prikazuju na ekranu.
+    Prva zagrada je velicina sekcije ispod header-a (glavni prozor).
+    Ostatak je oduzimanje margine.
+    height: calc((100vh - 60px - 36px - 5vh - 24px) * 0.5 - 9px);
+    */
+    position: relative;
+    min-height: 200px;
+    width: 100%;
+    margin-bottom: 12px;
+    border-color: #ef8354;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 25px;
+    background-color: #f5f0f6;
+    cursor: pointer;
+}
+
+.levaKolonaSmestaja:last-child {
+    margin-bottom: 0;
+}
+
+.levaKolonaSmestaja:last-child {
+    margin-bottom: 0;
+}
+
+.levaKolonaSmestaja {
+    display: inline-block;
+    width: calc(50% - 6px);
+    vertical-align: top;
+}
+
+.desnaKolonaSmestaja {
+    display: inline-block;
+    width: calc(50% - 6px);
+    margin-left: 12px;
+    float: right;
+    vertical-align: top;
+}

@@ -1,0 +1,152 @@
+<!-- Marko Mirković 2019/0197 -->
+<!-- Matija Milosevic 2019/0156 -->
+<!-- Jelena Lucic 2019/0268 -->
+<!-- Veljko Lazic 2019/0241 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beograd na WEB-u</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Bilbo Swash Caps' rel='stylesheet'>
+
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+    <div id="leviPanel">
+        <img id="pocetnaSlika" src="/images/pocetnaSlikaOriginal.jpg" alt="Slika na pocetnoj strani." />
+    </div>
+
+    <div id="desniPanelWrapper">
+        <div id="desniPanelPokrivac"></div>
+        <div id="desniPanel">
+            <img src="/images/logo.svg" id="logo" />
+
+            <h1 id="naslov">Beograd na WEB-u</h1>
+
+            <form class="forma" th:action="@{/login}" method="post">
+                <table>
+                    <tr> <td colspan="2">
+                        <p>Korisničko ime:</p>
+                    </td> </tr>
+                    <tr> <td colspan="2">
+                        <input id="username" class="inputLogin" type="text" name="username" placeholder="Unesite svoje korisničko ime." size="50" maxlength="30" />
+                    </td> </tr>
+
+                    <tr> <td colspan="2">
+                        <p>Šifra:</p>
+                    </td> </tr>
+                    <tr> <td colspan="2">
+                        <input class="inputLogin" type="password" name="password" placeholder="Unesite svoju šifru." size="50" maxlength="30" />
+                        <p th:if="${greska}" class="errorMessages">Pogrešni kredencijali!</p>
+                    </td> </tr>
+
+                    <tr>
+                        <td>
+                            <p><u id="zaboravljenaSifra">Zaboravili ste šifru?</u></p>
+                        </td>
+
+                        <td>
+                            <input class="loginButtons" type="submit" value="Prijavi se" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input class="loginButtons" type="button" value="Registrujte se" onclick="animacijaRegistracijeNastaje()" style="float: left; margin-top: 15px;" />
+                        </td>
+
+                        <td>
+                            <a th:href="@{/pregledsmestaja/0}"><input class="loginButtons" type="button" value="Nastavite kao gost" style="margin-top: 15px;" /></a>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <div id="desniPanelRegistracija">
+            <form id="formaReg" class="forma" th:action="@{/registracija}" method="post" enctype="utf8" th:object="${registracija}">
+                <table>
+                    <tr> <td colspan="2">
+                        <p>Email adresa:</p>
+                    </td> </tr>
+                    <tr> <td colspan="2">
+                        <input class="inputLogin" type="email" name="email"
+                               placeholder="Unesite svoju email adresu."
+                               size="50" maxlength="50" th:field="*{email}" />
+                        <p th:each="greska: ${#fields.errors('email')}" th:text="${greska}" class="errorMessages">Validaciona greska</p>
+                    </td> </tr>
+
+                    <tr> <td colspan="2">
+                        <p>Korisničko ime:</p>
+                    </td> </tr>
+                    <tr> <td colspan="2">
+                        <input class="inputLogin" type="text" name="usernameReg"
+                               placeholder="Unesite korisničko ime (do 30 karaktera)."
+                               size="50" maxlength="30" th:field="*{korime}" />
+                        <p th:each="greska: ${#fields.errors('korime')}" th:text="${greska}" class="errorMessages">Validaciona greska</p>
+                    </td> </tr>
+
+                    <tr> <td colspan="2">
+                        <p>Šifra:</p>
+                    </td> </tr>
+                    <tr> <td colspan="2">
+                        <input class="inputLogin" type="password" name="passwordFirst"
+                               placeholder="Unesite šifru (do 30 karaktera)."
+                               size="50" maxlength="30" th:field="*{sifra}" />
+                        <p th:each="greska: ${#fields.errors('sifra')}" th:text="${greska}" class="errorMessages">Validaciona greska</p>
+                    </td> </tr>
+
+                    <tr> <td colspan="2">
+                        <p>Šifra ponovo:</p>
+                    </td> </tr>
+                    <tr> <td colspan="2">
+                        <input class="inputLogin" type="password" name="passwordSecond"
+                               placeholder="Unesite šifru ponovo."
+                               size="50" maxlength="30" th:field="*{potvrdaSifre}" />
+                        <p th:each="greska: ${#fields.errors('potvrdaSifre')}" th:text="${greska}" class="errorMessages">Validaciona greska</p>
+                    </td> </tr>
+
+                    <tr> <td colspan="2">
+                        <input class="loginButtons" type="submit" value="Registruj se" />
+                    </td> </tr>
+
+                    <tr>
+                        <td>
+                            <input class="loginButtons" type="button" value="Vratite se na prijavljivanje" onclick="animacijaRegistracijeNestaje()" style="float: left; margin-top: 15px;" />
+                         </td>
+
+                         <td>
+                            <a th:href="@{/pregledsmestaja/0}"><input class="loginButtons" type="button" value="Nastavite kao gost" style="margin-top: 15px;" /></a>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <div id="zaboravljenaSifraPozadina">
+        <div id="zaboravljenaSifraPanel">
+            <p>Korisničko ime:</p>
+            <input id="zaboravljenaSifraPanelUsername" class="inputLogin" type="text" placeholder="Unesite korisničko ime." size="35" maxlength="30" />
+            <p>Uputstvo za prijavljivanje će Vam biti poslato putem mejla.<br />Klikom na dugme "Potvrdi" prozor će se zatvoriti.<br />Ukoliko ste se predomislili, kliknite van ovog prozora.</p>
+            <input id="zaboravljenaSifraPotvrdi" class="loginButtons" type="button" value="Potvrdi" />
+        </div>
+    </div>
+
+    <script src="js/index.js"></script>
+
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            let animacijaLosaRegistracija = /*[[${animacijaLosaRegistracija}]]*/ false;
+            if (animacijaLosaRegistracija)
+                animacijaRegistracijeNastaje();
+
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+/**
+    Marko Mirkovic 2019/0197
+ */
+
+body {
+    background-color: #f5f0f6;
+    margin: 0;
+    overflow: auto;
+    min-height: 800px;
+    height: 100vh;
+    font-family: Verdana, sans-serif;
+    color: #2d3142;
+}
+
+p {
+    margin: 0;
+    font-size: 15px;
+    padding: 0;
+}
+
+input:focus {
+    outline: none;
+}
+
+input[type="button"] {
+    cursor: pointer;
+}
+
+#leviPanel {
+    background-color: #ef8354;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    position: relative;
+    float: left;
+    height: 100%;
+    overflow: hidden;
+}
+
+#pocetnaSlika {
+    height: calc(100% - 100px - 30px);
+    width: auto;
+    border-style: solid;
+    border-width: 15px;
+    border-radius: 50%;
+    border-color: #f5f0f6;
+    margin: 50px;
+}
+
+@keyframes animacijaLoginNestaje {
+    from {margin-top: 0;}
+    to {
+        margin-top: -100vh; /* fallback vrednost, ne radi ispod 800px */
+        margin-top: min(-100vh, -800px);
+    }
+}
+
+@keyframes animacijaLoginNastaje {
+    from {
+        margin-top: -100vh; /* fallback vrednost, ne radi ispod 800px */
+        margin-top: min(-100vh, -800px);
+    }
+    to {margin-top: 0;}
+}
+
+#desniPanelWrapper {
+    position: relative;
+    width: fit-content;
+    height: 100%;
+    margin: auto;
+    overflow: hidden;
+}
+
+#desniPanel {
+    position: absolute;
+    height: fit-content;
+    width: fit-content;
+    top: 50%;
+    transform: translateY(-50%);
+    transition-property: all;
+    animation-play-state: paused;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+#desniPanelPokrivac {
+    position: relative;
+    height: 100%;
+    width: 615px;
+    transition-property: all;
+    animation-play-state: paused;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+#desniPanelRegistracija {
+    position: relative;
+    height: fit-content;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#logo {
+    display: block;
+    height: calc(800px * 0.3);
+    width: auto;
+    margin: auto;
+}
+
+#naslov {
+    width: 615px;
+    height: fit-content;
+    margin-top: 34px;
+    margin-bottom: 34px;
+    text-align: center;
+    font-family: 'Bilbo Swash Caps';
+    font-size: 80px;
+    font-weight: 600;
+    color: #2d3142;
+}
+
+.forma {
+    width: 100%;
+}
+
+.forma table {
+    margin: auto;
+}
+
+.forma table tr td {
+    padding: 0;
+}
+
+.forma table tr td * {
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+input[type="submit"] {
+    cursor: pointer;
+}
+
+.inputLogin {
+    border-radius: 25px;
+    border-color: #ef8354;
+    border-width: 3px;
+    border-style: solid;
+    padding: 5px 12px 5px 12px;
+    background-color: #2d3142;
+    color: white;
+    height: 20px;
+}
+
+.inputLogin::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(180, 180, 180);
+    opacity: 1; /* Firefox */
+    font-style: italic;
+}
+  
+.inputLogin:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgb(180, 180, 180);
+    font-style: italic;
+}
+  
+.inputLogin::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgb(180, 180, 180);
+    font-style: italic;
+}
+
+.loginButtons {
+    float: right;
+    font-size: 13px;
+    color: white;
+    background-color: #2d3142;
+    padding: 5px 15px 5px 15px;
+    border-radius: 25px;
+    border-color: #ef8354;
+    border-width: 3px;
+    border-style: solid;
+}
+
+#formaReg {
+    height: 100%;
+}
+
+#zaboravljenaSifra {
+    margin: 0;
+    cursor: pointer;
+}
+
+#zaboravljenaSifraPozadina {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+}
+
+#zaboravljenaSifraPanel {
+    position: relative;
+    width: 500px;
+    height: 196px;
+    margin: auto;
+    top: calc(50vh - 98px - 3px);
+    background-color: #f5f0f6;
+    border-radius: 5%;
+    border-style: solid;
+    border-color: #ef8354;
+    border-width: 3px;
+}
+
+#zaboravljenaSifraPanel p {
+    margin: 12px 0px 12px 15px;
+    font-size: 14px;
+    display: block;
+}
+
+#zaboravljenaSifraPanel input {
+    margin: 10px 0px 10px 15px;
+    float: none;
+    display: block;
+}
+
+.errorMessages {
+    color: red;
+    padding-left: 10px;
+}

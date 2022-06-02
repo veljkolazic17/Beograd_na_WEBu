@@ -1,3 +1,7 @@
+/**
+ * Jelena Lucic 2019/0268
+ */
+
 package rs.psi.beogradnawebu.services;
 
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,9 +13,17 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Kuca4Zida - Scraper za sajt 4Zida (scrape-uje samo kuce)
+ * @version 1.0
+ */
 @Service
 public class Kuca4Zida extends Scraper4Zida {
 
+    /**
+     * Metoda za pozivanje srcapera iz scheduler-a
+     * @return
+     */
     public List<Smestaj> callScraper() {
         scrape(); // automatsko pozivanje metode scrape
         smestaj.deleteWithFalseTag(2); // brisanje kuca koji se ne nalaze vise na sajtu
@@ -21,11 +33,22 @@ public class Kuca4Zida extends Scraper4Zida {
         return list;
     }
 
+    /**
+     * Kreiranje nove instance
+     * @param driver
+     * @param smestaj
+     */
     public Kuca4Zida(ChromeDriver driver, SmestajDAO smestaj) {
         super(driver, smestaj);
         URL = "https://www.4zida.rs/izdavanje-kuca/beograd";
     }
 
+    /**
+     * Pravljenje nove kuce
+     * @param href
+     * @param src
+     * @return
+     */
     @Override
     protected Smestaj makeNew(String href, String src) {
         HashMap<String, String> attributes = getAttributes(); // atributi odredjene kuce

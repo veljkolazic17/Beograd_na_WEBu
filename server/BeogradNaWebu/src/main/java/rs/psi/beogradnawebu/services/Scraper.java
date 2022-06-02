@@ -1,3 +1,7 @@
+/**
+ * Jelena Lucic 2019/0268
+ */
+
 package rs.psi.beogradnawebu.services;
 
 import lombok.AllArgsConstructor;
@@ -8,14 +12,18 @@ import rs.psi.beogradnawebu.dao.SmestajDAO;
 // broj_stana :
 // 1 - 4zida - Stan
 // 2 - 4zida - Kuca
-// 3 - drugo (neki drugi sajt)
 
+/**
+ * Scraper - apstraktna klasa scraper-a
+ * @version 1.0
+ */
 @AllArgsConstructor
 public abstract class Scraper {
     protected final ChromeDriver driver;
     protected SmestajDAO smestaj;
 
-
-
+    /**
+     * Apstraktna metoda za scrape-ovanje smestaja
+     */
     public abstract void scrape();
 }

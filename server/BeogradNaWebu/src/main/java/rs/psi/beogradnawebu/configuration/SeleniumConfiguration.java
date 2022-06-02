@@ -1,3 +1,7 @@
+/**
+ * Jelena Lucic 2019/0268
+ */
+
 package rs.psi.beogradnawebu.configuration;
 
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,14 +13,25 @@ import javax.annotation.PostConstruct;
 
 //konfiguracija driver-a
 
+/**
+ * SeleniumConfiguration - klasa za konfiguraciju driver-a kod scrapera
+ * @version 1.0
+ */
 @Configuration
 public class SeleniumConfiguration {
 
+    /**
+     * Metoda za podesavanje property-a za driver
+     */
     @PostConstruct
     void postConstuct() {
         System.setProperty("webdriver.chrome.driver", "drivers\\chromedriver.exe");
     }
 
+    /**
+     * Nova instanca drivera u headless rezimu
+     * @return
+     */
     @Bean
     public ChromeDriver driver() {
         ChromeOptions options = new ChromeOptions();

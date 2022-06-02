@@ -173,6 +173,10 @@ document.addEventListener("DOMContentLoaded", function() {
             if(tekstKomentara.value.length == 0) {
                 return;
             }
+            if(tekstKomentara.value.length > 281) {
+                //prikazati polje sa upozorenjem o duzini komentara
+                return;
+            }
             document.getElementById("noviKomentar").style.display = "block";
             var noviKomentarBox = document.createElement("div");
             noviKomentarBox.classList.add("komentari");
@@ -180,6 +184,20 @@ document.addEventListener("DOMContentLoaded", function() {
             var noviKomentarTekst = document.createElement("p");
             noviKomentarTekst.innerHTML = tekstKomentara.value.replaceAll("\n", "<br />");
 
+            //ovde poslati u bazu
+            var user = JSON.parse(sessionStorage.getItem("user"));
+            $.ajax({url: "noviKomentar/" + sessionStorage.getItem("currentSmestaj") + "/" + tekstKomentara.value, type: "POST"});
+
+            let idKom;
+            $.ajax({
+                url:"maxID",
+                type:"GET",
+                success: function(data) {
+                    idKom = data;
+                },
+                async: false
+            });
+            idKom++;
             var noviWrapper = document.createElement("div");
             noviWrapper.setAttribute("class", "dugmadNaKomentarimaWrapper");
 
@@ -188,9 +206,11 @@ document.addEventListener("DOMContentLoaded", function() {
             divZaLajk.addEventListener("click", function() {
                 if(noviDivZaSVG.children[0].getAttribute("class") == "Layer_1") {
                     lajkBrojac.innerHTML = parseInt(lajkBrojac.innerHTML) + 1;
+                    $.ajax({url:"komentarLike/" + idKom, type: "POST"});
                     noviDivZaSVG.innerHTML = fullHeart;
                 } else {
                     lajkBrojac.innerHTML = parseInt(lajkBrojac.innerHTML) - 1;
+                    $.ajax({url:"unlikeKomentar/" + idKom, type: "POST"});
                     noviDivZaSVG.innerHTML = emptyHeart;
                 }
             });
@@ -296,7 +316,5 @@ document.addEventListener("DOMContentLoaded", function() {
         "viewBox=\"0 0 500 472.44\" enable-background=\"new 0 0 500 472.44\" xml:space=\"preserve\">" +
         "<path fill=\"#DB1549\" stroke=\"#F5F0F6\" stroke-width=\"2\" stroke-miterlimit=\"10\" d=\"M53.4,260.54 " +
         "C-88.12,122.11,105.22-75.54,246.74,62.89c136.1-139.14,340.48,60.77,204.37,199.91l-97.58,99.76l-95.76,97.89L53.4,260.54z\"/></svg>";
-
-
 
 });

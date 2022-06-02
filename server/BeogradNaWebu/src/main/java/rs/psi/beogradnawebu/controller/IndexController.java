@@ -87,5 +87,4 @@ public class IndexController {
         }
         return "redirect:/pregledsmestaja";
     }
-
 }

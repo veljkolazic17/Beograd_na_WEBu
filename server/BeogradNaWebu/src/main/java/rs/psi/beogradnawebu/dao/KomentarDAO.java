@@ -2,11 +2,14 @@ package rs.psi.beogradnawebu.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import rs.psi.beogradnawebu.model.Komentar;
+import rs.psi.beogradnawebu.model.Smestaj;
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 @Component
@@ -22,6 +25,7 @@ public class KomentarDAO implements DAO<Komentar> {
         komentar.setTekstKomentara(rs.getString("tekst_komentara"));
         komentar.setIdkorisnik(rs.getInt("idkorisnik"));
         komentar.setIdsmestaj(rs.getLong("idsmestaj"));
+        komentar.setBroj_lajkova(rs.getLong("broj_lajkova"));
         return komentar;
     };
 
@@ -58,15 +62,13 @@ public class KomentarDAO implements DAO<Komentar> {
             log.info("Nije pronadjen komenatar sa ID: " + id);
         }
         return komentar;
-
-
     }
 
     @Override
     public void update(Komentar komentar, int id) {
         try {
-            jdbcTemplate.update("UPDATE komentar SET tekst_komentara = ?, idkorisnik = ?, idsmestaj = ? WHERE idkomentar =?"
-                    , komentar.getTekstKomentara(),komentar.getIdkorisnik(),komentar.getIdsmestaj(),id);
+            jdbcTemplate.update("UPDATE komentar SET tekst_komentara = ?, idkorisnik = ?, idsmestaj = ?, broj_lajkova = ? WHERE idkomentar = ?"
+                    , komentar.getTekstKomentara(),komentar.getIdkorisnik(),komentar.getIdsmestaj(), komentar.getBroj_lajkova(), id);
         }
         catch (Exception e){
             log.info("Nije pronadjen komenatar sa ID: " + id);
@@ -81,5 +83,27 @@ public class KomentarDAO implements DAO<Komentar> {
         catch (Exception e){
             log.info("Nije pronadjen komenatar sa ID: " + id);
         }
+    }
+
+    public Integer maxID() {
+        try {
+            Integer maxIDKom = jdbcTemplate.queryForObject("SELECT MAX(idkomentar) FROM komentar", Integer.class);
+            return maxIDKom;
+        } catch (EmptyResultDataAccessException e) {
+            return 1; // prazna baza
+        } catch (Exception e) {
+            log.info("Neuspesna operacija");
+            return -1;
+        }
+    }
+    public List<Komentar> allKomentar(int idSmestaj) {
+        List<Komentar> listKomentar = null;
+        try {
+            listKomentar = jdbcTemplate.query("SELECT * FROM komentar WHERE idsmestaj = ?", rowMapper, idSmestaj);
+        }
+        catch (Exception e){
+            log.info("Nije pronadjen komenatar sa idSmestaj: " + idSmestaj);
+        }
+        return listKomentar;
     }
 }

@@ -26,9 +26,11 @@ public class SifraPripadaValidator implements ConstraintValidator<PripadaSifra, 
 
     @Override
     public boolean isValid(String sifra, ConstraintValidatorContext context){
+        this.korisnik = SecurityContextHolder.getContext().getAuthentication();
         return validateSifra(sifra);
     }
     private boolean validateSifra(String sifra) {
+        System.out.println(korisnikDAO.getUserByUsername(korisnik.getName()).get().getKorisnickoime());
         return korisnikDAO.getUserByUsername(korisnik.getName()).get().getSifra().equals(sifra);
     }
 }

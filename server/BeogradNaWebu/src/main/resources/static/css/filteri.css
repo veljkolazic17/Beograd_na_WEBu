@@ -185,6 +185,7 @@
 #izabraniFilteriWrapper {
     width: 100%;
     cursor: pointer;
+    display: none;
 }
 
 #izabraniFilteriNaslov {

@@ -39,6 +39,9 @@
 
     let putanjaZaPromenuEmaila = /*[[@{promena/email}]]*/ "/";
     let prikazPredlozenih = /*[[${prikazPredlozenih}]]*/ false;
+
+    let uspesnaPromenaEmaila = /*[[${uspesnaPromenaEmaila}]]*/ null;
+    let uspesnaPromenaSifre = /*[[${uspesnaPromenaSifre}]]*/ null;
     /*]]>*/
 </script>
 
@@ -63,7 +66,7 @@
     <div id="nalogPanelPozadina">
         <div id="nalogPanel">
             <p th:text="'Korisničko ime:' + ${user.korisnickoime}">Greška</p>
-            <p th:text="'Email:' + ${user.email}">Greška</p>
+            <p th:text="'Email:' + ${user.email.substring(0, 5) + '...'}">Greška</p>
 
 
             <div id="nalogPanelAdminDugmeWrapper">
@@ -107,6 +110,10 @@
                         <input type="password" th:field="*{PonovljenaNovaSifra}" />
                     </div>
 
+                    <div class="greskePriPromeniInfo" th:if="${greskePriPromeniSifreList != null}">
+                        <p th:each="greska: ${greskePriPromeniSifreList}" th:text="${greska.getDefaultMessage()}"></p>
+                    </div>
+
                     <div class="prozorZaPotvrduDugmadWrapper">
                         <input type="button" value="Otkaži" />
                         <input type="submit" value="Potvrdi" />
@@ -123,6 +130,10 @@
                     <div class="mailoviWrappers">
                         <p id="noviEmailNatpis">Novi email: </p>
                         <input type="email" th:field="*{NoviEmail}" />
+                    </div>
+
+                    <div class="greskePriPromeniInfo" th:if="${greskePriPromeniEmailaList != null}">
+                        <p th:each="greska: ${greskePriPromeniEmailaList}" th:text="${greska.getDefaultMessage()}"></p>
                     </div>
 
                     <div class="prozorZaPotvrduDugmadWrapper">
@@ -449,6 +460,21 @@
         prikaziSvePredlozeneSmestaje();
     else
         prikaziSveSmestaje();
+
+    document.addEventListener("DOMContentLoaded", function(ev) {
+        if(uspesnaPromenaSifre === false) {
+            document.getElementById("dugmeNalog").click();
+            document.getElementById("promenaSifreDugme").click();
+        }
+
+        if(uspesnaPromenaEmaila === true) {
+            document.getElementById("dugmeNalog").click();
+            alert("Uspešno ste promenili Vaš email.");
+        } else if(uspesnaPromenaEmaila === false) {
+            document.getElementById("dugmeNalog").click();
+            document.getElementById("promenaEmailaDugme").click();
+        }
+    });
 </script>
 
 </body>

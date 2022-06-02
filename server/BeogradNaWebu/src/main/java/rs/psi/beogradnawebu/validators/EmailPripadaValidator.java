@@ -28,6 +28,7 @@ public class EmailPripadaValidator implements ConstraintValidator<PripadaEmail, 
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context){
+        this.korisnik = SecurityContextHolder.getContext().getAuthentication();
         return validateEmail(email);
     }
     private boolean validateEmail(String email) {

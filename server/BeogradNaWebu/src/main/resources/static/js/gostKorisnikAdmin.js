@@ -306,16 +306,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // primena filtera
     document.getElementById("potvrdiFiltereDugme").addEventListener("click", function(ev) {
-        document.getElementById("izabraniFilteri").innerHTML = "&times;&nbsp;...";
         document.getElementById("izabraniFilteriWrapper").style.display = "block"; 
         document.getElementById("filteriPanelPozadina").style.display = "none";
     });
 
-    // brisanje odrednjenog filtera
-    document.getElementById("izabraniFilteriWrapper").addEventListener("click", function(ev) {
-        document.getElementById("izabraniFilteriWrapper").style.display = "none";
-        ocistiFiltere(null);
-    });
+    // lajkovanje i anlajkovanje slike
     document.getElementById("lajkNaSlici").addEventListener("click", function(ev) {
         var element = document.getElementById("lajkNaSlici");
         if(user!=null) {
@@ -334,22 +329,21 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-
     // postavljanje selektovanih filtera
     var filterData = JSON.parse(sessionStorage.getItem("filterf"));
     var textToBind = "";
-    var first = true;
 
     if(filterData != null) {
         Object.entries(filterData).forEach(([key,value])=>{
             if(value != null && value !== 0 && value !== false && value !== "nullLokacija" && value !== "nullSoba" && value !== "nullSmestaj"){
-                if(first){
-                    textToBind+="&times;&nbsp;";
-                    first=false;
-                }
-                textToBind += key + ": " + value + "</br>"
+                textToBind += "<b>" + key + "</b>: " + value + "</br>"
             }
         });
-        document.getElementById("izabraniFilteri").innerHTML = textToBind;
+
+        if(textToBind !== "") {
+            document.getElementById("izabraniFilteri").innerHTML = textToBind;
+            document.getElementById("izabraniFilteriWrapper").style.display = "block";
+        }
+
     }
 });

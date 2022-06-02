@@ -35,6 +35,9 @@
 
     let putanjaZaPromenuEmaila = /*[[@{promena/email}]]*/ "/";
     let prikazPredlozenih = /*[[${prikazPredlozenih}]]*/ false;
+
+    let greskePriPromeniSifre = /*[[${greskePriPromeniSifreList}]]*/ null;
+    let greskePriPromeniEmaila = /*[[${greskePriPromeniEmailaList}]]*/ null;
     /*]]>*/
 </script>
 
@@ -88,6 +91,10 @@
                         <input type="password" th:field="*{PonovljenaNovaSifra}" />
                     </div>
 
+                    <div class="greskePriPromeniInfo" th:if="${greskePriPromeniSifreList != null}">
+                        <p th:each="greska: ${greskePriPromeniSifreList}" th:text="${greska.getDefaultMessage()}"></p>
+                    </div>
+
                     <div class="prozorZaPotvrduDugmadWrapper">
                         <input type="button" value="Otkaži" />
                         <input type="submit" value="Potvrdi" />
@@ -104,6 +111,10 @@
                     <div class="mailoviWrappers">
                         <p id="noviEmailNatpis">Novi email: </p>
                         <input type="email" th:field="*{NoviEmail}" />
+                    </div>
+
+                    <div class="greskePriPromeniInfo" th:if="${greskePriPromeniEmailaList != null}">
+                        <p th:each="greska: ${greskePriPromeniEmailaList}" th:text="${greska.getDefaultMessage()}"></p>
                     </div>
 
                     <div class="prozorZaPotvrduDugmadWrapper">
@@ -431,6 +442,18 @@
         prikaziSvePredlozeneSmestaje();
     else
         prikaziSveSmestaje();
+
+    document.addEventListener("DOMContentLoaded", function(ev) {
+        if(greskePriPromeniSifre != null) {
+            document.getElementById("dugmeNalog").click();
+            document.getElementById("promenaSifreDugme").click();
+        }
+
+        if(greskePriPromeniEmaila != null) {
+            document.getElementById("dugmeNalog").click();
+            document.getElementById("promenaEmailaDugme").click();
+        }
+    });
 </script>
 
 </body>

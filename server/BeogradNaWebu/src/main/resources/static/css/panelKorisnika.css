@@ -147,6 +147,18 @@
     padding: 1px 6px 1px 6px;
 }
 
+.greskePriPromeniInfo {
+    border-top: outset #ef8354 3px;
+}
+
+.greskePriPromeniInfo>p {
+    color: #f5f0f6;
+    font-weight: 600;
+    text-align: center;
+    padding: 5px;
+    margin: 0;
+}
+
 
 #panelPromenaEmaila {
     display: none;

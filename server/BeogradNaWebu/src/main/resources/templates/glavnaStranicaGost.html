@@ -17,269 +17,270 @@
     </head>
 <body>
 
-    <script type="text/javascript" th:inline="javascript">
-        /*<![CDATA[*/
-        sessionStorage.clear();
-        var smestajList = [[${smestajList}]];
-        sessionStorage.setItem("smestajList",JSON.stringify(smestajList));
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    sessionStorage.clear();
+    var smestajList = [[${smestajList}]];
+    var filterData = [[${filterf}]];
+    sessionStorage.setItem("smestajList",JSON.stringify(smestajList));
+    sessionStorage.setItem("filterf",JSON.stringify(filterData));
 
-        var filterData = [[${filterf}]];
-        sessionStorage.setItem("filterf",JSON.stringify(filterData));
+    console.log(smestajList);
+    /*]]>*/
+</script>
 
-        console.log(smestajList);
-        /*]]>*/
-    </script>
+<main class="container">
+    <header class="row">
+        <span id="dugmeNalog" class="col-3"></span>
+        <p class="col-6">Beograd na WEB-u</p>
+        <span class="col-3"><a  th:href="@{/}">Izlaz iz režima gosta</a></span>
+    </header>
 
+    <nav class="row">
+        <form th:action="@{/pregledsmestaja}" method="get" style="padding: 0;">
+            <input id="dugmeSviSmestaji" type="submit" value="Svi smeštaji" style="border-bottom-left-radius: 35px;" />
+        </form>
+    </nav>
 
-    <main class="container">
-        <header class="row">
-            <span id="dugmeNalog" class="col-3"></span>
-            <p class="col-6">Beograd na WEB-u</p>
-            <span class="col-3"><a  th:href="@{/}">Izlaz iz režima gosta</a></span>
-        </header>
-    
-        <nav class="row">
-            <form th:action="@{/pregledsmestaja}" method="get" style="padding: 0;">
-                <input id="dugmeSviSmestaji" type="submit" value="Svi smeštaji" style="border-bottom-left-radius: 35px;" />
-            </form>
-        </nav>
-    
-        <div id="pregledSmestaja" class="row pregled">
-            <section class="col-lg-10 order-2 order-lg-1">
-                <div class="levaKolonaSmestaja">
-                    <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 0}">
-                        <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
-                        <p class="opisSmestaja">
-                            <th:block th:if="${smestaj.getLokacija() != ''}" th:utext="'<b>Lokacija:</b> ' + ${smestaj.getLokacija()} + '<br />'"></th:block>
-                            <th:block th:if="${smestaj.getBrojSoba() > 0}" th:utext="'<b>Broj soba:</b> ' + ${smestaj.getBrojSoba()} + '<br />'"></th:block>
-                            <th:block th:utext="'<b>Cena:</b> ' + ${smestaj.getCena()}"></th:block>  €<br />
-                            <th:block th:utext="'<b>Kvadratura:</b> ' + ${smestaj.getKvadratura()}"></th:block>m<sup>2</sup>
-                        </p>
-                    </article>
+    <div id="pregledSmestaja" class="row pregled">
+        <section class="col-lg-10 order-2 order-lg-1">
+            <div class="levaKolonaSmestaja">
+                <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 0}">
+                    <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
+                    <p class="opisSmestaja">
+                        <th:block th:if="${smestaj.getLokacija() != ''}" th:utext="'<b>Lokacija:</b> ' + ${smestaj.getLokacija()} + '<br />'"></th:block>
+                        <th:block th:if="${smestaj.getBrojSoba() > 0}" th:utext="'<b>Broj soba:</b> ' + ${smestaj.getBrojSoba()} + '<br />'"></th:block>
+                        <th:block th:utext="'<b>Cena:</b> ' + ${smestaj.getCena()}"></th:block>  €<br />
+                        <th:block th:utext="'<b>Kvadratura:</b> ' + ${smestaj.getKvadratura()}"></th:block>m<sup>2</sup>
+                    </p>
+                </article>
+            </div>
+            <div class="desnaKolonaSmestaja">
+                <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 1}">
+                    <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
+                    <p class="opisSmestaja">
+                        <th:block th:if="${smestaj.getLokacija() != ''}" th:utext="'<b>Lokacija:</b> ' + ${smestaj.getLokacija()} + '<br />'"></th:block>
+                        <th:block th:if="${smestaj.getBrojSoba() > 0}" th:utext="'<b>Broj soba:</b> ' + ${smestaj.getBrojSoba()} + '<br />'"></th:block>
+                        <th:block th:utext="'<b>Cena:</b> ' + ${smestaj.getCena()}"></th:block>  €<br />
+                        <th:block th:utext="'<b>Kvadratura:</b> ' + ${smestaj.getKvadratura()}"></th:block>m<sup>2</sup>
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <aside class="col-lg-2 order-1 order-lg-2" id="filteri">
+            <div class="stranice">
+                <!-- ovo nije greska, namerno je da ne bi bilo prostora izmedju elemenata -->
+                <input type="button" value="<" class="stranicaLevo"
+                /><div class="brojStranice"> 1 </div
+            ><input type="button" value=">" class="stranicaDesno" />
+            </div>
+
+            <input id="dugmeFilteri" type="button" value="Filteri">
+
+            <div id="izabraniFilteriWrapper">
+                <p id="izabraniFilteriNaslov">Izabrani filteri:</p>
+
+                <div id="izabraniFilteri">
+
                 </div>
-                <div class="desnaKolonaSmestaja">
-                    <article class="smestaji" th:each="smestaj, iter : ${smestajList}" th:if="${iter.index % 2 == 1}">
-                        <img class="slikaSmestaja" th:src="${smestaj.getSlika()}" alt="primer apartmana" />
-                        <p class="opisSmestaja">
-                            <th:block th:if="${smestaj.getLokacija() != ''}" th:utext="'<b>Lokacija:</b> ' + ${smestaj.getLokacija()} + '<br />'"></th:block>
-                            <th:block th:if="${smestaj.getBrojSoba() > 0}" th:utext="'<b>Broj soba:</b> ' + ${smestaj.getBrojSoba()} + '<br />'"></th:block>
-                            <th:block th:utext="'<b>Cena:</b> ' + ${smestaj.getCena()}"></th:block>  €<br />
-                            <th:block th:utext="'<b>Kvadratura:</b> ' + ${smestaj.getKvadratura()}"></th:block>m<sup>2</sup>
-                        </p>
-                    </article>
+            </div>
+        </aside>
+    </div>
+</main>
+
+<div id="prikazStana">
+    <div id="stanPanel">
+        <div id="slikaWrapper">
+            <img id="slikaKonkretnogSmestaja" src="" alt="prikaz apartmana" />
+
+            <div id="lajkNaSlici">
+                <div>
+                    <svg version="1.1" class="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         viewBox="0 0 500 472.44" enable-background="new 0 0 500 472.44" xml:space="preserve">
+                    <path fill="#F5F0F6" stroke="#F5F0F6" stroke-width="2" stroke-miterlimit="10"
+                          d="M53.4,260.54
+                          C-88.12,122.11,105.22-75.54,246.74,62.89c136.1-139.14,340.48,60.77,204.37,
+                          199.91l-97.58,99.76l-95.76,97.89L53.4,260.54z"/>
+                        <path fill="#FFFFFF" stroke="#010202" stroke-miterlimit="10" d="M148.51,184.31"/>
+                        <path fill="#FFFFFF" stroke="#010202" stroke-miterlimit="10" d="M282.97,115.94"/>
+                </svg>
                 </div>
-            </section>
 
-            <aside class="col-lg-2 order-1 order-lg-2" id="filteri">
-                <div class="stranice">
-                    <!-- ovo nije greska, namerno je da ne bi bilo prostora izmedju elemenata -->
-                    <input type="button" value="<" class="stranicaLevo"
-                    /><div class="brojStranice"> 1 </div
-                ><input type="button" value=">" class="stranicaDesno" />
-                </div>
+                <p id = "likeCounter">0</p>
+            </div>
 
-                <input id="dugmeFilteri" type="button" value="Filteri">
-
-                <div id="izabraniFilteriWrapper">
-                    <p id="izabraniFilteriNaslov">Izabrani filteri:</p>
-
-                    <div id="izabraniFilteri">
-
-                    </div>
-                </div>
-            </aside>
+            <div id="linkNaSlici">
+                <a id = "link" href="" target="_blank">Originalni sajt</a>
+            </div>
         </div>
-    </main>
 
-    <div id="prikazStana" name = "">
-        <div id="stanPanel">
-            <div id="slikaWrapper">
-                <img id="slikaKonkretnogSmestaja" alt="prikaz apartmana" />
+        <div id="opisKonkretnogSmestaja">
+            <b>**Greška pri učitavanju**</b>
+        </div>
 
-                    <div id="lajkNaSlici">
-                        <div>
-                                <svg version="1.1" class="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                viewBox="0 0 500 472.44" enable-background="new 0 0 500 472.44" xml:space="preserve">
-                                    <path fill="#F5F0F6" stroke="#F5F0F6" stroke-width="2" stroke-miterlimit="10" d="M53.4,260.54
-                                    C-88.12,122.11,105.22-75.54,246.74,62.89c136.1-139.14,340.48,60.77,204.37,199.91l-97.58,99.76l-95.76,97.89L53.4,260.54z"/>
-                                    <path fill="#FFFFFF" stroke="#010202" stroke-miterlimit="10" d="M148.51,184.31"/>
-                                    <path fill="#FFFFFF" stroke="#010202" stroke-miterlimit="10" d="M282.97,115.94"/>
-                                </svg>
-
-                        </div>
-
-
-                        <p id = "likeCounter">0</p>
-                    </div>
-
-
-                <div id="linkNaSlici">
-                    <a id = "link" href="" target="_blank">Originalni sajt</a>
-
-                </div>
-            </div>
-            
-            <div id="opisKonkretnogSmestaja">
-
-
-
-            </div>
-            
         <div id="dugmeZaKomentare">
             <p>Prikaži komentare</p>
         </div>
-            <div id="komentariPanel" name="gost">
-                <!-- komentari -->
-                <div class="komentari">
-                    <div class="dugmadNaKomentarimaWrapper" style="width: fit-content; height: 30px;">
-                        <div class="lajkNaKomentarima">
-                            <div>
-                                <svg version="1.1" class="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 500 472.44" enable-background="new 0 0 500 472.44" xml:space="preserve"><path fill="#F5F0F6" stroke="#F5F0F6" stroke-width="2" stroke-miterlimit="10" d="M53.4,260.54C-88.12,122.11,105.22-75.54,246.74,62.89c136.1-139.14,340.48,60.77,204.37,199.91l-97.58,99.76l-95.76,97.89L53.4,260.54z"></path>
-                                    <path fill="#FFFFFF" stroke="#010202" stroke-miterlimit="10" d="M148.51,184.31"></path><path fill="#FFFFFF" stroke="#010202" stroke-miterlimit="10" d="M282.97,115.94"></path>
-                                </svg>
-                            </div>
-                            <p>0</p>
+        <div id="komentariPanel">
+            <!-- komentari -->
+            <!-- primer komentara -->
+            <!--
+            <div class="komentari">
+                <div class="dugmadNaKomentarimaWrapper" style="width: fit-content; height: 30px;">
+                    <div class="lajkNaKomentarima">
+                        <div>
+                            <img src="srcePrazno.svg" />
                         </div>
+                        <p>0</p>
                     </div>
-                    <p>Primer komentara 1.</p>
                 </div>
+                <p>Primer komentara 1.</p>
+            </div>
+            -->
+            <div id="noviKomentar">
+                <p>Dodajte novi komentar</p>
             </div>
         </div>
     </div>
+</div>
 
-    <form th:object="${filterData}" th:action="@{/pregledsmestaja/filter/0}" method="post">
-        <div id="filteriPanelPozadina">
-            <div id="filteriPanel">
-                <table id="filteriTabela">
-                    <tr>
-                        <td>
-                            <p class="filteriPanelTekst">Lokacija: </p>
-
-                            <select name="lokacija" class="filteriDropDown" th:field="*{Lokacija}">
-                                <option value="nullLokacija" class="lokacijaDropDownOpcija">
-                                    Sve
-                                </option>
-
-                                <option value="Zvezdara" class="lokacijaDropDownOpcija">
-                                    Zvezdara
-                                </option>
-
-                                <option value="Novi Beograd" class="lokacijaDropDownOpcija">
-                                    Novi Beograd
-                                </option>
-
-                                <option value="Zvezdara opština" class="lokacijaDropDownOpcija">
-                                    Zvezdara opština
-                                </option>
-
-                                <option value="Zemun" class="lokacijaDropDownOpcija">
-                                    Zemun
-                                </option>
-                            </select>
-                        </td>
-
-                        <td>
-                            <p class="filteriPanelTekst">Tip smeštaja: </p>
-
-                            <select name="smestaj" class="filteriDropDown" th:field="*{TipSmestaja}">
-                                <option value="nullSmestaj" class="lokacijaDropDownOpcija">
-                                    Sve
-                                </option>
-
-                                <option value="Stan" class="lokacijaDropDownOpcija">
-                                    Stan
-                                </option>
-
-                                <option value="Kuca" class="lokacijaDropDownOpcija">
-                                    Kuca
-                                </option>
-                            </select>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <p class="filteriPanelTekst">Broj soba: </p>
-                            <select name="brojSoba" class="filteriDropDown" th:field="*{BrojSoba}">
-                                <option value="nullSoba" class="lokacijaDropDownOpcija">
-                                    Sve
-                                </option>
-
-                                <option value="Garsonjera" class="lokacijaDropDownOpcija">
-                                    Garsonjera
-                                </option>
-
-                                <option value="Jednosoban" class="lokacijaDropDownOpcija">
-                                    Jednosoban
-                                </option>
-
-                                <option value="Jednoiposoban" class="lokacijaDropDownOpcija">
-                                    Jednoiposoban
-                                </option>
-
-                                <option value="Dvosoban" class="lokacijaDropDownOpcija">
-                                    Dvosoban
-                                </option>
-
-                                <option value="Dvoiposoban" class="lokacijaDropDownOpcija">
-                                    Dvoiposoban
-                                </option>
-
-                                <option value="TrosobanIPreko" class="lokacijaDropDownOpcija">
-                                    Trosoban i preko
-                                </option>
-                            </select>
-                        </td>
-
-                        <td>
-                            <p class="filteriPanelTekst">Kvadratura: </p>
-
-                            <div class="dupliInputWrapper">
-                                <input type="text" class="dupliInput" placeholder="od" th:field="*{KvadraturaOd}"/>
-                                <input type="text" class="dupliInput" placeholder="do" th:field="*{KvadraturaDo}"/>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <p class="filteriPanelTekst">Spratnost: </p>
-
-                            <div id="spratnostWrapper">
-                                <input type="checkbox" name="nijePrvi" id="nijePrvi" th:field="*{NijePrvi}"/>
-                                <label for="nijePrvi">Nije prvi</label>
-                                <br />
-                                <input type="checkbox" name="imaLift" id="imaLift" th:field="*{ImaLift}"/>
-                                <label for="imaLift">Ima lift</label>
-                            </div>
-                        </td>
-
-                        <td>
-                            <p class="filteriPanelTekst">Cena: </p>
-
-                            <div class="dupliInputWrapper">
-                                <input type="text" class="dupliInput" placeholder="od" th:field="*{CenaOd}"/>
-                                <input type="text" class="dupliInput" placeholder="do" th:field="*{CenaDo}"/>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <input id="ocistiFiltereDugme" type="button" class="filteriPanelDugmad" value="Očisti sve filtere" />
-                        </td>
-
-                        <td>
-                            <input id="potvrdiFiltereDugme" type="submit" class="filteriPanelDugmad" value="Potvrdi" />
-                        </td>
-                    </tr>
-                </table>
-            </div>
+<div id="pozadinaProzoraZaPotvrduBrisanjaKom">
+    <div id="prozorZaPotvrduBrisanjaKomentara">
+        <!-- dinamicko ucitavanje -->
+        <p id="tekstProzoraZaPotvrduBrisanjaKomentara">Da li ste sigurni da želite da obrišete komentar?</p>
+        <div class="prozorZaPotvrduDugmadWrapper">
+            <input type="button" value="Otkaži" />
+            <input type="button" value="Potvrdi" />
         </div>
-    </form>
-    <script src="../static/js/gostKorisnikAdmin.js" th:src="@{/js/gostKorisnikAdmin.js}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"  integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    </div>
+</div>
+
+<form th:object="${filterData}" th:action="@{/pregledsmestaja/filter/0}" method="post">
+    <div id="filteriPanelPozadina">
+        <div id="filteriPanel">
+
+            <div class="redFiltera">
+                <p class="filteriPanelTekst">Lokacija: </p>
+
+                <select name="lokacija" class="filteriDropDown" th:field="*{Lokacija}">
+                    <option value="nullLokacija" class="lokacijaDropDownOpcija">
+                        Sve
+                    </option>
+
+                    <option value="Zvezdara" class="lokacijaDropDownOpcija">
+                        Zvezdara
+                    </option>
+
+                    <option value="Novi Beograd" class="lokacijaDropDownOpcija">
+                        Novi Beograd
+                    </option>
+
+                    <option value="Zvezdara opština" class="lokacijaDropDownOpcija">
+                        Zvezdara opština
+                    </option>
+
+                    <option value="Zemun" class="lokacijaDropDownOpcija">
+                        Zemun
+                    </option>
+                </select>
+            </div>
+
+            <div class="redFiltera">
+                <p class="filteriPanelTekst">Tip smeštaja: </p>
+
+                <select name="smestaj" class="filteriDropDown" th:field="*{TipSmestaja}">
+                    <option value="nullSmestaj" class="lokacijaDropDownOpcija">
+                        Sve
+                    </option>
+
+                    <option value="Stan" class="lokacijaDropDownOpcija">
+                        Stan
+                    </option>
+
+                    <option value="Kuca" class="lokacijaDropDownOpcija">
+                        Kuca
+                    </option>
+                </select>
+            </div>
+
+            <div class="redFiltera">
+                <p class="filteriPanelTekst">Broj soba: </p>
+
+                <select name="brojSoba" class="filteriDropDown" th:field="*{BrojSoba}">
+                    <option value="nullSoba" class="lokacijaDropDownOpcija">
+                        Sve
+                    </option>
+
+                    <option value="Garsonjera" class="lokacijaDropDownOpcija">
+                        Garsonjera
+                    </option>
+
+                    <option value="Jednosoban" class="lokacijaDropDownOpcija">
+                        Jednosoban
+                    </option>
+
+                    <option value="Jednoiposoban" class="lokacijaDropDownOpcija">
+                        Jednoiposoban
+                    </option>
+
+                    <option value="Dvosoban" class="lokacijaDropDownOpcija">
+                        Dvosoban
+                    </option>
+
+                    <option value="Dvoiposoban" class="lokacijaDropDownOpcija">
+                        Dvoiposoban
+                    </option>
+
+                    <option value="TrosobanIPreko" class="lokacijaDropDownOpcija">
+                        Trosoban i preko
+                    </option>
+                </select>
+            </div>
+
+            <div class="redFiltera">
+                <p class="filteriPanelTekst">Kvadratura: </p>
+
+                <div class="dupliInputWrapper">
+                    <input type="text" class="dupliInput" placeholder="od" th:field="*{KvadraturaOd}"/>
+                    <input type="text" class="dupliInput" placeholder="do" th:field="*{KvadraturaDo}"/>
+                </div>
+            </div>
+
+            <div class="redFiltera">
+                <p class="filteriPanelTekst">Spratnost: </p>
+
+                <div id="spratnostWrapper">
+                    <input type="checkbox" name="nijePrvi" id="nijePrvi" th:field="*{NijePrvi}"/>
+                    <label for="nijePrvi">Nije prvi</label>
+
+                    <input type="checkbox" name="imaLift" id="imaLift" th:field="*{ImaLift}"/>
+                    <label for="imaLift">Ima lift</label>
+                </div>
+            </div>
+
+            <div class="redFiltera">
+                <p class="filteriPanelTekst">Cena: </p>
+
+                <div class="dupliInputWrapper">
+                    <input type="text" class="dupliInput" placeholder="od" th:field="*{CenaOd}"/>
+                    <input type="text" class="dupliInput" placeholder="do" th:field="*{CenaDo}"/>
+                </div>
+            </div>
+
+            <div class="redFiltera">
+                <input id="ocistiFiltereDugme" type="button" class="filteriPanelDugmad" value="Očisti sve filtere" />
+                <input id="potvrdiFiltereDugme" type="submit" class="filteriPanelDugmad" value="Potvrdi" />
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<script src="../static/js/gostKorisnikAdmin.js" th:src="@{/js/gostKorisnikAdmin.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"  integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

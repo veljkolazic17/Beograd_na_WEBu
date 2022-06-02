@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var user = JSON.parse(sessionStorage.getItem("user"));
     var isLiked = JSON.parse(sessionStorage.getItem("isliked"));
     var smestajList = JSON.parse(sessionStorage.getItem("smestajList"));
-    var komentarList = JSON.parse(sessionStorage.getItem("komentarList"));
+    var komentarList = null; //= JSON.parse(sessionStorage.getItem("komentarList"));
     let currClicked = null;
     var firstClick = true;
 
@@ -27,14 +27,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 //dohvatanje komentara za odredjeni smestaj
                 $.ajax({
-                    url:"sviKomentari/" + smestajList[i].idsmestaj,
+                    url:"../sviKomentari/" + smestajList[i].idsmestaj,
                     type: "GET",
                     success: function (komentari) {
                         komentarList = komentari;
                     },
                     async: false
                 });
-                sessionStorage.setItem("komentarList", JSON.stringify(komentarList));
 
                 if(user != null) {
 
@@ -195,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 var noviKomDugme = komentariPanel.removeChild(document.getElementById("noviKomentar"));
 
                 //prikaz komentara
-                for (let i = 0; i < komentarList.length; i++) {
+                for (let i = 0; komentarList != null && i < komentarList.length; i++) {
                     let komentar = komentarList[i];
 
                     let noviKomentarBox = document.createElement("div");
@@ -211,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     let islikedKom = false;
                     if(user != null) {
                         $.ajax({
-                            url:"islikedKomentar/" + user.korisnickoime + "/" + komentarList[i].idkomentar,
+                            url:"../islikedKomentar/" + user.korisnickoime + "/" + komentarList[i].idkomentar,
                             type:"GET",
                             success: function(data) {
                                 islikedKom = data;
@@ -226,13 +225,13 @@ document.addEventListener("DOMContentLoaded", function() {
                                 lajkBrojac.innerHTML = parseInt(lajkBrojac.innerHTML) + 1;
                                 //ovde lajk za bazu
                                 komentarList[i].broj_lajkova += 1;
-                                $.ajax({url:"komentarLike/" + komentarList[i].idkomentar, type: "POST"});
+                                $.ajax({url:"../komentarLike/" + komentarList[i].idkomentar, type: "POST"});
                                 noviDivZaSVG.innerHTML = fullHeart;
                             } else {
                                 lajkBrojac.innerHTML = parseInt(lajkBrojac.innerHTML) - 1;
                                 //ovde dislajk za bazu
                                 komentarList[i].broj_lajkova -= 1;
-                                $.ajax({url:"unlikeKomentar/" + komentarList[i].idkomentar, type: "POST"});
+                                $.ajax({url:"../unlikeKomentar/" + komentarList[i].idkomentar, type: "POST"});
                                 noviDivZaSVG.innerHTML = emptyHeart;
                             }
                         });

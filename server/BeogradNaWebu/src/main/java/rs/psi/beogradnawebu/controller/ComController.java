@@ -54,19 +54,19 @@ public class ComController {
         return ResponseEntity.status(200).build();
     }
 
-    @GetMapping("sviKomentari/{idsmestaj}")
+    @GetMapping("/sviKomentari/{idsmestaj}")
     ResponseEntity<List<Komentar>> allKomentar(@PathVariable Integer idsmestaj) {
         List<Komentar> listKomentar = komentarDAO.allKomentar(idsmestaj);
         return new ResponseEntity<>(listKomentar, HttpStatus.OK);
     }
 
-    @GetMapping("maxID")
+    @GetMapping("/maxID")
     ResponseEntity<Integer> maxID() {
         Integer maxID = komentarDAO.maxID();
         return new ResponseEntity<>(maxID, HttpStatus.OK);
     }
 
-    @PostMapping("komentarLike/{idkomentar}")
+    @PostMapping("/komentarLike/{idkomentar}")
     public ResponseEntity<String> likeKomentar(@AuthenticationPrincipal User korisnik, @PathVariable Integer idkomentar) {
 
         System.out.println("lajk");
@@ -89,7 +89,7 @@ public class ComController {
         }
     }
 
-    @PostMapping("unlikeKomentar/{idkomentar}")
+    @PostMapping("/unlikeKomentar/{idkomentar}")
     public ResponseEntity<String> unlikeKomentar(@AuthenticationPrincipal User korisnik, @PathVariable Integer idkomentar){
 
         System.out.println("dislajk");
@@ -109,7 +109,7 @@ public class ComController {
         return ResponseEntity.status(200).build();
     }
 
-    @GetMapping(value = "islikedKomentar/{username}/{idkomentar}")
+    @GetMapping(value = "/islikedKomentar/{username}/{idkomentar}")
     public ResponseEntity<Boolean> isLiked(@PathVariable("username") String username, @PathVariable("idkomentar") Integer idkomentar){
 
         Korisnik k = korisnikDAO.getUserByUsername(username).orElse(null);

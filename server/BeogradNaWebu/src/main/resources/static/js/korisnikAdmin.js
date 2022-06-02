@@ -209,11 +209,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
             //ovde poslati u bazu
             var user = JSON.parse(sessionStorage.getItem("user"));
-            $.ajax({url: "noviKomentar/" + sessionStorage.getItem("currentSmestaj") + "/" + tekstKomentara.value, type: "POST"});
+            $.ajax({url: "../noviKomentar/" + sessionStorage.getItem("currentSmestaj") + "/" + tekstKomentara.value, type: "POST"});
 
             let idKom;
             $.ajax({
-                url:"maxID",
+                url:"../maxID",
                 type:"GET",
                 success: function(data) {
                     idKom = data;
@@ -229,11 +229,11 @@ document.addEventListener("DOMContentLoaded", function() {
             divZaLajk.addEventListener("click", function() {
                 if(noviDivZaSVG.children[0].getAttribute("class") == "Layer_1") {
                     lajkBrojac.innerHTML = parseInt(lajkBrojac.innerHTML) + 1;
-                    $.ajax({url:"komentarLike/" + idKom, type: "POST"});
+                    $.ajax({url:"../komentarLike/" + idKom, type: "POST"});
                     noviDivZaSVG.innerHTML = fullHeart;
                 } else {
                     lajkBrojac.innerHTML = parseInt(lajkBrojac.innerHTML) - 1;
-                    $.ajax({url:"unlikeKomentar/" + idKom, type: "POST"});
+                    $.ajax({url:"../unlikeKomentar/" + idKom, type: "POST"});
                     noviDivZaSVG.innerHTML = emptyHeart;
                 }
             });

@@ -33,11 +33,14 @@ public class InfoChangeController {
     {
         if(bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("greskePriPromeniEmailaList", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("uspesnaPromenaEmaila", false);
             return "redirect:/pregledsmestaja/0";
         }
         Korisnik korisnik = korisnikDAO.getUserByUsername(user.getUsername()).get();
         korisnik.setEmail(mailovi.getNoviEmail());
         korisnikDAO.update(korisnik, (int) korisnik.getIdkorisnik());
+
+        redirectAttributes.addFlashAttribute("uspesnaPromenaEmaila", true);
         return "redirect:/pregledsmestaja/0";
     }
 
@@ -48,11 +51,14 @@ public class InfoChangeController {
     {
         if(bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("greskePriPromeniSifreList", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("uspesnaPromenaSifre", false);
             return "redirect:/pregledsmestaja/0";
         }
+
         Korisnik korisnik = korisnikDAO.getUserByUsername(user.getUsername()).get();
         korisnik.setSifra(sifre.getNovaSifra());
         korisnikDAO.update(korisnik, (int) korisnik.getIdkorisnik());
+
         return "redirect:/logout";
     }
 

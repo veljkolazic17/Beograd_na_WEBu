@@ -36,8 +36,8 @@
     let putanjaZaPromenuEmaila = /*[[@{promena/email}]]*/ "/";
     let prikazPredlozenih = /*[[${prikazPredlozenih}]]*/ false;
 
-    let greskePriPromeniSifre = /*[[${greskePriPromeniSifreList}]]*/ null;
-    let greskePriPromeniEmaila = /*[[${greskePriPromeniEmailaList}]]*/ null;
+    let uspesnaPromenaEmaila = /*[[${uspesnaPromenaEmaila}]]*/ null;
+    let uspesnaPromenaSifre = /*[[${uspesnaPromenaSifre}]]*/ null;
     /*]]>*/
 </script>
 
@@ -62,7 +62,7 @@
     <div id="nalogPanelPozadina">
         <div id="nalogPanel">
             <p th:text="'Korisničko ime:' + ${user.korisnickoime}">Greška</p>
-            <p th:text="'Email:' + ${user.email}">Greška</p>
+            <p th:text="'Email:' + ${user.email.substring(0, 5) + '...'}">Greška</p>
 
             <div id="nalogPanelDugmadWrapper">
                 <input id="promenaSifreDugme" type="button" value="Promena šifre" >
@@ -444,12 +444,15 @@
         prikaziSveSmestaje();
 
     document.addEventListener("DOMContentLoaded", function(ev) {
-        if(greskePriPromeniSifre != null) {
+        if(uspesnaPromenaSifre === false) {
             document.getElementById("dugmeNalog").click();
             document.getElementById("promenaSifreDugme").click();
         }
 
-        if(greskePriPromeniEmaila != null) {
+        if(uspesnaPromenaEmaila === true) {
+            document.getElementById("dugmeNalog").click();
+            alert("Uspešno ste promenili Vaš email.");
+        } else if(uspesnaPromenaEmaila === false) {
             document.getElementById("dugmeNalog").click();
             document.getElementById("promenaEmailaDugme").click();
         }

@@ -331,28 +331,21 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-
-
-
-
-    /*
-    * Postavljanje slektovanih filtera
-    * */
+    // postavljanje selektovanih filtera
     var filterData = JSON.parse(sessionStorage.getItem("filterf"));
     var textToBind = "";
     var first = true;
 
-    Object.entries(filterData).forEach(([key,value])=>{
-        if(value != null && value !== 0 && value !== false && value !== "nullLokacija" && value !== "nullSoba" && value !== "nullSmestaj"){
-            if(first){
-                textToBind+="&times;&nbsp;";
-                first=false;
+    if(filterData != null) {
+        Object.entries(filterData).forEach(([key,value])=>{
+            if(value != null && value !== 0 && value !== false && value !== "nullLokacija" && value !== "nullSoba" && value !== "nullSmestaj"){
+                if(first){
+                    textToBind+="&times;&nbsp;";
+                    first=false;
+                }
+                textToBind += key + ": " + value + "</br>"
             }
-            textToBind += key + ": " + value + "</br>"
-        }
-    });
-    document.getElementById("izabraniFilteri").innerHTML = textToBind;
-
-
-
+        });
+        document.getElementById("izabraniFilteri").innerHTML = textToBind;
+    }
 });

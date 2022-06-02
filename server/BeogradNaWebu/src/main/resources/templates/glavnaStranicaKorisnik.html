@@ -171,9 +171,11 @@
                 <!-- ovo nije greska, namerno je da ne bi bilo prostora izmedju elemenata -->
                 <form class="stranicaLevo" th:if="${pagen >= 1}" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}-1)}" method="get">
                     <input  class="stranicaLevo" value="<" type="submit"   />
-                </form>
-                <div  class="brojStranice" th:text="${pagen+1}">  </div>
-                <form th:if="${!lastPage}"  class="stranicaDesno" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}+1)}" method="get" >
+                </form
+                ><div class="stranicaLevo" style="background-color: transparent" th:if="${pagen == 0}">
+                </div
+                ><div  class="brojStranice" th:text="${pagen+1}">  </div
+                ><form th:if="${!lastPage}"  class="stranicaDesno" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}+1)}" method="get" >
                     <input class="stranicaDesno" value=">" type="submit"  />
                 </form>
             </div>
@@ -195,10 +197,12 @@
             <!-- ovo nije greska, namerno je da ne bi bilo prostora izmedju elemenata -->
             <form class="stranicaLevo" th:if="${pagen >= 1}" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}-1)}" method="get">
                 <input  class="stranicaLevo" value="<" type="submit"   />
-            </form>
-            <div  class="brojStranice" th:text="${pagen+1}">  </div>
-            <form th:if="${!lastPage}" class="stranicaDesno" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}+1)}" method="get" >
-                <input  class="stranicaDesno" value=">" type="submit"  />
+            </form
+            ><div class="stranicaLevo" style="background-color: transparent" th:if="${pagen == 0}">
+            </div
+            ><div  class="brojStranice" th:text="${pagen+1}">  </div
+            ><form th:if="${!lastPage}"  class="stranicaDesno" th:action="@{/pregledsmestaja/{pagen}(pagen = ${pagen}+1)}" method="get" >
+                <input class="stranicaDesno" value=">" type="submit"  />
             </form>
         </div>
 

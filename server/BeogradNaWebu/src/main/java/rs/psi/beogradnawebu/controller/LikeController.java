@@ -1,6 +1,8 @@
+/**
+ * Matija Milosevic 2019/0156
+ * Veljko Lazic 2019/0241
+ */
 package rs.psi.beogradnawebu.controller;
-
-
 
 import net.minidev.json.JSONObject;
 import org.apache.coyote.Response;
@@ -29,7 +31,10 @@ import javax.websocket.server.PathParam;
 import java.security.Principal;
 import java.util.HashMap;
 
-
+/**
+ * LikeController - endpoint zaduzen za funkcionalnosti vezane za lajkovanje smestaja i updateovanje stanja algoritma za preporuku
+ * @version 1.0
+ */
 @RestController
 public class LikeController {
     private static final Logger log = LoggerFactory.getLogger(FilterController.class);
@@ -38,6 +43,14 @@ public class LikeController {
     private final KorisnikDAO korisnikDAO;
     private final LajkSmestajaCDAO lajkSmestajaCDAO;
     private final MMLVRecommenderImpl mmlvRecommender;
+
+    /**
+     * Kreiranje instance
+     * @param smestajDAO
+     * @param korisnikDAO
+     * @param lajkSmestajaCDAO
+     * @param mmlvRecommender
+     */
     public LikeController(SmestajDAO smestajDAO,KorisnikDAO korisnikDAO,LajkSmestajaCDAO lajkSmestajaCDAO,MMLVRecommenderImpl mmlvRecommender){
         this.smestajDAO = smestajDAO;
         this.korisnikDAO = korisnikDAO;
@@ -45,23 +58,30 @@ public class LikeController {
         this.mmlvRecommender = mmlvRecommender;
     }
 
+    /**
+     * Metoda kojom se proverava da li je stan lajkovan
+     * @param username
+     * @param idsmestaj
+     * @return
+     */
     @GetMapping(value = "/isliked/{username}/{idsmestaj}")
     public ResponseEntity<Boolean> isLiked(@PathVariable("username") String username, @PathVariable("idsmestaj") Integer idsmestaj){
         Korisnik k = korisnikDAO.getUserByUsername(username).orElse(null);
         if(k==null){
-//            HashMap<String,Boolean> hashMap = new HashMap<>();
-//            hashMap.put("isliked",false);
             return new ResponseEntity<Boolean>(false, HttpStatus.OK);//new JSONObject(hashMap);
         }
         int idkorisnik = (int)k.getIdkorisnik();
         LajkSmestaja lajkSmestaja = lajkSmestajaCDAO.get(new int[]{idkorisnik,idsmestaj}).orElse(null);
-//        HashMap<String,Boolean> hashMap = new HashMap<>();
-//        hashMap.put("isliked",lajkSmestaja!=null);
-
         return new ResponseEntity<Boolean>(lajkSmestaja!=null, HttpStatus.OK);//new JSONObject(hashMap);
     }
 
-
+    /**
+     * Metoda kojom se lajkuje stan i menja stanje algoritma za prporuku
+     * @param request
+     * @param korisnik
+     * @param idSmestaj
+     * @return
+     */
     @PostMapping("/like/{idSmestaj}")
     public ResponseEntity<String> likeSmestaj(HttpServletRequest request, @AuthenticationPrincipal User korisnik, @PathVariable Integer idSmestaj){
 
@@ -89,6 +109,14 @@ public class LikeController {
         return ResponseEntity.status(200).build();
 
     }
+
+    /**
+     * Metoda kojom se anlajkuje
+     * @param request
+     * @param korisnik
+     * @param idSmestaj
+     * @return
+     */
     @PostMapping("/unlike/{idSmestaj}")
     public ResponseEntity<String> unlikeSmestaj(HttpServletRequest request, @AuthenticationPrincipal User korisnik,@PathVariable Integer idSmestaj){
 

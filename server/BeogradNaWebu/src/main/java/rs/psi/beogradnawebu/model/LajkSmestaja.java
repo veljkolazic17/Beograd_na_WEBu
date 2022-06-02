@@ -1,8 +1,15 @@
+/**
+ * Matija Milosevic 2019/0156
+ * Veljko Lazic 2019/0241
+ */
 package rs.psi.beogradnawebu.model;
 
 
 import java.util.List;
 
+/**
+ * Kasa koja sluzi za mapiranje reda iz tabele LajkSmestaja
+ */
 public class LajkSmestaja {
 
   private long idkorisnik;

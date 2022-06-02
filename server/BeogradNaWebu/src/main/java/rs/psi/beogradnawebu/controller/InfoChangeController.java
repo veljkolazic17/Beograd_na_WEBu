@@ -1,3 +1,8 @@
+/**
+ * Marko Mirkovic 2019/0197
+ * Matija Milosevic 2019/0156
+ * Veljko Lazic 2019/0241
+ * */
 package rs.psi.beogradnawebu.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +21,10 @@ import rs.psi.beogradnawebu.model.Korisnik;
 
 import javax.validation.Valid;
 
+/**
+ * InfoChangeController - endpoint koji sluzi za promenu osnovnih informacija korisnika
+ * @version 1.0
+ */
 @Controller
 public class InfoChangeController {
     private KorisnikDAO korisnikDAO;
@@ -41,6 +50,11 @@ public class InfoChangeController {
         return "redirect:/logout";
     }
 
+    /**
+     * Funkcija kojom se menja da stanje pretplate na mail servis
+     * @param user
+     * @return
+     */
     @PostMapping("/promena/pretplata")
     public ResponseEntity<String> promenaPretplate(@AuthenticationPrincipal User user){
         Korisnik korisnik = korisnikDAO.getUserByUsername(user.getUsername()).orElse(null);

@@ -1,3 +1,8 @@
+/**
+ * Matija Milosevic 2019/0156
+ * Veljko Lazic 2019/0241
+ */
+
 package rs.psi.beogradnawebu.dao;
 
 import org.slf4j.Logger;
@@ -13,6 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * LajkSmestajaCDAO - Klasa zaduzena za pristup bazi tabele LajkSmestaja
+ * @version 1.0
+ */
 @Component
 public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
 
@@ -20,6 +29,9 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
     private JdbcTemplate jdbcTemplate;
     private SmestajDAO smestajDAO;
 
+    /**
+     * Mapiranje redova u objekat
+     */
     public static RowMapper<LajkSmestaja> rowMapper = (rs, rowNum) -> {
         LajkSmestaja lajkSmestaja = new LajkSmestaja();
         lajkSmestaja.setIdkorisnik(rs.getLong("idkorisnik"));
@@ -27,23 +39,41 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
         return lajkSmestaja;
     };
 
+    /**
+     * Kreiranje instance
+     * @param jdbcTemplate
+     * @param smestajDAO
+     */
     public LajkSmestajaCDAO(JdbcTemplate jdbcTemplate, SmestajDAO smestajDAO) {
         this.jdbcTemplate = jdbcTemplate;
         this.smestajDAO = smestajDAO;
     }
 
+    /**
+     * Dohvatanje svih redova iz tabele LajkSmestaja
+     * @return
+     */
     @Override
     public List<LajkSmestaja> list() {
         List<LajkSmestaja> result = jdbcTemplate.query("select * from lajk_smestaja", rowMapper);
         return result;
     }
 
+    /**
+     * Kreiranje reda u tabeli LajkSmestaja
+     * @param lajkSmestaja
+     */
     @Override
     public void create(LajkSmestaja lajkSmestaja) {
         jdbcTemplate.update("insert into lajk_smestaja (idkorisnik,idsmestaj) values (?,?)", lajkSmestaja.getIdkorisnik(), lajkSmestaja.getIdsmestaj());
 
     }
 
+    /**
+     * Dohvatanje reda iz tabele LajkSmestaja sa kompozitnim kljucem id[]
+     * @param id
+     * @return
+     */
     @Override
     public Optional<LajkSmestaja> get(int[] id) {
         LajkSmestaja lajkSmestaja = null;
@@ -55,6 +85,11 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
         return Optional.ofNullable(lajkSmestaja);
     }
 
+    /**
+     * Apdejtovanje tabele LajkSmestaja sa kompozitnim kljucem id[]
+     * @param lajkSmestaja
+     * @param id
+     */
     @Override
     public void update(LajkSmestaja lajkSmestaja, int[] id) {
         try {
@@ -65,6 +100,10 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
         }
     }
 
+    /**
+     * Brisanje reda iz tabele LajkSmestaja sa kompozitnim kljucem id[]
+     * @param id
+     */
     @Override
     public void delete(int[] id) {
         try {
@@ -74,10 +113,20 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
             log.info("Nije moguce izbrisati lajksmestaja");
         }
     }
+
+    /**
+     * Brisanje lajkova korisnika sa PK idUser
+     * @param idUser
+     */
     public void deleteLikes(int idUser){
         jdbcTemplate.update("delete from lajk_smestaja where idkorisnik = ?",idUser);
     }
 
+    /**
+     * Dohvatanje poslednjeg lajka od strane korisnika sa PK idkorisnik
+     * @param idkorisnik
+     * @return
+     */
     public Optional<Smestaj> getLast(int idkorisnik) {
         //int idkorisnik = (int)korisnik.getIdkorisnik();
         //PROVERITI DA LI KORISNIK POSTOJI !!!!
@@ -88,6 +137,11 @@ public class LajkSmestajaCDAO implements CDAO<LajkSmestaja> {
         return smestajDAO.get((int) (lajkSmestaja.getIdsmestaj()));
     }
 
+    /**
+     * Dohvatanje svih lajkova korisnika sa PK idkorisnik
+     * @param idkorisnik
+     * @return
+     */
     public Optional<List<LajkSmestaja>> getLikes(int idkorisnik) {
         List<LajkSmestaja> likes = jdbcTemplate.query("SELECT * FROM lajk_smestaja WHERE idkorisnik = ?", rowMapper, idkorisnik);
         return Optional.of(likes);

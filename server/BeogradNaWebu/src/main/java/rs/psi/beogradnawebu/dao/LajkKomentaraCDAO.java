@@ -1,3 +1,7 @@
+/**
+ * Matija Milosevic 2019/0156
+ * Veljko Lazic 2019/0241
+ */
 package rs.psi.beogradnawebu.dao;
 
 import org.slf4j.Logger;
@@ -10,12 +14,19 @@ import rs.psi.beogradnawebu.model.LajkKomentara;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * LajkKomentaraCDAO - Klasa zaduzena za pristup bazi tabele LajkKomentara
+ * @version 1.0
+ */
 @Component
 public class LajkKomentaraCDAO implements CDAO<LajkKomentara> {
 
     private static final Logger log = LoggerFactory.getLogger(KomentarDAO.class);
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * Mapiranje redova u objekat
+     */
     public static RowMapper<LajkKomentara> rowMapper = (rs, rowNum) -> {
         LajkKomentara lajkKomentara = new LajkKomentara();
         lajkKomentara.setIdkomentar(rs.getLong("idkomentar"));
@@ -23,21 +34,38 @@ public class LajkKomentaraCDAO implements CDAO<LajkKomentara> {
         return lajkKomentara;
     };
 
+    /**
+     * Kreiranje instance
+     * @param jdbcTemplate
+     */
     public LajkKomentaraCDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Dohvatanje svih redova iz tabele LajkKomentara
+     * @return
+     */
     @Override
     public List<LajkKomentara> list() {
         List<LajkKomentara> result = jdbcTemplate.query("select * from lajk_komentara",rowMapper);
         return result;
     }
 
+    /**
+     * Kreiranje reda u tabeli LjakKomentar
+     * @param lajkKomentara
+     */
     @Override
     public void create(LajkKomentara lajkKomentara) {
         jdbcTemplate.update("insert into lajk_komentara (idkomentar,idkorisnik) values (?,?)",lajkKomentara.getIdkomentar(),lajkKomentara.getIdkorisnik());
     }
 
+    /**
+     * Dohvatanje reda iz tabele LajkKomentar sa kompozitnim kljucem id[]
+     * @param id
+     * @return
+     */
     @Override
     public Optional<LajkKomentara> get(int[] id) {
         LajkKomentara lajkKomentara = null;
@@ -49,6 +77,11 @@ public class LajkKomentaraCDAO implements CDAO<LajkKomentara> {
         return Optional.ofNullable(lajkKomentara);
     }
 
+    /**
+     * Apdejovanje reda u tabeli LajkKomentar sa kompozitnim kljucem id[]
+     * @param lajkKomentara
+     * @param id
+     */
     @Override
     public void update(LajkKomentara lajkKomentara, int[] id){
         try {
@@ -59,6 +92,10 @@ public class LajkKomentaraCDAO implements CDAO<LajkKomentara> {
         }
     }
 
+    /**
+     * Brisanje reda iz tabele LajkKomentar sa kompozitnim kljucem id[]
+     * @param id
+     */
     @Override
     public void delete(int []id) {
         try {

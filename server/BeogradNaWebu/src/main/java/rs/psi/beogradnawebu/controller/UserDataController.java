@@ -1,3 +1,8 @@
+/**
+ * Marko Mirkovic 2019/0197
+ * Matija Milosevic 2019/0156
+ * Veljko Lazic 2019/0241
+ */
 package rs.psi.beogradnawebu.controller;
 
 import org.springframework.http.HttpStatus;
@@ -32,6 +37,15 @@ public class UserDataController {
     private final MailService mailService;
     private final SimplePasswordGenerator simplePasswordGenerator;
 
+    /**
+     * Kreiranje instance
+     * @param korisnikDAO
+     * @param lajkSmestajaCDAO
+     * @param recAlgDAO
+     * @param smestajDAO
+     * @param mailService
+     * @param simplePasswordGenerator
+     */
     public UserDataController(
             KorisnikDAO korisnikDAO,
             LajkSmestajaCDAO lajkSmestajaCDAO,
@@ -48,7 +62,12 @@ public class UserDataController {
         this.simplePasswordGenerator = simplePasswordGenerator;
     }
 
-    // TODO staviti da je putanja /resetdata
+    /**
+     * Metoda kojom se brise istorija predlozenoih stanova
+     * @param request
+     * @param user
+     * @return
+     */
     @PostMapping
     public ResponseEntity<String> resetData(HttpServletRequest request, @AuthenticationPrincipal User user) {
         Korisnik korisnik = korisnikDAO.getUserByUsername(user.getUsername()).orElse(null);
@@ -65,6 +84,11 @@ public class UserDataController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    /**
+     * Metoda kojom se nova sifra salje na email korisnika
+     * @param username
+     * @return
+     */
     @PostMapping("passwordresetvialemail/{username}")
     public ResponseEntity<String> passwordResetViaEmail(@PathVariable("username") String username){
         Korisnik korisnik = korisnikDAO.getUserByUsername(username).orElse(null);

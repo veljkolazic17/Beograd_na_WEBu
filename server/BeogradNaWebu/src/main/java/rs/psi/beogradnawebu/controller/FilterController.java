@@ -1,3 +1,7 @@
+/**
+ * Matija Milosevic 2019/0156
+ * Veljko Lazic 2019/0241
+ */
 package rs.psi.beogradnawebu.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * FilterController - klasa za prikaz i pretragu smestaja
+ * @version 1.0
+ */
 @Controller
 @RequestMapping("/pregledsmestaja")
 public class FilterController {
@@ -32,12 +39,27 @@ public class FilterController {
     private final SmestajDAO smestajDAO;
     private final LajkSmestajaCDAO lajkSmestajaCDAO;
     private final KorisnikDAO korisnikDAO;
+
+    /**
+     * Kreiranje nove instance
+     * @param smestajDAO
+     * @param lajkSmestajaCDAO
+     * @param korisnikDAO
+     */
     public FilterController(SmestajDAO smestajDAO,LajkSmestajaCDAO lajkSmestajaCDAO,KorisnikDAO korisnikDAO){
         this.smestajDAO = smestajDAO;
         this.lajkSmestajaCDAO = lajkSmestajaCDAO;
         this.korisnikDAO = korisnikDAO;
     }
 
+    /**
+     * Metoda koja se koristi za pretragu smestaja po filterima
+     * @param request
+     * @param user
+     * @param filterData
+     * @param redirectAttributes
+     * @return
+     */
     @PostMapping("/filter")
     public String filterSmestaj(HttpServletRequest request,@AuthenticationPrincipal User user,@Valid @ModelAttribute("filterData") FilterDTO filterData, RedirectAttributes redirectAttributes){
         HttpSession mySession = request.getSession();
@@ -55,6 +77,14 @@ public class FilterController {
         return "redirect:/pregledsmestaja/0";
     }
 
+    /**
+     * Metoda koja se korisi za prelistavanje pokupljenih smestaja
+     * @param request
+     * @param korisnik
+     * @param nstranica
+     * @param model
+     * @return
+     */
     @GetMapping("/{nstranica}")
     public String listSmestaj(HttpServletRequest request , @AuthenticationPrincipal User korisnik,@PathVariable() int nstranica, Model model){
         model.addAttribute("filterData",new FilterDTO());

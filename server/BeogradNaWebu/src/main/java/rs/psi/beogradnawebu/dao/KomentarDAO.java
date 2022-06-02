@@ -1,3 +1,8 @@
+/**
+ * Matija Milosevic 2019/0156
+ * Veljko Lazic 2019/0241
+ * Jelena Lucic 2019/0268
+ */
 package rs.psi.beogradnawebu.dao;
 
 import org.slf4j.Logger;
@@ -12,6 +17,11 @@ import rs.psi.beogradnawebu.model.Smestaj;
 import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
+
+/**
+ * KomentarDAO - Klasa zaduzena za pristup bazi tabele Kometar
+ * @version 1.0
+ */
 @Component
 public class KomentarDAO implements DAO<Komentar> {
 
@@ -19,6 +29,9 @@ public class KomentarDAO implements DAO<Komentar> {
     private JdbcTemplate jdbcTemplate;
 
 
+    /**
+     * Mapiranje redova u objekat
+     */
     public static RowMapper<Komentar> rowMapper = (rs, rowNum) -> {
         Komentar komentar = new Komentar();
         komentar.setIdkomentar(rs.getLong("idkomentar"));
@@ -29,16 +42,28 @@ public class KomentarDAO implements DAO<Komentar> {
         return komentar;
     };
 
+    /**
+     * Kreiranje instance
+     * @param jdbcTemplate
+     */
     public KomentarDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Vraca listu svih komentara
+     * @return
+     */
     @Override
     public List<Komentar> list() {
         return jdbcTemplate.query("SELECT * FROM komentar",rowMapper);
 
     }
 
+    /**
+     * Kreira komentar
+     * @param komentar
+     */
     @Override
     public void create(Komentar komentar) {
         try {
@@ -51,6 +76,11 @@ public class KomentarDAO implements DAO<Komentar> {
 
     }
 
+    /**
+     * Vraca komentar sa zadatim id
+     * @param id
+     * @return
+     */
     @Override
     public Optional<Komentar> get(int id) {
         Optional<Komentar> komentar = null;
@@ -64,6 +94,11 @@ public class KomentarDAO implements DAO<Komentar> {
         return komentar;
     }
 
+    /**
+     * Updatovanje svih komentara sa zadatim id
+     * @param komentar
+     * @param id
+     */
     @Override
     public void update(Komentar komentar, int id) {
         try {
@@ -75,6 +110,10 @@ public class KomentarDAO implements DAO<Komentar> {
         }
     }
 
+    /**
+     * Brisanje komentara sa id
+     * @param id
+     */
     @Override
     public void delete(int id) {
         try {

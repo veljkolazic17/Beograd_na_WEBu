@@ -1,5 +1,12 @@
+/**
+ * Matija Milosevic 2019/0156
+ * Veljko Lazic 2019/0241
+ */
 package rs.psi.beogradnawebu.model;
 
+/**
+ * Kasa koja sluzi za mapiranje reda iz tabele LajkKomentara
+ */
 public class LajkKomentara {
 
   private long idkomentar;

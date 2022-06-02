@@ -1,6 +1,8 @@
+/**
+ * Matija Milosevic 2019/0156
+ * Veljko Lazic 2019/024
+ */
 package rs.psi.beogradnawebu.controller;
-
-
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,6 @@ import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-
 @Controller
 @RequestMapping("/pregledpredlozenihsmestaja")
 public class RecommendedController {
@@ -36,6 +37,13 @@ public class RecommendedController {
     private final MMLVRecommenderImpl mmlvRecommender;
     private final RecAlgDAO recAlgDAO;
 
+    /**
+     * Kreiranje instance
+     * @param smestajDAO
+     * @param korisnikDAO
+     * @param mmlvRecommender
+     * @param recAlgDAO
+     */
     public RecommendedController(SmestajDAO smestajDAO, KorisnikDAO korisnikDAO,MMLVRecommenderImpl mmlvRecommender,RecAlgDAO recAlgDAO){
         this.smestajDAO = smestajDAO;
         this.korisnikDAO = korisnikDAO;
@@ -43,7 +51,13 @@ public class RecommendedController {
         this.recAlgDAO = recAlgDAO;
     }
 
-
+    /**
+     * Metoda kojom se generisu predlozeni stanovi i salju dalje na prikaz
+     * @param request
+     * @param user
+     * @param redirectAttributes
+     * @return
+     */
     @GetMapping
     public String listSmestaj(HttpServletRequest request, @AuthenticationPrincipal User user, RedirectAttributes redirectAttributes){
         Korisnik korisnik = korisnikDAO.getUserByUsername(user.getUsername()).orElse(null);
@@ -58,6 +72,11 @@ public class RecommendedController {
 
     }
 
+    /**
+     * Metoda koja pokrece algoritam i generise listu predlozenih stanova
+     * @param k
+     * @return
+     */
     public List<Smestaj> recommendAcc(Korisnik k){
         List<Smestaj> result = null;
         SmestajDAO.AvgData avgAcc = smestajDAO.getAvgAcc(k.getIdkorisnik());

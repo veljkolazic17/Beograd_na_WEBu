@@ -9,6 +9,7 @@ public class Komentar {
   private long idkorisnik;
   private long idsmestaj;
 
+  private long broj_lajkova;
 
   public long getIdkomentar() {
     return idkomentar;
@@ -36,13 +37,20 @@ public class Komentar {
     this.idkorisnik = idkorisnik;
   }
 
-
   public long getIdsmestaj() {
     return idsmestaj;
   }
 
   public void setIdsmestaj(long idsmestaj) {
     this.idsmestaj = idsmestaj;
+  }
+
+  public long getBroj_lajkova() {
+    return broj_lajkova;
+  }
+
+  public void setBroj_lajkova(long broj_lajkova) {
+    this.broj_lajkova = broj_lajkova;
   }
 
   @Override
@@ -52,6 +60,7 @@ public class Komentar {
             ", tekstKomentara='" + tekstKomentara + '\'' +
             ", idkorisnik=" + idkorisnik +
             ", idsmestaj=" + idsmestaj +
+            ", broj_lajkova=" + broj_lajkova +
             '}';
   }
 }

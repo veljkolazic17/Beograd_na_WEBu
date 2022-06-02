@@ -1,5 +1,8 @@
 package rs.psi.beogradnawebu.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -37,4 +40,13 @@ public class InfoChangeController {
         korisnikDAO.update(korisnik, (int) korisnik.getIdkorisnik());
         return "redirect:/logout";
     }
+
+    @PostMapping("/promena/pretplata")
+    public ResponseEntity<String> promenaPretplate(@AuthenticationPrincipal User user){
+        Korisnik korisnik = korisnikDAO.getUserByUsername(user.getUsername()).orElse(null);
+        korisnik.setEpredlog((korisnik.getEpredlog() == 0)?1:0);
+        korisnikDAO.update(korisnik, (int) korisnik.getIdkorisnik());
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }

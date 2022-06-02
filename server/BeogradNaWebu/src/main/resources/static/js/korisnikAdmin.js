@@ -19,7 +19,7 @@ let aktivniProzor = null;
 let aktivanKomentar = null;
 
 document.addEventListener("DOMContentLoaded", function() {
-
+    var user = JSON.parse(sessionStorage.getItem("user"));
     // prikaz prozora za potvrdu
     document.getElementById("dugmeNalog").addEventListener("click", function(ev) {
         if(ev.target !== ev.currentTarget) return;
@@ -122,22 +122,26 @@ document.addEventListener("DOMContentLoaded", function() {
             });
 
             let dugmePotvrdi = panelPotvrde.getElementsByClassName("prozorZaPotvrduDugmadWrapper")[0].children[1];
+            if(user.epredlog) {
+                document.getElementById("porukaPotvrde").innerHTML =
+                    "Potvrđivanjem ove opcije aplikacija \"Beograd na WEB-u\"<br />"
+                    + "će prestati da Vas obaveštava o novom smeštaju putem Vašeg mail-a.";
+                dugmePotvrdi.value = "Prekini pretplatu";
+            } else {
+                document.getElementById("porukaPotvrde").innerHTML =
+                    "Potvrđivanjem ove opcije prihvatate da Vas aplikacija \"Beograd na WEB-u\"<br />" +
+                    "obaveštava o novom smeštaju putem Vašeg mail-a.";
+                dugmePotvrdi.value = "Pretplati se";
+            }
             dugmePotvrdi.addEventListener("click", function() {
                 // izmeniti za AJAX
-                if(dugmePotvrdi.value == "Pretplati se") {
-                    document.getElementById("porukaPotvrde").innerHTML =
-                        "Potvrđivanjem ove opcije aplikacija \"Beograd na WEB-u\"<br />"
-                        + "će prestati da Vas obaveštava o novom smeštaju putem Vašeg mail-a.";
-                    dugmePotvrdi.value = "Prekini pretplatu";
-                } else {
-                    document.getElementById("porukaPotvrde").innerHTML =
-                        "Potvrđivanjem ove opcije prihvatate da Vas aplikacija \"Beograd na WEB-u\"<br />" +
-                        "obaveštava o novom smeštaju putem Vašeg mail-a.";
-                    dugmePotvrdi.value = "Pretplati se";
-                }
+
 
                 panelPotvrde.style.display = "none";
                 pozadina.style.display = "none";
+                $.ajax({url:"../promena/pretplata",type:"POST"});
+                window.location.reload(true);
+                //return false;
             });
         }
     });

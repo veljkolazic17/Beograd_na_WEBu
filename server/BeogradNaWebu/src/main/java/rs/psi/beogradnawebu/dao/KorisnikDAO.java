@@ -135,4 +135,8 @@ public class KorisnikDAO implements DAO<Korisnik> {
         }
         return Optional.ofNullable(korisnik);
     }
+    public List<Korisnik> getByEpredlogFlag(){
+        List<Korisnik> result = jdbcTemplate.query("select * from korisnik where epredlog = 1",rowMapper);
+        return result;
+    }
 }

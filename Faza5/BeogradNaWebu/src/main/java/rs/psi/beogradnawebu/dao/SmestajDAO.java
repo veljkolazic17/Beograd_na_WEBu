@@ -261,7 +261,7 @@ public class SmestajDAO implements DAO<Smestaj>{
      */
     public void setAllTags(int brojSajta) {
         try {
-            jdbcTemplate.update("UPDATE smestaj SET postoji = ? AND broj_sajta = ?", 0, brojSajta); // azuriranje tagova na false
+            jdbcTemplate.update("UPDATE smestaj SET postoji = ? WHERE broj_sajta = ?", 0, brojSajta); // azuriranje tagova na false
         } catch(Exception e) {
             log.info("Neuspesna operacija");
         }

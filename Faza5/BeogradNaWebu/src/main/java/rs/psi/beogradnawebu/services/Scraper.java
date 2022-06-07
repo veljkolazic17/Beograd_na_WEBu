@@ -17,10 +17,14 @@ import rs.psi.beogradnawebu.dao.SmestajDAO;
  * Scraper - apstraktna klasa scraper-a
  * @version 1.0
  */
-@AllArgsConstructor
 public abstract class Scraper {
     protected final ChromeDriver driver;
     protected SmestajDAO smestaj;
+
+    public Scraper(ChromeDriver driver, SmestajDAO smestaj){
+        this.driver = driver;
+        this.smestaj = smestaj;
+    }
 
     /**
      * Apstraktna metoda za scrape-ovanje smestaja

@@ -90,6 +90,7 @@ public class KomentarDAO implements DAO<Komentar> {
         }
         catch (Exception e){
             log.info("Nije pronadjen komenatar sa ID: " + id);
+            komentar = Optional.ofNullable(null);
         }
         return komentar;
     }

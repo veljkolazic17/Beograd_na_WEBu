@@ -196,11 +196,14 @@ document.addEventListener("DOMContentLoaded", function() {
         dugmePotvrdi.setAttribute("type", "button");
         dugmePotvrdi.setAttribute("value", "Objavi");
         dugmePotvrdi.addEventListener("click", function(ev) {
-            if(tekstKomentara.value.length == 0) {
+            let tekstKomRegex = /\w/i;
+            if(!tekstKomRegex.test(tekstKomentara.value)) {
+                alert("Komentar mora sadržati karaktere alfabeta.");
                 return;
             }
+            alert(tekstKomRegex.exec(tekstKomentara.value))
             if(tekstKomentara.value.length > 281) {
-                //prikazati polje sa upozorenjem o duzini komentara
+                alert("Komentar je predugačak, mora biti do 280 karaktera.");
                 return;
             }
             document.getElementById("noviKomentar").style.display = "block";

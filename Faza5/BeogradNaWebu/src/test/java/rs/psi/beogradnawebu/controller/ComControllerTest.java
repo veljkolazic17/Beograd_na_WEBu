@@ -55,10 +55,10 @@ class ComControllerTest {
     @CsvSource({
             "'komentar', marko, marko, 200, true", // korisnik bez administratorskih prava pokusava da objavi komentar(LK), komentar sadrzi najmanje 1 karakter(LK)
             "'komentar', Platon, 123, 200, true",  // korisnik sa administratorskim pravima pokusava da objavi komentar(LK), komentar sadrzi najmanje 1 karakter(LK)
-            "' ', marko, marko, 302, false",       // korisnik bez administratorskih prava pokusava da objavi komentar(LK), komentar je duzine 0(NK)
-                                                   // !!! komentar se objavljuje, iako u tekstu komentara ne postoji barem 1 karakter
+            "' ', marko, marko, 400, false",       // korisnik bez administratorskih prava pokusava da objavi komentar(LK), komentar je duzine 0(NK)
+                                                   // !!! komentar se objavljuje, iako u tekstu komentara ne postoji barem 1 karakter. Ispravljeno.
             "'komentar', '', '', 302, false"       // strano lice (gost ili zahtevi van sajta) pokusava da objavi komentar(NK), komentar sadrzi najmanje 1 karakter(LK)
-                                                   // !!! komentar se ne objavljuje, ali je povratni kod 200, ne redirekt na login
+                                                   // !!! komentar se ne objavljuje, ali je povratni kod 200, ne redirekt na login. Ispravljeno.
     })
     void addKomentar(String tekstKomentara, String korisnickoIme, String sifra, int statusniKod, boolean unetKomentar) throws Exception {
 
@@ -192,9 +192,9 @@ class ComControllerTest {
             "80, Platon, 123, 200",   // korisnik sa administratorskim privilegijama brise svoj komentar(LK)
             "99, Platon, 123, 200",   // korisnik sa administratorskim privilegijama brise tudji komentar(LK)
             "80, marko, marko, 403",  // korisnik bez administratorskih privilegija brise tudji komentar(NK)
-                                      // !!! Pogresan povratni kod (500), komentar se ne brise.
+                                      // !!! Pogresan povratni kod (500), komentar se ne brise. Ispravljeno.
             "99, '', '', 302"         // strano lice pokusava da obrise komentar (NK)
-                                      // !!! Pogresan povratni kod (200), komentar se ne brise.
+                                      // !!! Pogresan povratni kod (200), komentar se ne brise. Ispravljeno.
     })
     void brisanjeKomentara(int idKomentara, String korisnickoIme, String sifra, int statusniKod) throws Exception {
 
@@ -213,8 +213,8 @@ class ComControllerTest {
                     .andExpect(status().is(statusniKod));
 
             Optional<Komentar> obrisanKomentar = komentarDAO.get(idKomentara);
-            assertEquals(statusniKod == 200 ? true : false, obrisanKomentar == null || obrisanKomentar.isEmpty());
-                                                                  // u slucaju exception-a DAO vraca null umesto Optional !!!
+            assertEquals(statusniKod == 200 ? true : false, obrisanKomentar.isEmpty());
+                                        // !!! u slucaju exception-a DAO vraca null umesto Optional. Ispravljeno.
         } else {
             this.mockMvc.perform(MockMvcRequestBuilders.post("/obrisiKomentar/" + idKomentara))
                     .andExpect(status().is(statusniKod));

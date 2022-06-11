@@ -9,6 +9,9 @@ var komentarList = null;
 let aktivanKomentar = null;
 let postavljenEventHandlerPotvrdaBrisanjaKomentara = false;
 
+let scrollDisableDefaultHeight = null;
+let scrollDisableDefaultOverflow = null;
+
 document.addEventListener("DOMContentLoaded", function() {
     // podesavanje prikazanih smestaja da prikazu svoju sliku na panelu za konkretni smestaj
     var smestaji = document.getElementsByClassName("smestaji");
@@ -118,6 +121,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     document.getElementById("lajkNaSlici").children[0].innerHTML = fullHeart;
                 else
                     document.getElementById("lajkNaSlici").children[0].innerHTML = emptyHeart;
+
+                scrollDisableDefaultHeight = document.body.style.height;
+                scrollDisableDefaultOverflow = document.body.style.overflow;
+                document.body.style.height = "100%";
+                document.body.style.overflow = "hidden";
             });
 
             // greska pri prikazu u listi
@@ -138,6 +146,11 @@ document.addEventListener("DOMContentLoaded", function() {
     // prikaz panela za filtere
     document.getElementById("dugmeFilteri").addEventListener('click', function() {
         document.getElementById("filteriPanelPozadina").style.display = "block";
+
+        scrollDisableDefaultHeight = document.body.style.height;
+        scrollDisableDefaultOverflow = document.body.style.overflow;
+        document.body.style.height = "100%";
+        document.body.style.overflow = "hidden";
     });
     document.getElementsByClassName("stranicaLevo")
 
@@ -158,6 +171,10 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("prikazStana").addEventListener("click", function(ev) {
 
         if(ev.target !== ev.currentTarget) return;
+
+        document.body.style.height = scrollDisableDefaultHeight;
+        document.body.style.overflow = scrollDisableDefaultOverflow;
+
         document.getElementById("prikazStana").style.display = "none";
 
         // brisanje komentara pri izlazku iz prozora
@@ -327,12 +344,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.getElementById("dugmeNalog").addEventListener("click", function(ev) {
         if(ev.target !== ev.currentTarget) return;
+
+
+
         document.getElementById("nalogPanelPozadina").style.display = "block";
     });
 
     // izlaz iz panela za filtere
     document.getElementById("filteriPanelPozadina").addEventListener("click", function(ev) {
         if(ev.target !== ev.currentTarget) return;
+
+        document.body.style.height = scrollDisableDefaultHeight;
+        document.body.style.overflow = scrollDisableDefaultOverflow;
+
         document.getElementById("filteriPanelPozadina").style.display = "none";
     });
 
@@ -362,7 +386,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // primena filtera
     document.getElementById("potvrdiFiltereDugme").addEventListener("click", function(ev) {
-        document.getElementById("izabraniFilteriWrapper").style.display = "block"; 
+        document.getElementById("izabraniFilteriWrapper").style.display = "block";
+
+        document.body.style.height = scrollDisableDefaultHeight;
+        document.body.style.overflow = scrollDisableDefaultOverflow;
+
         document.getElementById("filteriPanelPozadina").style.display = "none";
     });
 

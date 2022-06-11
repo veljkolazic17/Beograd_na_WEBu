@@ -40,13 +40,10 @@ public class PrikazKonkretnogSmestaja {
 
         boolean notEqual = false;
         for(int i = 0; i < smestaji.size(); i++) {
-            String tekstOpisa = opisi.get(i).getText();
 
             js.executeScript("document.getElementsByClassName('smestaji')[" + i + "].click()");
+
             String tekstKonkretnogSmestaja = driver.findElement(By.id("opisKonkretnogSmestaja")).getText();
-
-            String tokeniSmestaja[] = tekstOpisa.split("\n");
-
             HashMap<String, String> konkretniSmestajMapa = new HashMap<String, String>();
             String tokeniKonkretnogSmestaja[] = tekstKonkretnogSmestaja.split("\n");
             for(String token: tokeniKonkretnogSmestaja) {
@@ -57,27 +54,17 @@ public class PrikazKonkretnogSmestaja {
                 konkretniSmestajMapa.put(vrednost[0].trim(), vrednost[1].trim());
             }
 
+            String tekstOpisa = opisi.get(i).getText();
+            String tokeniSmestaja[] = tekstOpisa.split("\n");
             for(String token: tokeniSmestaja) {
                 String vrednost[] = token.split(":");
-
-                if(vrednost[0].equals("Cena"))
-                    vrednost[1] = "" + Math.round(Float.parseFloat(vrednost[1].replace("€", " ")));
-                else if(vrednost[0].equals("Kvadratura"))
-                    vrednost[1] = vrednost[1].replace("m2", " ");
-
                 vrednost[1] = vrednost[1].trim();
 
-                String vrednostMapa0 = vrednost[0].trim();
-                String vrednostMapa1 = konkretniSmestajMapa.get(vrednostMapa0);
-                if(vrednostMapa0.equals("Broj soba"))
-                    vrednostMapa1 = vrednostMapa1.contains(".") ? vrednostMapa1 : (vrednostMapa1 + ".0");
+                String vrednostMapa[] = {vrednost[0].trim(), konkretniSmestajMapa.get(vrednost[0])};
 
-                vrednostMapa1 = vrednostMapa1.trim();
-
-                if(!vrednostMapa1.equals(vrednost[1])) {
-                    System.out.println(vrednostMapa0);
-                    System.out.println(vrednostMapa1);
+                if(!vrednostMapa[1].equals(vrednost[1])) {
                     System.out.println(vrednost[1]);
+                    System.out.println(vrednostMapa[1]);
                     notEqual = true;
                     break;
                 }

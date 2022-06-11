@@ -62,16 +62,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 var opis = "";
                 if (smestajList[i].cena > 0) {
-                    opis+= "Cena: " + smestajList[i].cena + '<br>';
+                    opis+= "Cena: " + smestajList[i].cena + '.0  €<br>';
                 }
                 if(smestajList[i].kvadratura > 0) {
-                    opis+= "Kvadratura: " + smestajList[i].kvadratura + '<br>';
+                    opis+= "Kvadratura: " + smestajList[i].kvadratura + 'm<sup>2</sup><br>';
                 }
                 if(smestajList[i].lokacija != "") {
                     opis+= "Lokacija: " + smestajList[i].lokacija + '<br>';
                 }
                 if(smestajList[i].brojSoba > 0) {
-                    opis+= "Broj soba: " + smestajList[i].brojSoba + '<br>';
+                    opis+= "Broj soba: " + smestajList[i].brojSoba + (smestajList[i].brojSoba * 10 % 10 > 0 ? '' : '.0') + '<br>';
                 }
                 if(smestajList[i].spratonost > 0 ) {
                     opis+= "Spratnost: " + smestajList[i].spratonost + '<br>';
@@ -110,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     slika.style.marginLeft = "20%";
                     slika.style.marginTop = "5%";
                     slika.style.marginBottom = "5%";
+                    ev.preventDefault();
                 });
                 slika.setAttribute("src", smestajList[i].slika);
 

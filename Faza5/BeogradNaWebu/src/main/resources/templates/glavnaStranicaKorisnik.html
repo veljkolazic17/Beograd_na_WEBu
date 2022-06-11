@@ -64,8 +64,14 @@
 
     <div id="nalogPanelPozadina">
         <div id="nalogPanel">
-            <p th:text="'Korisničko ime:' + ${user.korisnickoime}">Greška</p>
-            <p th:text="'Email:' + ${user.email.substring(0, 5) + '...'}">Greška</p>
+            <p>
+                Korisničko ime:<br/>
+                <th:block th:text="${user.korisnickoime}"></th:block>
+            </p>
+            <p>
+                Email:<br/>
+                <th:block th:text="${user.email.substring(0, 5) + '...'}"></th:block>
+            </p>
 
             <div id="nalogPanelDugmadWrapper">
                 <input id="promenaSifreDugme" type="button" value="Promena šifre" >
@@ -162,7 +168,7 @@
                     <p class="opisSmestaja">
                         <th:block th:if="${smestaj.getLokacija() != ''}" th:utext="'<b>Lokacija:</b> ' + ${smestaj.getLokacija()} + '<br />'"></th:block>
                         <th:block th:if="${smestaj.getBrojSoba() > 0}" th:utext="'<b>Broj soba:</b> ' + ${smestaj.getBrojSoba()} + '<br />'"></th:block>
-                        <th:block th:utext="'<b>Cena:</b> ' + ${smestaj.getCena()}"></th:block>  €<br />
+                        <th:block th:utext="'<b>Cena:</b> ' + ${smestaj.getCena()}"></th:block> €<br />
                         <th:block th:utext="'<b>Kvadratura:</b> ' + ${smestaj.getKvadratura()}"></th:block>m<sup>2</sup>
                     </p>
                 </article>

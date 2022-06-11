@@ -32,7 +32,7 @@ create table recalgdata
     weight_cena          double default 0 null,
     constraint recalgdata_korisnik_idkorisnik_fk
         foreign key (idkorisnik) references korisnik (idkorisnik)
-            on update cascade
+            on update cascade on delete cascade
 );
 
 create table tip_smestaja
@@ -73,7 +73,7 @@ create table komentar
     broj_lajkova    int default 0 not null,
     constraint idkorisnik_komentar_fk
         foreign key (idkorisnik) references korisnik (idkorisnik)
-            on update cascade,
+            on update cascade on delete cascade,
     constraint idsmestaj_komentar_fk
         foreign key (idsmestaj) references smestaj (idsmestaj)
             on update cascade on delete cascade
@@ -95,7 +95,7 @@ create table lajk_komentara
             on update cascade on delete cascade,
     constraint idkorisnikj_lajk2_fk
         foreign key (idkorisnik) references korisnik (idkorisnik)
-            on update cascade
+            on update cascade on delete cascade
 );
 
 create index idkorisnikj_lajk2_fk_idx
@@ -108,7 +108,7 @@ create table lajk_smestaja
     primary key (idkorisnik, idsmestaj),
     constraint idkorisnik_lajk_fk
         foreign key (idkorisnik) references korisnik (idkorisnik)
-            on update cascade,
+            on update cascade on delete cascade,
     constraint idsmestaj_lajk_fk
         foreign key (idsmestaj) references smestaj (idsmestaj)
             on update cascade on delete cascade

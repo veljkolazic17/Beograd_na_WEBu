@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/Faza5/BeogradNaWebu" />
     <file type="web" url="file://$PROJECT_DIR$/server/BeogradNaWebu" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/server/BeogradNaWebu/pom.xml" />
+        <option value="$PROJECT_DIR$/Faza5/BeogradNaWebu/pom.xml" />
       </list>
     </option>
   </component>

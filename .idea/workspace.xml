@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="816e3a65-fb70-4e4c-a19a-d34e4f517a27" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Faza5/BeogradNaWebu/src/main/java/rs/psi/beogradnawebu/configuration/SeleniumConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/Faza5/BeogradNaWebu/src/main/java/rs/psi/beogradnawebu/configuration/SeleniumConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Faza5/BeogradNaWebu/src/main/java/rs/psi/beogradnawebu/services/Scraper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Faza5/BeogradNaWebu/src/main/java/rs/psi/beogradnawebu/services/Scraper.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="test_lj190268_mm190197" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2AQvKe5Qndc3TqYEDfBzzEUjrj2" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/marko/IdeaProjects/Beograd_na_WEBu/Faza5/BeogradNaWebu",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "spring.configuration.checksum": "16444896fca0e3f411b0f555f52ff000"
+  }
+}]]></component>
+  <component name="RunManager" selected="JUnit.BrisanjeKomentara">
+    <configuration name="BrisanjeKomentara" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="BeogradNaWebu" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="rs.psi.beogradnawebu.selenium.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="rs.psi.beogradnawebu.selenium" />
+      <option name="MAIN_CLASS_NAME" value="rs.psi.beogradnawebu.selenium.BrisanjeKomentara" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BeogradNaWebuApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="BeogradNaWebu" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="rs.psi.beogradnawebu.BeogradNaWebuApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.BrisanjeKomentara" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="816e3a65-fb70-4e4c-a19a-d34e4f517a27" name="Changes" comment="" />
+      <created>1654954563133</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1654954563133</updated>
+      <workItem from="1654954566538" duration="3462000" />
+      <workItem from="1654959240615" duration="702000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.seleniumhq.selenium:selenium-java" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>

@@ -65,8 +65,14 @@
 
     <div id="nalogPanelPozadina">
         <div id="nalogPanel">
-            <p th:text="'Korisničko ime:' + ${user.korisnickoime}">Greška</p>
-            <p th:text="'Email:' + ${user.email.substring(0, 5) + '...'}">Greška</p>
+            <p>
+                Korisničko ime:<br/>
+                <th:block th:text="${user.korisnickoime}"></th:block>
+            </p>
+            <p>
+                Email:<br/>
+                <th:block th:text="${user.email.substring(0, 5) + '...'}"></th:block>
+            </p>
 
 
             <div id="nalogPanelAdminDugmeWrapper">

@@ -3,6 +3,7 @@
  */
 package rs.psi.beogradnawebu.controller;
 
+import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.psi.beogradnawebu.dao.*;
 import rs.psi.beogradnawebu.model.*;
 
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -56,7 +58,12 @@ public class ComController {
 
         System.out.println("komentar");
 
-        if (korisnik == null) return null;
+        if (korisnik == null)
+            return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/login")).build();
+
+        if(TextKomentara.trim().length() == 0)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).location(URI.create("/login")).build();
+
         Korisnik k = korisnikDAO.getUserByUsername(korisnik.getUsername()).orElse(null);
 
         Komentar komentar = new Komentar();
@@ -180,7 +187,8 @@ public class ComController {
     @PostMapping("obrisiKomentar/{idkomentar}")
     public ResponseEntity<String> deleteKomentar(@AuthenticationPrincipal User korisnik, @PathVariable("idkomentar") Integer idkomentar) {
 
-        if(korisnik == null) return null;
+        if(korisnik == null)
+            return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/login")).build();
 
         Korisnik k = korisnikDAO.getUserByUsername(korisnik.getUsername()).orElse(null);
         Komentar kom = komentarDAO.get(idkomentar).orElse(null);
@@ -194,6 +202,7 @@ public class ComController {
             }
             return ResponseEntity.status(200).build();
         }
-        return ResponseEntity.status(500).build();
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 }

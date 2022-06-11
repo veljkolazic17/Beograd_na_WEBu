@@ -24,10 +24,15 @@ let aktivniProzor = null;
 
 document.addEventListener("DOMContentLoaded", function() {
     var user = JSON.parse(sessionStorage.getItem("user"));
-    // prikaz prozora za potvrdu
+    // prikaz korisnickog panela
     document.getElementById("dugmeNalog").addEventListener("click", function(ev) {
         if(ev.target !== ev.currentTarget) return;
         document.getElementById("nalogPanelPozadina").style.display = "block";
+
+        scrollDisableDefaultHeight = document.body.style.height;
+        scrollDisableDefaultOverflow = document.body.style.overflow;
+        document.body.style.height = "100%";
+        document.body.style.overflow = "hidden";
     });
 
     // izlaz iz prozora za potvrdu
@@ -59,6 +64,10 @@ document.addEventListener("DOMContentLoaded", function() {
     .addEventListener("click", function(ev)
     {
         if(ev.target !== ev.currentTarget) return;
+
+        document.body.style.height = scrollDisableDefaultHeight;
+        document.body.style.overflow = scrollDisableDefaultOverflow;
+
         document.getElementById("nalogPanelPozadina").style.display = "none";
     });
 
@@ -196,11 +205,14 @@ document.addEventListener("DOMContentLoaded", function() {
         dugmePotvrdi.setAttribute("type", "button");
         dugmePotvrdi.setAttribute("value", "Objavi");
         dugmePotvrdi.addEventListener("click", function(ev) {
-            if(tekstKomentara.value.length == 0) {
+            let tekstKomRegex = /\w/i;
+            if(!tekstKomRegex.test(tekstKomentara.value)) {
+                alert("Komentar mora sadržati karaktere alfabeta.");
                 return;
             }
+
             if(tekstKomentara.value.length > 281) {
-                //prikazati polje sa upozorenjem o duzini komentara
+                alert("Komentar je predugačak, mora biti do 280 karaktera.");
                 return;
             }
             document.getElementById("noviKomentar").style.display = "block";

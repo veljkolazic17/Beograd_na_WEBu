@@ -21,11 +21,13 @@ public class BrisanjeKomentara {
         System.setProperty("webdriver.chrome.driver", "drivers\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.setHeadless(true);
-        driver = new ChromeDriver(/*options*/);
+        driver = new ChromeDriver(options);
     }
 
     @Test
     public void brisanjeSvojihKomentara() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
         driver.get("http://localhost:8080");
 
         driver.findElement(By.id("username")).sendKeys("marko");
@@ -42,21 +44,21 @@ public class BrisanjeKomentara {
         WebElement noviKomentar = driver.findElement(By.tagName("textarea"));
         noviKomentar.sendKeys("Ja sam ovde novi");
 
-        JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("document.querySelector('.komentari:last-child>div>input:first-of-type').click()");
 
+        //2. jer je prozor u kome se ubacuje novi komentar takodje klase komentari
         String staraVrednost = (String)js.executeScript(" return document.querySelector('.komentari:nth-last-child(2)>input').value");
 
         js.executeScript("document.querySelector('.dugmadNaKomentarimaWrapper:last-of-type>input').click()");
         js.executeScript("document.querySelector('#prozorZaPotvrduBrisanjaKomentara>div>input:nth-child(2)').click()");
 
-        List<WebElement> komentari = driver.findElements(By.className("komentari"));
-        WebElement poslednji = komentari.get(komentari.size() - 1);
-        String novaVrednost = (String)js.executeScript(" return document.querySelector('.komentari:nth-last-child(2)>input').value");
+        String novaVrednost = (String)js.executeScript(
+                "let prethodniKomentar = document.querySelector('.komentari:nth-last-child(2)>input');" +
+                "if(prethodniKomentar == null) return null; else return prethodniKomentar.value;"
+        );
 
         assertNotEquals(staraVrednost, novaVrednost);
 
-        driver.findElement(By.id("prikazStana")).click();
-        //driver.findElement(By.tagName("input"));
+        driver.close();
     }
 }

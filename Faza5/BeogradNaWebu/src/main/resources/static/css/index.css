@@ -200,7 +200,7 @@ input[type="submit"] {
 
 #zaboravljenaSifraPanel {
     position: relative;
-    width: 500px;
+    width: fit-content;
     height: 196px;
     margin: auto;
     top: calc(50vh - 98px - 3px);
@@ -212,15 +212,18 @@ input[type="submit"] {
 }
 
 #zaboravljenaSifraPanel p {
-    margin: 12px 0px 12px 15px;
+    padding: 12px;
     font-size: 14px;
     display: block;
+    text-align: center;
 }
 
 #zaboravljenaSifraPanel input {
     margin: 10px 0px 10px 15px;
     float: none;
     display: block;
+
+    margin: auto;
 }
 
 .errorMessages {

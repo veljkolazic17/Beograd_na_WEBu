@@ -173,9 +173,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 panelBrisanje.style.display = "none";
                 pozadina.style.display = "none";
 
-                $.ajax({url:"../userdata/",type:"POST"});
+                $.ajax({url:"../userdata/",type:"POST",async:false});
                 window.location.reload(true);
-                return false;
+
             });
         }
     });
